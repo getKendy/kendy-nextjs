@@ -1,0 +1,13 @@
+use kendy;
+
+db.createUser({
+  user: 'root',
+  pwd: 'password',
+  roles: [
+    {
+      role: 'dbOwner',
+      db: 'kendy',
+    },
+  ],
+});
+
