@@ -6,7 +6,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '../../../lib/mongodb';
 
-export default NextAuth({
+// import type { NextAuthOptions } from 'next-auth';
+
+export const authOptions = {
   // Adapter is the database connection.
   adapter: MongoDBAdapter(clientPromise),
   // Configure one or more authentication providers
@@ -37,8 +39,9 @@ export default NextAuth({
   // Configure other options
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"
-    brandColor: '#1818C7', // Hex color code
+    brandColor: '', // Hex color code
     logo: '', // Absolute URL to image
-    buttonText: '#1818C7', // Hex color code
+    buttonText: '', // Hex color code
   },
-});
+};
+export default NextAuth(authOptions);

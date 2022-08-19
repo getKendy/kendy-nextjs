@@ -24,7 +24,8 @@ RUN . /etc/os-release \
 # [Optional] Uncomment if you want to install more global node modules
 # RUN su node -c "npm install -g <your-package-list-here>"
 
-
+# mongosh is a command line tool for MongoDB that allows you to run mongodb commands from the command line.
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
 RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 RUN sudo apt-get update
+RUN sudo apt-get install -y mongodb-mongosh   
