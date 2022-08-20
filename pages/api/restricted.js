@@ -5,9 +5,13 @@ const handler = async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (!session) {
-    return res.send({ message: 'You must be logged in.' });
-  } else {
-    return res.send({ message: 'Success' });
+    res.status(401).json({ message: "You must be logged in." });
+    return;
   }
+
+  return res.json({
+    message: 'Success',
+  })
+  
 };
 export default handler;

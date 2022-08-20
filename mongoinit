@@ -1,4 +1,4 @@
-use kendy;
+use kendynextjs;
 
 db.createUser({
   user: 'root',
@@ -6,7 +6,7 @@ db.createUser({
   roles: [
     {
       role: 'dbOwner',
-      db: 'kendy',
+      db: 'kendynextjs',
     },
   ],
 });
