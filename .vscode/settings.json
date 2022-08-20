@@ -1,0 +1,32 @@
+{
+    "settings": {
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": "active",
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "files.autoSave": "afterDelay",
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "emmet.includeLanguages": {
+            "javascript": "javascriptreact"
+        },
+        "prettier.singleQuote": true,
+        "prettier.jsxSingleQuote": true,
+        "redhat.telemetry.enabled": false
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "mongodb.mongodb-vscode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "andrewmcodes.tailwindcss-extension-pack",
+        "redhat.vscode-yaml",
+        "xabikos.javascriptsnippets",
+        "dsznajder.es7-react-js-snippets",
+        "dzannotti.vscode-babel-coloring",
+        "wix.vscode-import-cost",
+        "infeng.vscode-react-typescript",
+        "ms-vscode.vscode-typescript-next"
+    ]
+}
