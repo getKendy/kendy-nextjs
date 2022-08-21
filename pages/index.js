@@ -1,18 +1,19 @@
 import Link from 'next/link';
+import Image from 'next/image';
+
 import axios from 'axios';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 import Header from '../components/Header/Header';
-import Component from '../components/login-btn';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+
 
 export default function Home({ btcbusd, ethbusd, bnbbusd }) {
   const { data: session } = useSession();
 
   return (
     <div>
-      <Header activeTab='home' description='Crypto Scanner Trading Alerts' title='GetKendy - Home' />
+      <Header activeTab='home' description='Crypto Scanner Trading Alerts' 
+        title='GetKendy - Home' showTopHeader={true}/>
       <main className='main'>
         <div className="hero min-h-screen pb-32 bg-base-300">
           <div className="hero-content flex-col lg:flex-row-reverse">
@@ -29,9 +30,11 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>
               {session ? (
-                <button className="btn btn-primary">
-                  <Link href='/alerts'>Open Dashboard</Link>
-                </button>
+                <Link href='/alerts'>
+                  <button className="btn btn-primary">
+                    Open Dashboard
+                  </button>
+                </Link>
               ) : (
                 <button className="btn btn-primary" onClick={() => signIn()} >
                   Get Started</button>

@@ -3,11 +3,11 @@ import Link from 'next/link'
 import Head from 'next/head';
 import Image from 'next/image';
 
-import { buttons } from './button'
+import { buttons } from './buttons'
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const Header = ({ title, description, activeTab }) => {
+const Header = ({ title, description, activeTab, showTopHeader }) => {
     const { data: session } = useSession();
     const router = useRouter();
     // console.log(session)
@@ -18,14 +18,17 @@ const Header = ({ title, description, activeTab }) => {
                 <meta name='description' content={description} />
                 <link rel='icon' href='/GetKendyLogo.png' />
             </Head>
-            <div className="navbar bg-base-200">
-                <Image src='/GetKendyLogo.png' width={50} height={50} alt='GetKendy Logo is shown here'/>
-                <a className="btn btn-ghost uppercase text-xl text-primary-focus">GetKendy</a>
-            </div>
+            {showTopHeader && (
+
+                <div className="navbar bg-base-200">
+                    <Image src='/GetKendyLogo.png' width={50} height={50} alt='GetKendy Logo is shown here' />
+                    <a className="btn btn-ghost uppercase text-xl text-primary-focus">GetKendy</a>
+                </div>
+            )}
             <div className="btm-nav z-10">
                 {buttons.map((button, index) => (
                     <Link key={index} href={button.link}>
-                        <button className={session ? activeTab == button.name ? 'text-primary active' : 'text-primary' :'disabled'}>
+                        <button className={session ? activeTab == button.name ? 'text-primary active' : 'text-primary' : 'disabled'}>
                             {button.svg}
                             <span className="btm-nav-label">
                                 {button.Label}

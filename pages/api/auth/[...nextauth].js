@@ -25,16 +25,16 @@ export const authOptions = {
       },
       from: process.env.EMAIL_FROM,
     }),
-    // https://next-auth.js.org/providers/apple
-    AppleProvider({
-      clientId: process.env.APPLE_ID,
-      clientSecret: process.env.APPLE_SECRET,
-    }),
-    // https://next-auth.js.org/providers/google
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-    }),
+    // // https://next-auth.js.org/providers/apple
+    // AppleProvider({
+    //   clientId: process.env.APPLE_ID,
+    //   clientSecret: process.env.APPLE_SECRET,
+    // }),
+    // // https://next-auth.js.org/providers/google
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_ID,
+    //   clientSecret: process.env.GOOGLE_SECRET,
+    // }),
   ],
   // Configure other options
   theme: {
