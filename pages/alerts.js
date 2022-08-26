@@ -3,16 +3,31 @@ import Header from '../components/Header/Header'
 import { authOptions } from './api/auth/[...nextauth].js'
 import { unstable_getServerSession } from "next-auth/next"
 import axios from 'axios'
+import formatDate from '../lib/formaDate'
 
 const Alerts = () => {
     const [baro, setBaro] = useState([])
     const [btcbusd, setBtcbusd] = useState({})
+    const [alert, setAlert] = useState([])
 
+    // fetch alert 
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await axios.get('/api/backend/alert')
+            console.log(data)
+            setAlert(data.items)
+        }
+        fetchData()
+        const interval = setInterval(() => {
+            fetchData()
+        }, 10000)
+        return () => clearInterval(interval)
+    }, [])
     // fetch 1min baro 
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await axios.get('/api/backend/baro')
-            console.log(data)
+            // console.log(data)
             setBaro(data.items)
         }
         fetchData()
@@ -26,7 +41,7 @@ const Alerts = () => {
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await axios.get('/api/backend/ticker/?symbol=BTCBUSD')
-            console.log(data)
+            // console.log(data)
             setBtcbusd(data)
         }
         fetchData()
@@ -35,10 +50,11 @@ const Alerts = () => {
         }, 60000)
         return () => clearInterval(interval)
     }, [])
+
     return (
         <div>
             <Header activeTab='alerts' description='Crypto Scanner Trading Alerts' title='GetKendy - Alerts' />
-            <div className="lg:mx-20 stats shadow grid place-items-center ">
+            <div className="stats shadow grid place-items-center w-screen ">
 
                 <div className="stat">
                     <div className="stat-figure text-secondary">
@@ -46,7 +62,7 @@ const Alerts = () => {
                     </div>
                     <div className="stat-title">BTC - Fiat Binance Dominance</div>
                     <div className="stat-value">{baro[0]?.btcStrength}</div>
-                    <div className="stat-desc">{baro[0]?.date}</div>
+                    <div className="stat-desc">{formatDate(baro[0]?.date)}</div>
                 </div>
 
                 <div className="stat">
@@ -68,6 +84,26 @@ const Alerts = () => {
                 </div>
 
             </div>
+            {alert.length > 0 ?  (
+                <div className='flex justify-between mx-5 border-b'>
+                    <div>Symbol</div>
+                    <div>Volume</div>
+                    <div>Close</div>
+                    <div>BBU</div>
+                    <div>StochK</div>
+                    <div>StochD</div>
+                </div>
+            ) : null}
+            {alert.length > 0 ?  alert.map((a, index) => (
+                <div key={index} className='flex justify-between mx-5'>
+                    <div>{a.symbol}</div>
+                    <div>{a.volume}</div>
+                    <div>{a.close}</div>
+                    <div>{a.bbu}</div>
+                    <div>{a.stochk}</div>
+                    <div>{a.stockd}</div>
+                </div>
+            )) : 'No Alerts'}
         </div>
     )
 }

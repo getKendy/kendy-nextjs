@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
     }
     try {
         const { data } = await axios.get(`${process.env.BACKEND_API}ticker/`)
-        console.log(data)
+        // console.log(data)
         res.status(200).send(data)
     } catch (error) {
         res.status(500).send(error)
