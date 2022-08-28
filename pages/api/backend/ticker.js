@@ -6,7 +6,7 @@ const handler = nc()
 handler.get(async (req, res) => {
     if (req.query.symbol) {
         try {
-            const { data } = await axios.get(`${process.env.BACKEND_API}ticker/${req.query.symbol}`)
+            const { data } = await axios.get(`${process.env.BACKEND_API}tickerredis/${req.query.symbol}`)
             res.status(200).send(data)
         } catch (error) {
             res.status(500).send(error)

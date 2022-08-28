@@ -12,8 +12,8 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
 
   return (
     <div>
-      <Header activeTab='home' description='Crypto Scanner Trading Alerts' 
-        title='GetKendy - Home' showTopHeader={true}/>
+      <Header activeTab='home' description='Crypto Scanner Trading Alerts'
+        title='GetKendy - Home' showTopHeader={true} />
       <main className='main'>
         <div className="hero min-h-screen pb-32 bg-base-300">
           <div className="hero-content flex-col lg:flex-row-reverse">
@@ -22,11 +22,14 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
             <div>
               <div className='grid grid-cols-3'>
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
-                <div className="text-5xl font-bold text-right col-span-2">${btcbusd?.close.toFixed(0)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${+(btcbusd?.c)}</div>
+                
                 <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
-                <div className="text-5xl font-bold text-right col-span-2">${ethbusd?.close.toFixed(0)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${+(ethbusd?.c)}</div>
+                
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
-                <div className="text-5xl font-bold text-right col-span-2">${bnbbusd?.close.toFixed(0)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${+(bnbbusd?.c)}</div>
+                
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>
               {session ? (
@@ -54,9 +57,9 @@ export const getServerSideProps = async ({ req, res }) => {
   )
   // console.log(context);
   try {
-    const { data: btcbusd } = await axios.get(`${process.env.BACKEND_API}ticker/BTCBUSD`);
-    const { data: ethbusd } = await axios.get(`${process.env.BACKEND_API}ticker/ETHBUSD`);
-    const { data: bnbbusd } = await axios.get(`${process.env.BACKEND_API}ticker/BNBBUSD`);
+    const { data: btcbusd } = await axios.get(`${process.env.BACKEND_API}tickerredis/BTCBUSD`);
+    const { data: ethbusd } = await axios.get(`${process.env.BACKEND_API}tickerredis/ETHBUSD`);
+    const { data: bnbbusd } = await axios.get(`${process.env.BACKEND_API}tickerredis/BNBBUSD`);
     return {
       props: {
         btcbusd, ethbusd, bnbbusd,
