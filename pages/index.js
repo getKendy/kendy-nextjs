@@ -2,13 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import axios from 'axios';
-import { useSession, signIn, signOut } from 'next-auth/react';
+// import { useSession, signIn, signOut } from 'next-auth/react';
 
 import Header from '../components/Header/Header';
 
 
 export default function Home({ btcbusd, ethbusd, bnbbusd }) {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   return (
     <div>
@@ -32,7 +32,7 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
                 
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>
-              {session ? (
+              {/* {session ? (
                 <Link href='/alerts'>
                   <button className="btn btn-primary">
                     Open Dashboard
@@ -41,7 +41,12 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
               ) : (
                 <button className="btn btn-primary" onClick={() => signIn()} >
                   Get Started</button>
-              )}
+              )} */}
+              <Link href='/alerts'>
+                <button className="btn btn-primary">
+                  Open Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
