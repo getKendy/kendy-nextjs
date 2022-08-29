@@ -22,13 +22,13 @@ export default function Home({ btcbusd, ethbusd, bnbbusd }) {
             <div>
               <div className='grid grid-cols-3'>
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
-                <div className="text-5xl font-bold text-right col-span-2">${+(btcbusd?.c)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+(btcbusd?.c)).toFixed()}</div>
                 
                 <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
-                <div className="text-5xl font-bold text-right col-span-2">${+(ethbusd?.c)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+(ethbusd?.c)).toFixed()}</div>
                 
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
-                <div className="text-5xl font-bold text-right col-span-2">${+(bnbbusd?.c)}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+(bnbbusd?.c)).toFixed()}</div>
                 
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>

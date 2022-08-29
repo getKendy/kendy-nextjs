@@ -42,7 +42,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance --autoscale=20,1
+    command: celery -A src worker --loglevel=INFO -Q binance 
     volumes:
       - ./celery:/app
     env_file:
@@ -57,7 +57,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance --autoscale=20,1
+    command: celery -A src worker --loglevel=INFO -Q binance 
     volumes:
       - ./celery:/app
     env_file:
@@ -72,7 +72,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance --autoscale=20,1
+    command: celery -A src worker --loglevel=INFO -Q binance 
     volumes:
       - ./celery:/app
     env_file:
@@ -87,7 +87,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q barometer --autoscale=20,1
+    command: celery -A src worker --loglevel=INFO -Q barometer 
     volumes:
       - ./celery:/app
     env_file:
@@ -102,7 +102,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q candlealerts --autoscale=20,1
+    command: celery -A src worker --loglevel=INFO -Q candlealerts 
     volumes:
       - ./celery:/app
     env_file:
