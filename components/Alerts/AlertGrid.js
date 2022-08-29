@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { current } from 'daisyui/src/colors'
 import React, { useEffect, useState } from 'react'
-import formatDate from '../../lib/formatDate'
+import {formatDateAlert} from '../../lib/formatDate'
 const AlertGrid = () => {
     const [alerts, setAlerts] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -53,7 +53,7 @@ const AlertGrid = () => {
                         {
                             alerts.length > 0 ? alerts.reverse().map((alert, index) => (
                                 <tr key={index} className='border-b border-secondary text-primary-content'>
-                                    <td>{formatDate(alert.date)}</td>
+                                    <td>{formatDateAlert(alert.date)}</td>
                                     <td>{alert.market}</td>
                                     <td>{alert.volume24h}</td>
                                     <td>{alert.close}</td>

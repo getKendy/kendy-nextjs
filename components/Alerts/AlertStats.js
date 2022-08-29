@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import formatDate from '../../lib/formatDate'
+import {formatDate} from '../../lib/formatDate'
 
 const AlertStats = () => {
     const [baro, setBaro] = useState([])
@@ -9,7 +9,7 @@ const AlertStats = () => {
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await axios.get('/api/backend/baro/?size=60')
-            console.log({'baro':data})
+            // console.log({'baro':data})
             setBaro(data.items)
         }
         fetchData()
@@ -36,7 +36,7 @@ const AlertStats = () => {
     // console.log(baro)
     return (
         <div className="stats shadow grid place-items-center ">
-
+            {}
             <div className="stat">
                 <div className="stat-figure text-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
