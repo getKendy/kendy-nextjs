@@ -40,7 +40,7 @@ export const authOptions = {
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"
     brandColor: '', // Hex color code
-    logo: 'http://localhost:3000/GetKendyLogo.png', // Absolute URL to image
+    logo: 'http://crypto.hezik.nl/GetKendyLogo.png', // Absolute URL to image
     buttonText: '', // Hex color code
   },
 };
