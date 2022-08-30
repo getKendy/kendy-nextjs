@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Header from '../components/Header/Header'
 // import { authOptions } from './api/auth/[...nextauth].js'
 // import { unstable_getServerSession } from "next-auth/next"
-import axios from 'axios'
+
 import AlertStats from '../components/Alerts/AlertStats'
 import AlertGrid from '../components/Alerts/AlertGrid'
 
