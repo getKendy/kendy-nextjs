@@ -43,6 +43,7 @@ const AlertGrid = () => {
                     <table className='w-full table'>
                         <tr className='border-b border-primary'>
                             <th>Date</th>
+                            <th>Timeframe</th>
                             <th>Market</th>
                             <th>Volume 24h</th>
                             <th>Close</th>
@@ -54,6 +55,7 @@ const AlertGrid = () => {
                             alerts.length > 0 ? alerts.reverse().map((alert, index) => (
                                 <tr key={index} className='border-b border-secondary text-primary-content'>
                                     <td>{formatDateAlert(alert.date)}</td>
+                                    <td>{alert.timeframe}</td>
                                     <td>{alert.market}</td>
                                     <td>{alert.volume24h}</td>
                                     <td>{alert.close}</td>
