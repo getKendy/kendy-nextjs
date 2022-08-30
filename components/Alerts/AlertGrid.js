@@ -63,10 +63,10 @@ const AlertGrid = () => {
                                     <td>{alert.stochk}</td>
                                     <td>{alert.stockd}</td>
                                 </tr>
-                            )) : <div className='text-center text-primary'>No Alerts Found</div>
+                            )) : null
                         }
                     </table>
-                ) : <div className='h-screen text-center text-primary-content'>Alerts on 1min. timeframe are active</div>
+                ) : <div className='h-screen text-center text-primary-content'>Alerts on 2min. timeframe are active</div>
             }
             {alerts.length > 0 ?
                 <div className="btn-group justify-center mt-1 mb-24">
