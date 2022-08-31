@@ -45,10 +45,10 @@ const AlertSide = ({ baros }) => {
   }, [])
 
 
-  const TickerDisplay = ({ ticker }) => (
+  const TickerDisplay = ({ ticker,coin }) => (
     <div className='flex flex-row justify-center md:flex-col-reverse space-x-3 mb-5'>
       <div className='flex space-x-2'>
-        <div className='font-bold'>ETH/BUSD:</div>
+        <div className='font-bold'>{coin}/BUSD:</div>
         <div>
           ${(+(ticker.c)).toFixed(2)}
         </div>
@@ -65,9 +65,9 @@ const AlertSide = ({ baros }) => {
     <div className='flex flex-col flex-grow '>
       <h2 className='text-2xl text-center border-b shadow-inner shadow-secondary'>Tickers:</h2>
       <div className='flex flex-col md:flex-row md:space-x-5 text-xl justify-center'>
-        <TickerDisplay ticker={ethbusd} />
-        <TickerDisplay ticker={bnbbusd} />
-        <TickerDisplay ticker={paxgbusd} />
+        <TickerDisplay ticker={ethbusd} coin='ETH' />
+        <TickerDisplay ticker={bnbbusd} coin='BNB'/>
+        <TickerDisplay ticker={paxgbusd} coin='PAXG'/>
       </div>
     </div>
   )
