@@ -8,11 +8,11 @@ import AlertGrid from '../components/Alerts/AlertGrid'
 
 const Alerts = () => {
     return (
-        <div>
+        <React.Fragment>
             <Header activeTab='alerts' description='Crypto Scanner Trading Alerts' title='GetKendy - Alerts' />
             <AlertStats />
             <AlertGrid />
-        </div>
+        </React.Fragment>
     )
 }
 

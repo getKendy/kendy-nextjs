@@ -37,7 +37,7 @@ const AlertGrid = () => {
     }
 
     return (
-        <div className='overflow-x-auto w-full bg-base-200 rounded-t-xl'>
+        <div className='overflow-x-auto w-full h-screen bg-base-300 rounded-t-xl'>
             {
                 alerts.length > 0 ? (
                     <table className='w-full table'>
