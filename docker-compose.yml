@@ -10,6 +10,8 @@ services:
     ports:
       - 3000:3000
     # stdin_open: true
+    env_file:
+      - .env.local
     networks:
       - default
     restart: unless-stopped
