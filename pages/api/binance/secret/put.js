@@ -13,7 +13,7 @@ handler.put(async (req, res) => {
     const { db } = await connectToDatabase()
     const { apiKey, apiSecret, id } = req.body
     await db.collection["binanceKey"].updateOne(
-        { username: session.username, },
+        { username: session.user.email, },
         {
             $set: {
                 apiKey,
@@ -23,7 +23,7 @@ handler.put(async (req, res) => {
         }
     )
     res.status(200).json({
-        data: await db.collection("binanceKey").findOne({ username: session.username, }),
+        data: await db.collection("binanceKey").findOne({ username: session.user.email, }),
         message: 'Key changed succesfully'
     })
 })

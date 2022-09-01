@@ -12,7 +12,7 @@ handler.post(async (req, res) => {
     const { db } = await connectToDatabase()
     const { apiKey, apiSecret } = req.body
     const response = db.collection["binanceKey"].insertOne({
-        username: session.username,
+        username: session.user.email,
         apiKey,
         apiSecret,
         createdAt: new Date(),

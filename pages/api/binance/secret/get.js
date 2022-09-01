@@ -9,17 +9,18 @@ handler.get(async (req, res) => {
     if (!session) {
         res.status(401).send('User not authenticated')
     }
-    // const { db } = await connectToDatabase()
-    // const { data } = db.collection["binanceKey"].findOne({
-    //     username: session.username,
-    // }).toArray()
-    // if (!data) {
-    //     res.status(500).send('no api key found')
-    // }
-    // // res.status(201).send({
-    // //     username: data.username,
-    // //     apiKey: data.apiKey
-    // // })
+    const { db } = await connectToDatabase()
+    const { data } = db.collection["binanceKey"].findOne({
+        username: session.user.email,
+    }).toArray()
+    if (!data) {
+        res.status(500).send('no api key found')
+    }
+    // res.status(201).send({
+    //     username: data.username,
+    //     apiKey: data.apiKey
+    // })
+    res.send('ok')
     // res.status(201).send({
     //     data
     // })
