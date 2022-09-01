@@ -42,8 +42,8 @@ const AlertGrid = () => {
             <h2 className='mb-5 text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary'>Binance Scanner Alerts:</h2>
             {
                 alerts.length > 0 ? (
-                    <table className='mb-5 table table-compact'>
-                        <tr className='border-b border-primary table-header-group'>
+                    <table className='mb-5 table table-compact table-zebra'>
+                        <thead className='table-header-group'>
                             <th>Date</th>
                             <th>Interval</th>
                             <th>Market</th>
@@ -62,32 +62,34 @@ const AlertGrid = () => {
                                 </div>
                             </th>
                             <th className='text-center'>Stoch K/D</th>
-                        </tr>
+                        </thead>
+                        <tbody>
 
-                        {
-                            alerts.length > 0 ? alerts.map((alert, index) => (
-                                <tr key={index} className='border-b border-secondary text-primary-content'>
-                                    <td className='table-cell'>{formatDateAlert(alert.date)}</td>
-                                    <td>{alert.timeframe}</td>
-                                    <td>{alert.market}</td>
-                                    <td>{alert.volume24h}</td>
-                                    <td>{alert.close}</td>
-                                    <td className=''>
-                                        <div className='flex space-x-2'>
-                                            <div>{alert.bbl}</div>
-                                            <div>/</div>
-                                            <div>{alert.bbm}</div>
-                                        </div>
-                                        <div className='flex space-x-2'>
-                                            <div>{alert.bbu}</div>
-                                            <div>/</div>
-                                            <div>{alert.bbb}%</div>
-                                        </div>
-                                    </td>
-                                    <td className='text-center'>{alert.stochk}/{alert.stockd}</td>
-                                </tr>
-                            )) : null
-                        }
+                            {
+                                alerts.length > 0 ? alerts.map((alert, index) => (
+                                    <tr key={index} className='text-primary-content'>
+                                        <td className='table-cell'>{formatDateAlert(alert.date)}</td>
+                                        <td>{alert.timeframe}</td>
+                                        <td>{alert.market}</td>
+                                        <td>{alert.volume24h}</td>
+                                        <td>{alert.close}</td>
+                                        <td className=''>
+                                            <div className='flex space-x-2'>
+                                                <div>{alert.bbl}</div>
+                                                <div>/</div>
+                                                <div>{alert.bbm}</div>
+                                            </div>
+                                            <div className='flex space-x-2'>
+                                                <div>{alert.bbu}</div>
+                                                <div>/</div>
+                                                <div>{alert.bbb}%</div>
+                                            </div>
+                                        </td>
+                                        <td className='text-center'>{alert.stochk}/{alert.stockd}</td>
+                                    </tr>
+                                )) : null
+                            }
+                        </tbody>
                     </table>
                 ) : <div className='h-screen text-center text-primary-content'>Alerts on 3 and 5min. timeframe are active</div>
             }
