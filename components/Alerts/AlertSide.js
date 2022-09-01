@@ -75,7 +75,7 @@ const AlertSide = ({ baros }) => {
         <TickerDisplay ticker={bnbbusd} coin='BNB'/>
         <TickerDisplay ticker={paxgbusd} coin='PAXG'/>
       </div>
-      {/* <Api></Api> */}
+      <Api></Api>
     </div>
   )
 }

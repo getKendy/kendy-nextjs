@@ -44,24 +44,26 @@ const AlertGrid = () => {
                 alerts.length > 0 ? (
                     <table className='mb-5 table table-compact table-zebra'>
                         <thead className='table-header-group'>
-                            <th>Date</th>
-                            <th>Interval</th>
-                            <th>Market</th>
-                            <th>Volume 24h</th>
-                            <th>Close</th>
-                            <th className=''>
-                                <div className='flex space-x-2'>
-                                    <div>BBL</div>
-                                    <div>/</div>
-                                    <div>BBM</div>
-                                </div>
-                                <div className='flex space-x-2'>
-                                    <div>BBU</div>
-                                    <div>/</div>
-                                    <div>BBB</div>
-                                </div>
-                            </th>
-                            <th className='text-center'>Stoch K/D</th>
+                            <tr className='table-row'>
+                                <th>Date</th>
+                                <th>Interval</th>
+                                <th>Market</th>
+                                <th>Volume 24h</th>
+                                <th>Close</th>
+                                <th className=''>
+                                    <div className='flex space-x-2'>
+                                        <div>BBL</div>
+                                        <div>/</div>
+                                        <div>BBM</div>
+                                    </div>
+                                    <div className='flex space-x-2'>
+                                        <div>BBU</div>
+                                        <div>/</div>
+                                        <div>BBB</div>
+                                    </div>
+                                </th>
+                                <th className='text-center'>Stoch K/D</th>
+                            </tr>
                         </thead>
                         <tbody>
 
