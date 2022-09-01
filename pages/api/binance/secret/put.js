@@ -1,5 +1,5 @@
 import nc from 'next-connect'
-import { connectToDatabase } from '../../../../lib/mongodb'
+import { connectToDatabase } from '../../../../lib/mongoData'
 import { unstable_getServerSession } from "next-auth/next"
 import { ObjectId } from 'mongodb'
 
@@ -12,7 +12,7 @@ handler.put(async (req, res) => {
     }
     const { db } = await connectToDatabase()
     const { apiKey, apiSecret, id } = req.body
-    await db.collection["binanceKey"].updateOne(
+    await db.collection("binanceKey").updateOne(
         { username: session.user.email, },
         {
             $set: {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 
+import Api from '../Binance/Api'
+
 const AlertSide = ({ baros }) => {
   const [ethbusd, setEthbusd] = useState({})
   const [bnbbusd, setBnbbusd] = useState({})
@@ -73,6 +75,7 @@ const AlertSide = ({ baros }) => {
         <TickerDisplay ticker={bnbbusd} coin='BNB'/>
         <TickerDisplay ticker={paxgbusd} coin='PAXG'/>
       </div>
+      <Api></Api>
     </div>
   )
 }

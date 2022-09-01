@@ -1,5 +1,5 @@
 import nc from 'next-connect'
-import { connectToDatabase } from '../../../../lib/mongodb'
+import { connectToDatabase } from '../../../../lib/mongoData'
 import { unstable_getServerSession } from "next-auth/next"
 
 const handler = nc()
@@ -11,7 +11,7 @@ handler.post(async (req, res) => {
     }
     const { db } = await connectToDatabase()
     const { apiKey, apiSecret } = req.body
-    const response = db.collection["binanceKey"].insertOne({
+    const response = db.collection("binanceKey").insertOne({
         username: session.user.email,
         apiKey,
         apiSecret,
