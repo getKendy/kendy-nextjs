@@ -15,7 +15,7 @@ const Statics = () => {
   //     for (const worker in data) {
   //       if (Object.hasOwnProperty.call(data, worker)) {
   //         const element = data[worker];
-  //         console.log(element)
+  //         // console.log(element)
   //         workers.push(element)
   //       }
   //     }
@@ -24,7 +24,6 @@ const Statics = () => {
   //   }
   //   fetchData()
   // }, [])
-
 
   return (
     <div>
@@ -38,16 +37,8 @@ const Statics = () => {
       </div> */}
 
 
-      {/* {workers?.map((worker, index) => (
-        <div key={index}>
-          {worker.active_queues?.map((queue, index) => (
-            <div key={index}>
-              {queue.name}
-            </div>
-          ))}
-        </div>
-      ))} */}
 
+     
     </div>
 
   )

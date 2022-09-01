@@ -39,10 +39,10 @@ const AlertGrid = () => {
     return (
 
         <div className='flex flex-col flex-grow'>
-            <h2 className='text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary'>Binance Scanner Alerts:</h2>
+            <h2 className='mb-5 text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary'>Binance Scanner Alerts:</h2>
             {
                 alerts.length > 0 ? (
-                    <table className='table table-compact'>
+                    <table className='mb-5 table table-compact'>
                         <tr className='border-b border-primary table-header-group'>
                             <th>Date</th>
                             <th>Interval</th>
@@ -61,7 +61,7 @@ const AlertGrid = () => {
                                     <div>BBB</div>
                                 </div>
                             </th>
-                            <th className='text-center'>StochK/StochD</th>
+                            <th className='text-center'>Stoch K/D</th>
                         </tr>
 
                         {
@@ -89,7 +89,7 @@ const AlertGrid = () => {
                             )) : null
                         }
                     </table>
-                ) : <div className='h-screen text-center text-primary-content'>Alerts on 5min. timeframe are active</div>
+                ) : <div className='h-screen text-center text-primary-content'>Alerts on 3 and 5min. timeframe are active</div>
             }
             {
                 alerts.length > 0 ?

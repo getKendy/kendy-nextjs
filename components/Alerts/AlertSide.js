@@ -1,10 +1,14 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import axios from 'axios'
 
 const AlertSide = ({ baros }) => {
   const [ethbusd, setEthbusd] = useState({})
   const [bnbbusd, setBnbbusd] = useState({})
   const [paxgbusd, setPaxgbusd] = useState({})
+  const {data:session}=useSession()
+  console.log(session)
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get('/api/backend/ticker/?symbol=ETHBUSD')
@@ -46,7 +50,7 @@ const AlertSide = ({ baros }) => {
 
 
   const TickerDisplay = ({ ticker,coin }) => (
-    <div className='flex flex-row justify-center md:flex-col-reverse space-x-3 mb-5'>
+    <div className='flex flex-row justify-center md:flex-col-reverse space-x-3 mb-5 shadow shadow-primary p-2 rounded-xl'>
       <div className='flex space-x-2'>
         <div className='font-bold'>{coin}/BUSD:</div>
         <div>
@@ -63,7 +67,7 @@ const AlertSide = ({ baros }) => {
 
   return (
     <div className='flex flex-col flex-grow '>
-      <h2 className='text-2xl text-center border-b shadow-inner shadow-secondary'>Tickers:</h2>
+      <h2 className='mb-5 text-2xl text-center border-b shadow-inner shadow-secondary'>Tickers:</h2>
       <div className='flex flex-col md:flex-row md:space-x-5 text-xl justify-center'>
         <TickerDisplay ticker={ethbusd} coin='ETH' />
         <TickerDisplay ticker={bnbbusd} coin='BNB'/>

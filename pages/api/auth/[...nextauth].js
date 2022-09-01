@@ -4,7 +4,7 @@ import AppleProvider from 'next-auth/providers/apple';
 import GoogleProvider from 'next-auth/providers/google';
 
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '../../../lib/mongodb';
+import clientPromise from '../../../lib/auth/mongodb';
 
 // import type { NextAuthOptions } from 'next-auth';
 
