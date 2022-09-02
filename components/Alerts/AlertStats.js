@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import {formatDate} from '../../lib/formatDate'
+import { formatDate } from '../../lib/formatDate'
 
-const AlertStats = ({baros}) => {
+const AlertStats = ({ baros }) => {
     const [btcbusd, setBtcbusd] = useState({})
 
-    
+
 
     // fetch btc ticker
     useEffect(() => {
@@ -21,6 +21,22 @@ const AlertStats = ({baros}) => {
         return () => clearInterval(interval)
     }, [])
 
+    const UpDownRender = ({ timeframe }) => {
+
+        return (
+            <div className={baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
+                'p-1 m-1 rounded-lg  shadow-inner shadow-green-500 flex items-center justify-center'
+                :
+                'p-1 m-1 rounded-lg shadow-inner shadow-red-500 flex items-center justify-center'}>
+                <span>{timeframe > 59 ? <>{timeframe / 60}h</> : <>{timeframe}m</>}:</span>
+                {baros[timeframe]?.altBtcStrength && baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
+                    <div className="text-sm text-green-500"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                    :
+                    <div className="text-sm text-red-500"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                }
+            </div>
+        )
+    }
     // console.log(baro)
     return (
         <div className="stats shadow flex flex-col md:flex-row place-items-center bg-base-200">
@@ -39,43 +55,17 @@ const AlertStats = ({baros}) => {
                 </div>
                 <div className="stat-title truncate">BTC - Alts Binance Dominance</div>
                 <div className="stat-value">{baros[0]?.altBtcStrength.toFixed(2)}%</div>
-                <div className='flex flex-row space-x-2 mb-1'>
-                    <div className='border-b border-r border-base-300'>
-
-                        {baros[5]?.altBtcStrength && baros[0]?.altBtcStrength - baros[4]?.altBtcStrength < 0 ?
-                            <div className="text-sm text-red-500">5m: ↘︎ {(baros[0]?.altBtcStrength - baros[4]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[4]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                            :
-                            <div className="text-sm text-green-500">5m: ↗︎ {(baros[0]?.altBtcStrength - baros[4]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[4]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                        }
-                    </div>
-                    <div className='border-b border-l border-base-300'>
-
-                        {baros[5]?.altBtcStrength && baros[0]?.altBtcStrength - baros[15]?.altBtcStrength < 0 ?
-                            <div className="text-sm text-red-500">15m: ↘︎ {(baros[0]?.altBtcStrength - baros[14]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[14]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                            :
-                            <div className="text-sm text-green-500">15m: ↗︎ {(baros[0]?.altBtcStrength - baros[14]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[14]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                        }
-                    </div>
+                <div className='flex flex-row'>
+                    <UpDownRender timeframe={5} />
+                    <UpDownRender timeframe={15} />
                 </div>
 
-                <div className='flex flex-row space-x-2'>
+                <div className='flex flex-row'>
 
-                    <div className='border-t border-r border-base-300'>
+                    <UpDownRender timeframe={30} />
 
-                        {baros[5]?.altBtcStrength && baros[0]?.altBtcStrength - baros[29]?.altBtcStrength < 0 ?
-                            <div className="text-sm text-red-500">30m: ↘︎ {(baros[0]?.altBtcStrength - baros[29]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[29]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                            :
-                            <div className="text-sm text-green-500">30m: ↗︎ {(baros[0]?.altBtcStrength - baros[29]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[29]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                        }
-                    </div>
-                    <div className='border-t border-l border-base-300'>
+                    <UpDownRender timeframe={60} />
 
-                        {baros[5]?.altBtcStrength && baros[0]?.altBtcStrength - baros[59]?.altBtcStrength < 0 ?
-                            <div className="text-sm text-red-500">1h: ↘︎ {(baros[0]?.altBtcStrength - baros[59]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[59]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                            :
-                            <div className="text-sm text-green-500">1h: ↗︎ {(baros[0]?.altBtcStrength - baros[59]?.altBtcStrength).toFixed(2)} ({(baros[0]?.altBtcStrength * 100 / baros[59]?.altBtcStrength - 100).toFixed(2)}%)</div>
-                        }
-                    </div>
 
                 </div>
             </div>
