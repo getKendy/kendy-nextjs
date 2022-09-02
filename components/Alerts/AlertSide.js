@@ -52,7 +52,7 @@ const AlertSide = ({ baros }) => {
 
 
   const TickerDisplay = ({ ticker, coin }) => (
-    <div className='flex flex-row justify-center md:flex-col-reverse space-x-3 mb-5 shadow shadow-primary p-2 rounded-xl'>
+    <div className='flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow shadow-primary p-2 rounded-xl'>
       <div className='flex space-x-2 justify-center'>
         <div className='font-bold'>{coin}/BUSD:</div>
         <div>

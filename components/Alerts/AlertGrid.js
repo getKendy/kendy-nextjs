@@ -23,14 +23,14 @@ const AlertGrid = () => {
     }, [currentPage, totalPages])
 
     const handlePageUp = () => {
-        console.log({ 'page': currentPage })
+        // console.log({ 'page': currentPage })
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1)
         }
     }
 
     const handlePageDown = () => {
-        console.log({ 'page': currentPage })
+        // console.log({ 'page': currentPage })
         if (currentPage >= 2) {
             setCurrentPage(currentPage - 1)
         }
@@ -39,10 +39,10 @@ const AlertGrid = () => {
     return (
 
         <div className='flex flex-col flex-grow'>
-            <h2 className='mb-5 text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary'>Binance Scanner Alerts:</h2>
+            <h2 className='text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary'>Binance Scanner Alerts:</h2>
             {
                 alerts.length > 0 ? (
-                    <table className='mb-5 table table-compact table-zebra'>
+                    <table className='mb-2 table table-compact table-zebra'>
                         <thead className='table-header-group'>
                             <tr className=''>
                                 <th>Date</th>
@@ -97,9 +97,10 @@ const AlertGrid = () => {
             }
             {
                 alerts.length > 0 ?
-                    <div className="btn-group justify-center mt-1 mb-24">
+                    <div className="btn-group justify-center mt-1">
                         <button className={currentPage == 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'} onClick={() => { handlePageDown() }}>«</button>
-                        <button className='btn btn-sm'>{currentPage}</button>
+                        <button className='btn btn-sm'>Page {currentPage}
+                        </button>
                         <button className={currentPage >= totalPages ? "btn btn-sm btn-primary btn-disabled" : 'btn btn-sm btn-primary'} onClick={() => { handlePageUp() }}>»</button>
                     </div>
                     : null

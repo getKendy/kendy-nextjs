@@ -28,8 +28,8 @@ const Alerts = () => {
         <React.Fragment>
             <Header activeTab='alerts' description='Crypto Scanner Trading Alerts' title='GetKendy - Alerts' />
             <AlertStats baros={baros}/>
-            <div className='overflow-x-auto w-full h-screen bg-base-300 rounded-t-xl'>
-                <div className='flex flex-grow flex-shrink flex-col-reverse  justify-center lg:flex-row '>
+            <div className='mb-2 sm:mb-4 md:mb-16 lg:mb-0 overflow-x-auto w-full h-screen bg-base-300 rounded-t-xl'>
+                <div className=' flex flex-grow flex-shrink flex-col-reverse  justify-center lg:flex-row '>
                     <AlertGrid />
                     <AlertSide baros={baros}/>
                 </div>
