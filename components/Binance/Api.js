@@ -28,14 +28,14 @@ const Api = () => {
   const RenderApiNotFound = () => {
     return (
       <Link href='/settings/addKey'>
-      <button className='m-5 btn btn-primary text-primary-content'>Add Binance Api Key </button>
+        <button className='m-5 btn btn-primary text-primary-content'>Add Binance Api Key </button>
       </Link>
     )
   }
 
   return (
     <>
-      {apiFound ? RenderApiFOund() : RenderApiNotFound()}
+      {apiFound ? RenderApiFound() : RenderApiNotFound()}
     </>
   )
 }
