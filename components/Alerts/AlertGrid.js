@@ -44,9 +44,9 @@ const AlertGrid = () => {
                 alerts.length > 0 ? (
                     <table className='mb-5 table table-compact table-zebra'>
                         <thead className='table-header-group'>
-                            <tr className='table-row'>
+                            <tr className=''>
                                 <th>Date</th>
-                                <th>Interval</th>
+                                <th className='truncate'>Interval</th>
                                 <th>Market</th>
                                 <th>Volume 24h</th>
                                 <th>Close</th>
