@@ -25,14 +25,26 @@ const AlertStats = ({ baros }) => {
 
         return (
             <div className={baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
-                'p-1 m-1 rounded-lg  shadow-inner shadow-green-500 flex items-center justify-center'
-                :
-                'p-1 m-1 rounded-lg shadow-inner shadow-red-500 flex items-center justify-center'}>
-                <span>{timeframe > 59 ? <>{timeframe / 60}h</> : <>{timeframe}m</>}:</span>
-                {baros[timeframe]?.altBtcStrength && baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
-                    <div className="text-sm text-green-500"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 1 ?
+                    'p-1 m-1 rounded-lg  shadow text-white bg-green-500 shadow-green-500 flex items-center justify-center'
                     :
-                    <div className="text-sm text-red-500"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                    'p-1 m-1 rounded-lg  shadow-inner shadow-green-500 flex items-center justify-center'
+                : baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength < -1 ?
+                    'p-1 m-1 rounded-lg shadow text-white bg-red-500 shadow-red-500 flex items-center justify-center'
+                    :
+                    'p-1 m-1 rounded-lg shadow-inner shadow-red-500 flex items-center justify-center'
+            }>
+                <span>{timeframe > 59 ? <>{timeframe / 60}h</> : <>{timeframe}m</>}:</span>
+                {baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
+                    baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 1 ?
+                        <div className="text-sm text-white"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                        :
+                        <div className="text-sm text-green-500"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                    :
+                    baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength < -1 ?
+                        <div className="text-sm text-white"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                        :
+                        <div className="text-sm text-red-500"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
                 }
             </div>
         )
@@ -61,12 +73,8 @@ const AlertStats = ({ baros }) => {
                 </div>
 
                 <div className='flex flex-row'>
-
                     <UpDownRender timeframe={30} />
-
                     <UpDownRender timeframe={60} />
-
-
                 </div>
             </div>
 

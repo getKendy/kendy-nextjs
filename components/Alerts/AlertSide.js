@@ -53,9 +53,15 @@ const AlertSide = ({ baros }) => {
 
   const TickerDisplay = ({ ticker, coin }) => (
     <div className={(+(ticker?.c) - +(ticker?.o)) > 0 ?
-      'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-green-500 p-2 rounded-xl'
+      (+(ticker?.c) * 100 / +(ticker?.o) - 100) > 1 ?
+        'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner bg-green-500 shadow-green-500 p-2 rounded-xl'
+        :
+        'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-green-500 p-2 rounded-xl'
       :
-      'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-red-500 p-2 rounded-xl'
+      (+(ticker?.c) * 100 / +(ticker?.o) - 100) < -1 ?
+        'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner bg-red-500 shadow-red-500 p-2 rounded-xl'
+        :
+        'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-red-500 p-2 rounded-xl'
     } >
       <div className='flex space-x-2 justify-center'>
         <div className='font-bold'>{coin}/BUSD:</div>
@@ -66,9 +72,12 @@ const AlertSide = ({ baros }) => {
       <div className='md:text-sm text-center justify-center flex space-x-2'>
         <span>24h:</span>
         {(+(ticker?.c) - +(ticker?.o)) > 0 ?
-          <div className="text-green-600"> ↗︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
-          :
-          <div className="text-red-600"> ↘︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
+          (+(ticker?.c) * 100 / +(ticker?.o) - 100) > 1 ?
+            <div className="text-white"> ↗︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
+            : <div className="text-green-600"> ↗︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
+          : (+(ticker?.c) * 100 / +(ticker?.o) - 100) < -1 ?
+            <div className="text-white"> ↘︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
+            : <div className="text-red-600"> ↘︎ ${(+(ticker.c) - +(ticker.o)).toFixed(2)}</div>
         }
         <span> ({(+(ticker?.c) * 100 / +(ticker?.o) - 100).toFixed(2)}%)</span>
       </div>
@@ -79,7 +88,7 @@ const AlertSide = ({ baros }) => {
     <div className='flex flex-col flex-grow text-primary-content'>
       <h2 className='mb-5 text-2xl text-center  border-b shadow-inner shadow-secondary'>Tickers:</h2>
       <div className='p-2 flex flex-col text-xl justify-center'>
-        <div className='flex flex-col md:flex-row md:space-x-2 lg:flex-col lg:space-x-0 xl:flex-row xl:space-x-2'>
+        <div className='flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2'>
           <TickerDisplay ticker={ethbusd} coin='ETH' />
           <TickerDisplay ticker={bnbbusd} coin='BNB' />
         </div>
