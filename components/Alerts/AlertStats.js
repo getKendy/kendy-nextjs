@@ -6,7 +6,6 @@ const AlertStats = ({ baros }) => {
     const [btcbusd, setBtcbusd] = useState({})
 
 
-
     // fetch btc ticker
     useEffect(() => {
         const fetchData = async () => {
