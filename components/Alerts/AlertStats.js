@@ -21,26 +21,30 @@ const AlertStats = ({ baros }) => {
         return () => clearInterval(interval)
     }, [])
 
-    const UpDownRender = ({ timeframe }) => {
-
+    const UpDownRender = ({ begin, end, timeframe }) => {
+        // console.log(begin, end, timeframe)
         return (
-            <div className={baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
-                baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 1 ?
-                    'p-1 m-1 rounded-lg  shadow text-white bg-green-500 shadow-green-500 flex items-center justify-center'
+            <div className={begin * 100 / end - 100 > 0 ?
+                begin * 100 / end - 100 > 1 ?
+                    begin * 100 / end - 100 > 5 ?
+                        'p-1 m-1 rounded-lg  shadow text-white bg-green-800 shadow-green-600 flex items-center justify-center'
+                        : 'p-1 m-1 rounded-lg  shadow  bg-green-500 shadow-green-300 flex items-center justify-center'
                     : 'p-1 m-1 rounded-lg  shadow-inner shadow-green-500 flex items-center justify-center'
-                : baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength < -1 ?
-                    'p-1 m-1 rounded-lg shadow text-white bg-red-500 shadow-red-500 flex items-center justify-center'
+                : begin * 100 / end - 100 < -1 ?
+                    begin * 100 / end - 100 < -5 ?
+                        'p-1 m-1 rounded-lg shadow text-white bg-red-800 shadow-red-600 flex items-center justify-center'
+                        : 'p-1 m-1 rounded-lg shadow  bg-red-500 shadow-red-300 flex items-center justify-center'
                     : 'p-1 m-1 rounded-lg shadow-inner shadow-red-500 flex items-center justify-center'
             }>
                 <span>{timeframe > 59 ? <>{timeframe / 60}h</> : <>{timeframe}m</>}:</span>
-                {baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 0 ?
-                    baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength > 1 ?
-                        <div className="text-sm text-white"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
-                        : <div className="text-sm text-green-500"> ↗︎  {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                {begin * 100 / end - 100 > 0 ?
+                    begin * 100 / end - 100 > 1 ?
+                        <div className="text-sm text-white"> ↗︎  {(begin * 100 / end - 100).toFixed(2)}%</div>
+                        : <div className="text-sm text-green-500"> ↗︎  {(begin * 100 / end - 100).toFixed(2)}%</div>
                     :
-                    baros[0]?.altBtcStrength - baros[timeframe - 1]?.altBtcStrength < -1 ?
-                        <div className="text-sm text-white"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
-                        : <div className="text-sm text-red-500"> ↘︎ {(baros[0]?.altBtcStrength * 100 / baros[timeframe - 1]?.altBtcStrength - 100).toFixed(2)}%</div>
+                    begin * 100 / end - 100 < -1 ?
+                        <div className="text-sm text-white"> ↘︎ {(begin * 100 / end - 100).toFixed(2)}%</div>
+                        : <div className="text-sm text-red-500"> ↘︎ {(begin * 100 / end - 100).toFixed(2)}%</div>
                 }
             </div>
         )
@@ -64,13 +68,13 @@ const AlertStats = ({ baros }) => {
                 <div className="stat-title truncate">BTC - Alts Binance Dominance</div>
                 <div className="stat-value">{baros[0]?.altBtcStrength.toFixed(2)}%</div>
                 <div className='flex flex-row'>
-                    <UpDownRender timeframe={5} />
-                    <UpDownRender timeframe={15} />
+                    <UpDownRender timeframe={5} begin={baros[0]?.altBtcStrength} end={baros[4]?.altBtcStrength} />
+                    <UpDownRender timeframe={15} begin={baros[0]?.altBtcStrength} end={baros[14]?.altBtcStrength} />
                 </div>
 
                 <div className='flex flex-row'>
-                    <UpDownRender timeframe={30} />
-                    <UpDownRender timeframe={60} />
+                    <UpDownRender timeframe={30} begin={baros[0]?.altBtcStrength} end={baros[29]?.altBtcStrength} />
+                    <UpDownRender timeframe={60} begin={baros[0]?.altBtcStrength} end={baros[59]?.altBtcStrength} />
                 </div>
             </div>
 
@@ -80,10 +84,14 @@ const AlertStats = ({ baros }) => {
                 </div>
                 <div className="stat-title">Ticker BTC/BUSD</div>
                 <div className="stat-value">${+(btcbusd.c)}</div>
-                {(+(btcbusd?.c) - +(btcbusd?.o)) < 0 ?
-                    <div className=" text-red-500">24h: ↘︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
+                {(+(btcbusd?.c) - +(btcbusd?.o)) > 0 ?
+                    (+(btcbusd?.c) - +(btcbusd?.o)) > 5 ?
+                        <div className="text-white bg-red-800 shadow-inner shadow-red-600 rounded-lg pl-2 ">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
+                        : <div className=" text-green-500">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
                     :
-                    <div className=" text-green-500">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
+                    (+(btcbusd?.c) - +(btcbusd?.o)) < -5 ?
+                        <div className=" text-white bg-red-800 shadow-inner shadow-red-600 rounded-lg pl-2 ">24h: ↘︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
+                        : <div className=" text-red-500">24h: ↘︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
                 }
             </div>
 
