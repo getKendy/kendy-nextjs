@@ -85,7 +85,7 @@ const AlertStats = ({ baros }) => {
                 <div className="stat-value">${+(btcbusd.c)}</div>
                 {(+(btcbusd?.c) - +(btcbusd?.o)) > 0 ?
                     (+(btcbusd?.c) - +(btcbusd?.o)) > 5 ?
-                        <div className="text-white bg-red-800 shadow-inner shadow-red-600 rounded-lg pl-2 ">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
+                        <div className="text-white bg-green-800 shadow-inner shadow-green-600 rounded-lg pl-2 ">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
                         : <div className=" text-green-500">24h: ↗︎ ${(+(btcbusd.c) - +(btcbusd.o)).toFixed()} ({(+(btcbusd?.c) * 100 / +(btcbusd?.o) - 100).toFixed(2)}%)</div>
                     :
                     (+(btcbusd?.c) - +(btcbusd?.o)) < -5 ?
