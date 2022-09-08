@@ -55,15 +55,15 @@ const AlertSide = ({ baros }) => {
     <div className={(+(ticker?.c) - +(ticker?.o)) > 0 ?
       (+(ticker?.c) * 100 / +(ticker?.o) - 100) > 1 ?
         (+(ticker?.c) * 100 / +(ticker?.o) - 100) > 5 ?
-          'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner text-white bg-green-800 shadow-green-600 p-2 rounded-xl'
-          : 'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner bg-green-500 shadow-green-300 p-2 rounded-xl'
-        : 'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-green-500 p-2 rounded-xl'
+          'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-lg text-white bg-green-800 shadow-green-600 p-2 rounded-xl'
+          : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-md bg-green-500 shadow-green-300 p-2 rounded-xl'
+        : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-green-500 p-2 rounded-xl'
       :
       (+(ticker?.c) * 100 / +(ticker?.o) - 100) < -1 ?
         (+(ticker?.c) * 100 / +(ticker?.o) - 100) < -5 ?
-          'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner text-white bg-red-800 shadow-red-600 p-2 rounded-xl'
-          : 'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner bg-red-500 shadow-red-300 p-2 rounded-xl'
-        : 'flex flex-row flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-red-500 p-2 rounded-xl'
+          'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-lg text-white bg-red-800 shadow-red-600 p-2 rounded-xl'
+          : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-md bg-red-500 shadow-red-300 p-2 rounded-xl'
+        : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-red-500 p-2 rounded-xl'
     } >
       <div className='flex space-x-2 justify-center'>
         <div className='font-bold'>{coin}/BUSD:</div>
