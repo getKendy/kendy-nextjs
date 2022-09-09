@@ -6,30 +6,19 @@ import { useRouter } from 'next/router'
 import { authOptions } from '../api/auth/[...nextauth].js'
 import { unstable_getServerSession } from "next-auth/next"
 import Header from '../../components/Header/Header'
-import { useEffect } from 'react'
 import { connectToDatabase } from '../../lib/mongoData.js'
-// import { ObjectId } from 'mongodb'
 
-const EditKey = ({api}) => {
+
+const EditKey = ({ api }) => {
     const apiKey = useRef(null)
     const apiSecret = useRef(null)
     const [status, setStatus] = useState('')
     const router = useRouter()
-    // console.log(api)
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const {data} = await axios.get('/api/binance/secret/get')
-    //         console.log(data)
-    //     }
-    //     fetchData()
-    // }, [])
 
     const formSubmitHandler = async (e) => {
         try {
             e.preventDefault()
             setStatus('')
-            // console.log(apiKey.current.value)
-            // console.log(apiSecret.current.value)
             if (!apiKey.current.value || !apiSecret.current.value) {
                 setStatus('Key or Secret is empty.')
                 return
@@ -38,8 +27,6 @@ const EditKey = ({api}) => {
                 apikey: apiKey.current.value,
                 apisecret: apiSecret.current.value,
             })
-
-            // console.log(data)
             router.push('/alerts')
         } catch (error) {
             setStatus(error)
@@ -73,14 +60,8 @@ export default EditKey
 
 export async function getServerSideProps(context) {
     const session = await unstable_getServerSession(context.req, context.res, authOptions)
-    // const { data } = await axios.get('/api/binance/secret/get')
-    // const { data } = await axios.get(`${process.env.BACKEND_API}settings/?username=${session.user.email}`)
     const { db } = await connectToDatabase()
-    // console.log('trying')
-    // const {data} = await axios.get(`${process.env.BACKEND_API}settings/?username=${session.user.email}`)
-    const data = await db.collection("binanceKey").findOne({
-        username: session.user.email
-    })
+
 
     if (!session) {
         return {
@@ -90,10 +71,14 @@ export async function getServerSideProps(context) {
             },
         }
     }
-console.log(data)
+
+    const data = await db.collection("binanceKey").findOne({
+        username: session.user.email
+    })
+    
     return {
         props: {
-            api:{_id:JSON.stringify(data._id),apikey:data.apikey}
+            api: { _id: JSON.stringify(data._id), apikey: data.apikey }
         },
     }
 }

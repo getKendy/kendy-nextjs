@@ -14,16 +14,12 @@ handler.get(async (req, res,) => {
     }
     try {
         const { db } = await connectToDatabase()
-        // console.log('trying')
-        // const {data} = await axios.get(`${process.env.BACKEND_API}settings/?username=${session.user.email}`)
         const data = await db.collection("binanceKey").findOne({
             username: session.user.email
         })
         if (!data) {
             res.status(200)
         } else {
-            // console.log(data)
-            // console.log({ data: data })
             res.status(200).send({
                 _id: data._id,
                 apikey: data.apikey

@@ -15,8 +15,6 @@ const AddKey = () => {
         try {
             e.preventDefault()
             setStatus('')
-            // console.log(apiKey.current.value)
-            // console.log(apiSecret.current.value)
             if (!apiKey.current.value || !apiSecret.current.value) {
                 setStatus('Key or Secret is empty.')
             }
@@ -25,7 +23,7 @@ const AddKey = () => {
                 apisecret: apiSecret.current.value,
             })
             router.push('/alerts')
-            
+
         } catch (error) {
             setStatus(error)
         }

@@ -12,7 +12,6 @@ handler.put(async (req, res) => {
         res.status(401).send('User not authenticated')
     }
     const { db } = await connectToDatabase()
-
     const { apikey, apisecret } = req.body
     await db.collection("binanceKey").updateOne(
         { username: session.user.email, },
@@ -24,7 +23,6 @@ handler.put(async (req, res) => {
             }
         }
     )
-    console.log('ok')
     res.status(201).send('changed')
 })
 
