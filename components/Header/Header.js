@@ -22,7 +22,11 @@ const Header = ({ title, description, activeTab, showTopHeader }) => {
 
                 <div className="navbar bg-base-200">
                     <Image src='/GetKendyLogo.png' width={50} height={50} alt='GetKendy Logo is shown here' />
-                    <a href='/' className="btn btn-ghost uppercase text-xl text-primary-focus">GetKendy</a>
+                    <Link href='/' >
+                        <div className="btn btn-ghost uppercase text-xl text-primary-focus">
+                            GetKendy
+                        </div>
+                    </Link>
                 </div>
             )}
             <div className="btm-nav z-10">
