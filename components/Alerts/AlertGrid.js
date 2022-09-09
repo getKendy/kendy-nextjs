@@ -20,20 +20,18 @@ const AlertGrid = () => {
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
-            if (data) {
+            if (data.items[0]) {
                 setAlerts(data.items)
                 setTotalPages(data.total / data.size)
                 if (!lastAlert) {
-                    console.log('setting lastalert for the fist time')
+                    // console.log('setting lastalert for the fist time')
                     addAlert(data.items[0])
                     return
                 } else {
                     if (lastAlert._id != data.items[0]._id) {
-                        console.log('new alert')
+                        // console.log('new alert')
                         addAlert(data.items[0])
                         playAlert()
-                    } else {
-                        console.log('same alert')
                     }
                 }
             }
@@ -48,7 +46,7 @@ const AlertGrid = () => {
 
     const playAlert = () => {
         let ding = new Audio('ding.mp3')
-        ding.volume = ((+(rangeAudioLevel.current.value)) /100) || 0.50
+        ding.volume = ((+(rangeAudioLevel.current.value)) / 100) || 0.50
         if (checkboxAllowAudio.current.checked) {
             ding.play()
         }
@@ -93,11 +91,11 @@ const AlertGrid = () => {
                                 <div className='flex'>
                                     <label className='text-center text-secondary' >
 
-                                            Alert Volume
+                                        Alert Volume
 
                                         <input id='audioLevel' type="range" min="0" max="100" ref={rangeAudioLevel} defaultValue={50} className="range range-md range-secondary bg-primary" step="5" />
-                                    
-                                        
+
+
                                     </label>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
-import AppleProvider from 'next-auth/providers/apple';
-import GoogleProvider from 'next-auth/providers/google';
+// import AppleProvider from 'next-auth/providers/apple';
+// import GoogleProvider from 'next-auth/providers/google';
 
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '../../../lib/mongodb';
