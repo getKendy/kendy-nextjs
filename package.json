@@ -12,6 +12,7 @@
     "@binance/connector": "^1.13.0",
     "@next-auth/mongodb-adapter": "^1.0.4",
     "@tailwindcss/line-clamp": "^0.4.0",
+    "appwrite": "^9.0.2",
     "axios": "^0.27.2",
     "daisyui": "^2.22.0",
     "moment": "^2.29.4",

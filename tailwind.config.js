@@ -21,7 +21,7 @@ module.exports = {
     logs: true,
     rtl: false,
     prefix: '',
-    themes: ['emerald','forest'],
+    themes: ['emerald', 'forest'],
     darkTheme: 'forest',
   },
 };
