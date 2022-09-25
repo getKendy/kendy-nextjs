@@ -1,6 +1,6 @@
 // pages/500.js
 import Link from 'next/link'
-import Header from '../components/Header/Header'
+import Header from '../component/Header/Header'
 
 export default function Custom500() {
 

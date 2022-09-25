@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Header from '../components/Header/Header'
+import Header from '../component/Header/Header'
 // pages/404.js
 export default function Custom404() {
     return (
