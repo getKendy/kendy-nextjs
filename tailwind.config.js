@@ -1,3 +1,4 @@
+// tailwind.config.js
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
@@ -15,13 +16,12 @@ module.exports = {
   ],
   daisyui: {
     styled: true,
-    themes: true,
+    themes: ['dark'],
     base: true,
     utils: true,
     logs: true,
     rtl: false,
     prefix: '',
-    themes: ['emerald', 'forest'],
-    darkTheme: 'forest',
+    darkTheme: 'dark',
   },
-};
+}
