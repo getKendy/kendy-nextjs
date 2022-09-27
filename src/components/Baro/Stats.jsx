@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Query } from 'appwrite';
 
 import { formatDate } from '../../lib/formatDate';
-import sdk, { serverless } from '../../appwrite/sdk';
+import { serverless, databases } from '../../appwrite/sdk';
 
 function UpDownRender({ begin, end, timeframe }) {
   // console.log(begin, end, timeframe)
@@ -83,23 +85,42 @@ UpDownRender.propTypes = {
 function Stats() {
   const [btcbusd, setBtcbusd] = useState({});
   const [baros, setBaros] = useState([]);
-  useEffect(() => {
-    sdk.subscribe('documents', (response) => {
-      console.log(response);
-      if (response.events.includes('Barometer')) {
-        setBaros(response.payload);
-      }
-    });
-  }, []);
+
+  // test socket
+  // useEffect(() => {
+  //   console.log('starting');
+  //   sdk.subscribe('documents', (response) => {
+  //     console.log(response);
+  //     // if (response.events.includes('Barometer')) {
+  //     //   setBaros(response.payload);
+  //     // }
+  //   });
+  // }, []);
 
   useEffect(() => {
-    const fetchdata = async () => {
-      const data = await serverless.createExecution(process.env.APPWRITE_GET_TICKER);
+    const fetchData = async () => {
+      const data = await databases.listDocuments(
+        process.env.REACT_APP_APPWRITE_GETKENDY_DATA,
+        process.env.REACT_APP_APPWRITE_BAROMETER,
+        [
+          Query.orderDesc('$id'),
+          Query.limit(60),
+        ],
+      );
       console.log(data);
-      setBtcbusd(data);
+      setBaros(data.documents);
     };
-    fetchdata();
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchdata = async () => {
+  //     const data = await serverless.createExecution(process.env.APPWRITE_GET_TICKER);
+  //     console.log(data);
+  //     setBtcbusd(data);
+  //   };
+  //   fetchdata();
+  // }, []);
 
   return (
     <div className="stats shadow flex flex-col md:flex-row place-items-center bg-base-200">

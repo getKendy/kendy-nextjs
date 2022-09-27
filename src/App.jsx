@@ -8,7 +8,7 @@ import Magic from './components/Auth/Magic';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Settings from './components/User/Settings';
-import Alert from './components/AlertBinance/Alert';
+import Alert from './components/Alerts/Alert';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="/auth/magic-url" element={<Magic />} />
         <Route path="/auth/login" element={<Login />} />
-        <Route path="/alert" element={<Alert />} />
+        <Route path="/alerts" element={<Alert />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
