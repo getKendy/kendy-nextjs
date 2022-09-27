@@ -1,11 +1,9 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [
@@ -21,7 +19,7 @@ module.exports = {
     utils: true,
     logs: true,
     rtl: false,
-    prefix: '',
-    darkTheme: 'dark',
+    prefix: "",
+    darkTheme: "dark",
   },
 }
