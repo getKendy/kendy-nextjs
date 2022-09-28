@@ -31,7 +31,6 @@ function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
-      console.log(JSON.parse(response));
       const { ticker } = JSON.parse(response);
       setBtcbusd(ticker);
     };
@@ -41,10 +40,10 @@ function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     const fetchdata = async () => {
       const { response } = await serverless.createExecution('GetTicker', 'ETHBUSD');
-      console.log(JSON.parse(response));
       const { ticker } = JSON.parse(response);
       setEthbusd(ticker);
     };
@@ -54,10 +53,10 @@ function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     const fetchdata = async () => {
       const { response } = await serverless.createExecution('GetTicker', 'BNBBUSD');
-      console.log(JSON.parse(response));
       const { ticker } = JSON.parse(response);
       setBnbbusd(ticker);
     };
@@ -67,6 +66,7 @@ function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
   return (
     <div>
       <main className="main">
@@ -81,19 +81,16 @@ function Home() {
                   $
                   {(+(btcbusd?.c)).toFixed()}
                 </div>
-
                 <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
                 <div className="text-5xl font-bold text-right col-span-2">
                   $
                   {(+(ethbusd?.c)).toFixed()}
                 </div>
-
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
                 <div className="text-5xl font-bold text-right col-span-2">
                   $
                   {(+(bnbbusd?.c)).toFixed()}
                 </div>
-
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>
               {user ? (
@@ -105,7 +102,6 @@ function Home() {
               ) : (
                 <button type="button" className="btn btn-primary" onClick={() => navigate('/auth/login')}>
                   Get Started
-
                 </button>
               )}
             </div>
