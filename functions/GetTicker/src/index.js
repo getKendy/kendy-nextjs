@@ -40,7 +40,7 @@ module.exports = async function (req, res) {
   //     .setSelfSigned(true);
   // }
 
-  const { data } = await axios(`http://10.20.31.6:8000/api/v2/tickerredis/${req.payload}`);
+  const { data } = await axios(`http://${req.variables.APP_ENV_API}:8000/api/v2/tickerredis/${req.payload}`);
   res.json({
     ticker: data,
     symbol: req.payload,
