@@ -1,4 +1,4 @@
-// const sdk = require('node-appwrite');
+const sdk = require('node-appwrite');
 const axios = require('axios');
 /*
   'req' variable has:
@@ -39,15 +39,10 @@ module.exports = async function (req, res) {
   //     .setKey(req.variables.APPWRITE_FUNCTION_API_KEY)
   //     .setSelfSigned(true);
   // }
-  try {
-    const { symbol } = req.payload;
-    const data = await axios.get(`http://localhost:8000/api/v2/tickerredis/${symbol}`);
-    res.json({
-      data,
-    });
-  } catch (error) {
-    res.json({
-      error,
-    });
-  }
+
+  const { data } = await axios(`http://10.20.31.6:8000/api/v2/tickerredis/${req.payload}`);
+  res.json({
+    ticker: data,
+    symbol: req.payload,
+  });
 };

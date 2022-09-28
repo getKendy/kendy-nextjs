@@ -79,7 +79,7 @@ function UpDownRender({ begin, end, timeframe }) {
 UpDownRender.propTypes = {
   begin: PropTypes.number.isRequired,
   end: PropTypes.number.isRequired,
-  timeframe: PropTypes.string.isRequired,
+  timeframe: PropTypes.number.isRequired,
 };
 
 function Stats() {
@@ -111,16 +111,25 @@ function Stats() {
       setBaros(data.documents);
     };
     fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+    }, 30000);
+    return () => clearInterval(interval);
   }, []);
 
-  // useEffect(() => {
-  //   const fetchdata = async () => {
-  //     const data = await serverless.createExecution(process.env.APPWRITE_GET_TICKER);
-  //     console.log(data);
-  //     setBtcbusd(data);
-  //   };
-  //   fetchdata();
-  // }, []);
+  useEffect(() => {
+    const fetchdata = async () => {
+      const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
+      console.log(JSON.parse(response));
+      const { ticker } = JSON.parse(response);
+      setBtcbusd(ticker);
+    };
+    fetchdata();
+    const interval = setInterval(() => {
+      fetchdata();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="stats shadow flex flex-col md:flex-row place-items-center bg-base-200">
