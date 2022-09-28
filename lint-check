@@ -1,0 +1,4 @@
+
+npx eslint 'src/**'
+## fix simple issues
+npx eslint 'src/**/*.{js,jsx}' --fix
