@@ -75,11 +75,16 @@ function UpDownRender({ begin, end, timeframe }) {
     </div>
   );
 }
+UpDownRender.defaultProps = {
+  begin: 0,
+  end: 0,
+  timeframe: 0,
+};
 
 UpDownRender.propTypes = {
-  begin: PropTypes.number.isRequired,
-  end: PropTypes.number.isRequired,
-  timeframe: PropTypes.number.isRequired,
+  begin: PropTypes.number,
+  end: PropTypes.number,
+  timeframe: PropTypes.number,
 };
 
 function Stats() {
@@ -107,7 +112,6 @@ function Stats() {
           Query.limit(60),
         ],
       );
-      console.log(data);
       setBaros(data.documents);
     };
     fetchData();
@@ -120,7 +124,6 @@ function Stats() {
   useEffect(() => {
     const fetchdata = async () => {
       const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
-      console.log(JSON.parse(response));
       const { ticker } = JSON.parse(response);
       setBtcbusd(ticker);
     };
