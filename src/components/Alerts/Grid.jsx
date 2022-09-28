@@ -1,6 +1,82 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Query } from 'appwrite';
+// import useAlertStore from '../../store/alertStore';
+import { databases } from '../../appwrite/sdk';
+import { formatDateAlert } from '../../lib/formatDate';
 
 function Grid() {
+  const [alerts, setAlerts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  // const { lastAlert, addAlert } = useAlertStore();
+  const checkboxAllowAudio = useRef(false);
+  const rangeAudioLevel = useRef(50);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
+      const data = await databases.listDocuments(
+        process.env.REACT_APP_APPWRITE_GETKENDY_DATA,
+        process.env.REACT_APP_APPWRITE_ALERTS,
+        [
+          Query.orderDesc('$id'),
+          Query.limit(10),
+        ],
+      );
+      console.log(data);
+      setAlerts(data.documents);
+      setTotalPages(1);
+
+      // if (data.items[0]) {
+      //   setAlerts(data.items)
+      //   setTotalPages(data.total / data.size)
+      //   if (!lastAlert) {
+      //     // console.log('setting lastalert for the fist time')
+      //     addAlert(data.items[0])
+      //     return
+      //   } else {
+      //     if (lastAlert._id != data.items[0]._id) {
+      //       // console.log('new alert')
+      //       addAlert(data.items[0])
+      //       playAlert()
+      //     }
+      //   }
+      // }
+    };
+    fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [currentPage, totalPages]);
+
+  // const playAlert = () => {
+  //   const ding = new Audio('ding.mp3');
+  //   ding.volume = ((+(rangeAudioLevel.current.value)) / 100) || 0.50;
+  //   if (checkboxAllowAudio.current.checked) {
+  //     ding.play();
+  //   }
+  // };
+
+  const handlePageUp = () => {
+    // console.log({ 'page': currentPage })
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePageDown = () => {
+    // console.log({ 'page': currentPage })
+    if (currentPage >= 2) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
   return (
     <div className="flex flex-col flex-grow">
       {/* <Test></Test> */}
@@ -54,9 +130,9 @@ function Grid() {
               <tbody>
 
                 {
-                  alerts.length > 0 ? alerts.map((alert, index) => (
+                  alerts.length > 0 ? alerts.map((alert) => (
 
-                    <tr key={index} className="text-primary-content">
+                    <tr key={alert.$id} className="text-primary-content">
                       <td>{formatDateAlert(alert.date)}</td>
                       <td>{alert.timeframe}</td>
                       <td>{alert.market}</td>
@@ -90,8 +166,8 @@ function Grid() {
             </table>
             <div className="md:hidden mb-6">
 
-              {alerts.length > 0 ? alerts.map((alert, index) => (
-                <div key={index} className=" grid grid-cols-2 p-2 m-2 border border-primary rounded-lg shadow shadow-secondary">
+              {alerts.length > 0 ? alerts.map((alert) => (
+                <div key={alert.$id} className=" grid grid-cols-2 p-2 m-2 border border-primary rounded-lg shadow shadow-secondary">
 
                   <div>Date:</div>
                   <div className="">{formatDateAlert(alert.date)}</div>
@@ -125,13 +201,13 @@ function Grid() {
               )) : null}
             </div>
           </>
-        ) : <div className="h-screen text-center text-primary-content">Alerts on 3 and 5min. timeframe are active</div>
+        ) : <div className="h-screen text-center text-primary-content">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
       }
       {
         alerts.length > 0
           ? (
             <div className="mb-20 md:mb-2 lg:mb-20 xl:mb-0 btn-group justify-center mt-1">
-              <button type="button" className={currentPage == 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'} onClick={() => { handlePageDown(); }}>«</button>
+              <button type="button" className={currentPage === 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'} onClick={() => { handlePageDown(); }}>«</button>
               <button type="button" className="btn btn-sm">
                 Page
                 {' '}

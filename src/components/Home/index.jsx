@@ -20,8 +20,8 @@ function Home() {
           const data = await account.get();
           setUser(data);
         } catch (error) {
-          setActiveTab('login');
-          navigate('/auth/login');
+          // setActiveTab('login');
+          // navigate('/auth/login');
         }
       }
     };
@@ -95,7 +95,7 @@ function Home() {
               <p className="py-6">Crypto Scanner Trading Alerts</p>
               {user ? (
                 <Link to="/alerts">
-                  <button type="button" className="btn btn-primary">
+                  <button type="button" className="btn btn-primary" onClick={() => setActiveTab('alerts')}>
                     Open Dashboard
                   </button>
                 </Link>
