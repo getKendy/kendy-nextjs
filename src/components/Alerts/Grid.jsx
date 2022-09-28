@@ -23,7 +23,7 @@ function Grid() {
           Query.limit(10),
         ],
       );
-      console.log(data);
+
       setAlerts(data.documents);
       setTotalPages(1);
 
@@ -74,7 +74,6 @@ function Grid() {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(e);
   };
 
   return (

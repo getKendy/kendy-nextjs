@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 
 import { serverless } from '../../appwrite/sdk';
+import Binance from '../Binance';
 
 function TickerDisplay({ ticker, coin }) {
   return (
@@ -140,7 +141,7 @@ function Side() {
         </div>
         <TickerDisplay ticker={paxgbusd} coin="PAXG" />
       </div>
-      {/* <Api /> */}
+      <Binance />
     </div>
   );
 }

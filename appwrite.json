@@ -16,6 +16,21 @@
             "events": [],
             "schedule": "",
             "timeout": 15
+        },
+        {
+            "$id": "GetBinanceBalance",
+            "name": "GetBinanceBalance",
+            "runtime": "node-16.0",
+            "path": "functions/GetBinanceBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
         }
     ]
 }
