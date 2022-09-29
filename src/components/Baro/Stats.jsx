@@ -139,7 +139,7 @@ function Stats() {
       <div className="p-1 flex flex-col flex-grow justify-center items-center">
         <div className="flex self-start">BTC - Fiat Binance Dominance</div>
         <div className="prose">
-          <h1>
+          <h1 className="text-secondary-content">
             {baros[0]?.btcStrength.toFixed(2)}
             %
           </h1>
@@ -151,7 +151,7 @@ function Stats() {
         <div className="flex self-start">BTC - Alts Binance Dominance</div>
         <div className="flex flex-row items-center">
           <div className="prose">
-            <h1>
+            <h1 className="text-secondary-content">
               {baros[0]?.altBtcStrength.toFixed(2)}
               %
             </h1>
@@ -187,7 +187,7 @@ function Stats() {
       <div className="p-1 flex flex-col flex-grow justify-center items-center">
         <div className="flex self-start">Ticker BTC/BUSD</div>
         <div className="prose">
-          <h1>
+          <h1 className="text-secondary-content">
             $
             {+(btcbusd.c)}
           </h1>

@@ -132,9 +132,9 @@ function Side() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-grow text-neutral-content">
+    <div className="flex flex-col flex-grow">
       <h2 className="mb-5 text-2xl text-center  border-b shadow-inner shadow-secondary">Tickers:</h2>
-      <div className="p-2 flex flex-col text-xl justify-center">
+      <div className="p-2 flex flex-col text-xl justify-center text-secondary-content">
         <div className="flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2">
           <TickerDisplay ticker={ethbusd} coin="ETH" />
           <TickerDisplay ticker={bnbbusd} coin="BNB" />
