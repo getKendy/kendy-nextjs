@@ -24,6 +24,7 @@ function Home() {
           // navigate('/auth/login');
         }
       }
+      setActiveTab('home');
     };
     fetchUser();
   }, [user]);
@@ -70,7 +71,7 @@ function Home() {
   return (
     <div>
       <main className="main">
-        <div className="hero min-h-screen pb-32 bg-base-300">
+        <div className="hero pb-32 bg-base-200">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="max-w-sm rounded-lg shadow-2xl" />
             <img src="/GetKendyLogo.png" width={600} height={600} alt="Logo" />

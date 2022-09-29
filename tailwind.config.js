@@ -1,12 +1,14 @@
+/* eslint-disable global-require */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {},
   },
   plugins: [
+    require("@tailwindcss/typography"),
     require('@tailwindcss/line-clamp'),
     require('daisyui'),
     'tailwindcss',
@@ -14,12 +16,12 @@ module.exports = {
   ],
   daisyui: {
     styled: true,
-    themes: ['dark'],
+    themes: ['garden', 'luxury'],
     base: true,
     utils: true,
     logs: true,
     rtl: false,
-    prefix: "",
-    darkTheme: "dark",
+    prefix: '',
+    darkTheme: 'luxury',
   },
-}
+};

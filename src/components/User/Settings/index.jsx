@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import useTabStore from '../../../store/tabStore';
 import Profile from './Profile';
 import Api from './Api';
 
 function Settings() {
   const [settingId, setSettingId] = useState('profile');
+  const { setActiveTab } = useTabStore();
+
+  useEffect(() => {
+    setActiveTab('settings');
+  }, []);
 
   return (
     <div className="flex flex-col items-center">

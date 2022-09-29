@@ -135,87 +135,62 @@ function Stats() {
   }, []);
 
   return (
-    <div className="stats shadow flex flex-col md:flex-row place-items-center bg-base-200">
-      <div className="stat">
-        <div className="stat-figure text-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-
-          </svg>
+    <div className="flex flex-col md:flex-row  bg-base-200 ">
+      <div className="p-1 flex flex-col flex-grow justify-center items-center">
+        <div className="flex self-start">BTC - Fiat Binance Dominance</div>
+        <div className="prose">
+          <h1>
+            {baros[0]?.btcStrength.toFixed(2)}
+            %
+          </h1>
         </div>
-        <div className="stat-title truncate">BTC - Fiat Binance Dominance</div>
-        <div className="stat-value">
-          {baros[0]?.btcStrength.toFixed(2)}
-          %
-        </div>
-        <div className="stat-desc truncate">{formatDate(baros[0]?.date)}</div>
+        <div className="truncate">{formatDate(baros[0]?.date)}</div>
       </div>
 
-      <div className="stat">
-        <div className="stat-figure text-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+      <div className="p-1 flex flex-col flex-grow justify-center items-center">
+        <div className="flex self-start">BTC - Alts Binance Dominance</div>
+        <div className="flex flex-row items-center">
+          <div className="prose">
+            <h1>
+              {baros[0]?.altBtcStrength.toFixed(2)}
+              %
+            </h1>
+          </div>
+          <div className="grid">
+            <UpDownRender
+              timeframe={5}
+              begin={baros[0]?.altBtcStrength}
+              end={baros[4]?.altBtcStrength}
             />
+            <UpDownRender
+              timeframe={15}
+              begin={baros[0]?.altBtcStrength}
+              end={baros[14]?.altBtcStrength}
+            />
+          </div>
 
-          </svg>
-        </div>
-        <div className="stat-title truncate">BTC - Alts Binance Dominance</div>
-        <div className="stat-value">
-          {baros[0]?.altBtcStrength.toFixed(2)}
-          %
-        </div>
-        <div className="flex flex-row">
-          <UpDownRender
-            timeframe={5}
-            begin={baros[0]?.altBtcStrength}
-            end={baros[4]?.altBtcStrength}
-          />
-          <UpDownRender
-            timeframe={15}
-            begin={baros[0]?.altBtcStrength}
-            end={baros[14]?.altBtcStrength}
-          />
-        </div>
-
-        <div className="flex flex-row">
-          <UpDownRender
-            timeframe={30}
-            begin={baros[0]?.altBtcStrength}
-            end={baros[29]?.altBtcStrength}
-          />
-          <UpDownRender
-            timeframe={60}
-            begin={baros[0]?.altBtcStrength}
-            end={baros[59]?.altBtcStrength}
-          />
+          <div className="grid">
+            <UpDownRender
+              timeframe={30}
+              begin={baros[0]?.altBtcStrength}
+              end={baros[29]?.altBtcStrength}
+            />
+            <UpDownRender
+              timeframe={60}
+              begin={baros[0]?.altBtcStrength}
+              end={baros[59]?.altBtcStrength}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="stat">
-        <div className="stat-figure text-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-            />
-
-          </svg>
-        </div>
-        <div className="stat-title">Ticker BTC/BUSD</div>
-        <div className="stat-value">
-          $
-          {+(btcbusd.c)}
+      <div className="p-1 flex flex-col flex-grow justify-center items-center">
+        <div className="flex self-start">Ticker BTC/BUSD</div>
+        <div className="prose">
+          <h1>
+            $
+            {+(btcbusd.c)}
+          </h1>
         </div>
         {((+(btcbusd?.c) * 100) / +(btcbusd?.o) - 100) > 0
           ? ((+(btcbusd?.c) * 100) / +(btcbusd?.o) - 100) > 1

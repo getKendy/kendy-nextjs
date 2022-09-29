@@ -12,18 +12,20 @@ import Statics from './components/Statics';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth/magic-url" element={<Magic />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/alerts" element={<Alert />} />
-        <Route path="/statics" element={<Statics />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="text-base-content bg-base-200 h-screen">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth/magic-url" element={<Magic />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/alerts" element={<Alert />} />
+          <Route path="/statics" element={<Statics />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

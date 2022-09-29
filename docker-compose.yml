@@ -36,7 +36,8 @@ services:
   redis:
     image: redis:6-alpine
     restart: unless-stopped
-
+    ports:
+      - 6379:6379
   celery_worker1_1:
     build:
       context: ./celery

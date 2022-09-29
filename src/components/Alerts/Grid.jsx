@@ -77,9 +77,9 @@ function Grid() {
   };
 
   return (
-    <div className="flex flex-col flex-grow">
+    <div className="flex flex-col flex-grow text-neutral-content">
       {/* <Test></Test> */}
-      <h2 className="text-2xl text-center text-primary-content border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
+      <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
       {
         alerts.length > 0 ? (
           <>
@@ -88,12 +88,12 @@ function Grid() {
 
                 <div>
                   <div className="label cursor-pointer space-x-2">
-                    <span className="label-text text-secondary ">Enable Audio Alerts</span>
+                    <span className="label-text">Enable Audio Alerts</span>
                     <input id="allowAudio" type="checkbox" defaultChecked={false} ref={checkboxAllowAudio} className="checkbox checkbox-primary" />
                   </div>
                 </div>
                 <div className="flex">
-                  <div className="text-center text-secondary">
+                  <div className="text-center ">
 
                     Alert Volume
 
@@ -131,7 +131,7 @@ function Grid() {
                 {
                   alerts.length > 0 ? alerts.map((alert) => (
 
-                    <tr key={alert.$id} className="text-primary-content">
+                    <tr key={alert.$id} className="">
                       <td>{formatDateAlert(alert.date)}</td>
                       <td>{alert.timeframe}</td>
                       <td>{alert.market}</td>
@@ -200,7 +200,7 @@ function Grid() {
               )) : null}
             </div>
           </>
-        ) : <div className="h-screen text-center text-primary-content">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
+        ) : <div className="h-screen text-center ">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
       }
       {
         alerts.length > 0

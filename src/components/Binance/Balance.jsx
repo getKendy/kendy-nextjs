@@ -38,18 +38,18 @@ function Balance() {
   }, []);
 
   return (
-    <div className="mx-2 mb-2 p-1 border border-secondary rounded-lg shadow-lg">
+    <div className="mx-2 mb-2 p-1 text-accent-content border border-secondary rounded-lg shadow-lg">
       <div className="flex justify-between items-center">
-        <div className="flex space-x-4 text-xl text-primary-content font-black">
+        <div className="flex space-x-4 text-xl font-black">
           <div>Balance Total:</div>
           <div>
             ₿
             {total}
           </div>
         </div>
-        <Link to="/settings">Edit API</Link>
+        <Link to="/settings" className="btn bnt-sm">Edit API</Link>
       </div>
-      <div className="text-primary-content text-left">
+      <div className="text-left">
         {balances
           && (
             <div>
