@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { account, serverless } from '../../appwrite/sdk';
 
 function Balance() {
@@ -26,8 +27,7 @@ function Balance() {
           }
         }
       } catch (error) {
-        console.error(error);
-        setStatus(error);
+        setStatus('could not load data from API.');
       }
     };
     fetchBalance();
@@ -47,7 +47,7 @@ function Balance() {
             {total}
           </div>
         </div>
-        Edit API
+        <Link to="/settings">Edit API</Link>
       </div>
       <div className="text-primary-content text-left">
         {balances
