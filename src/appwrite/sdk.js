@@ -5,11 +5,11 @@ import {
 const sdk = new Client();
 
 sdk
-  .setEndpoint('http://10.20.31.67/v1')
-  .setProject('632f552c4ce9c579196e');
+  .setEndpoint(process.env.REACT_APP_APPWRITE_ENDPOINT)
+  .setProject(process.env.REACT_APP_APPWRITE_PROJECT);
 
 export const account = new Account(sdk);
-export const databases = new Databases(sdk, '632f59b1cb57bc71508c');
+export const databases = new Databases(sdk, process.env.REACT_APP_APPWRITE_GETKENDY_DATA);
 export const serverless = new Functions(sdk);
 
 export default sdk;

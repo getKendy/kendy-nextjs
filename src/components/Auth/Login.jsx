@@ -13,7 +13,7 @@ function Login() {
       await account.createMagicURLSession(
         'unique()',
         email.current.value,
-        'http://localhost:3000/auth/magic-url',
+        `${process.env.REACT_APP_DOMAIN}/auth/magic-url`,
       );
       setMailStatus('Mail send.');
     } catch (error) {

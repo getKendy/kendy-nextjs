@@ -2,7 +2,7 @@ from appwrite.services.databases import Databases
 
 def createBarometer(client, database):
   databases = Databases(client)
-  result = databases.create_collection(database['$id'], 'unique()', 'barometer' ['read("users")'])
+  result = databases.create_collection(database['$id'], 'unique()', 'barometer', ['read("users")'])
   return result
 
 def createBaroAtributes(client,database,collection):
