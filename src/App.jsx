@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Login from './components/Auth/Login';
-import Profile from './components/User/Settings/Profile';
 import Magic from './components/Auth/Magic';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
@@ -22,7 +21,6 @@ function App() {
         <Route path="/alerts" element={<Alert />} />
         <Route path="/statics" element={<Statics />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
