@@ -11,6 +11,10 @@ function Statics() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setActiveTab('statics');
+  }, []);
+
+  useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
       if (!user) {

@@ -132,7 +132,7 @@ function Side() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-grow text-primary-content">
+    <div className="flex flex-col flex-grow text-neutral-content">
       <h2 className="mb-5 text-2xl text-center  border-b shadow-inner shadow-secondary">Tickers:</h2>
       <div className="p-2 flex flex-col text-xl justify-center">
         <div className="flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2">

@@ -1,5 +1,5 @@
 {
-    "projectId": "632f552c4ce9c579196e",
+    "projectId": "631db1da6e495d8a4abb",
     "projectName": "",
     "functions": [
         {
@@ -53,10 +53,10 @@
             "timeout": 15
         },
         {
-            "$id": "calculate_bitcoin_brice",
-            "name": "calculate_bitcoin_brice",
+            "$id": "calculate_bitcoin_price",
+            "name": "calculate_bitcoin_price",
             "runtime": "python-3.10",
-            "path": "functions/calculate_bitcoin_brice",
+            "path": "functions/calculate_bitcoin_price",
             "entrypoint": "src/index.py",
             "ignore": [
                 "__pypackages__"

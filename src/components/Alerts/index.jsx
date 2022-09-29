@@ -14,6 +14,10 @@ function Alert() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setActiveTab('alerts');
+  }, []);
+
+  useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
       if (!user) {
@@ -31,7 +35,7 @@ function Alert() {
   }, [user]);
 
   return (!loading && (
-    <div>
+    <div className="bg-base-200">
       <Stats />
       <div className="flex flex-row flex-wrap-reverse">
         <Grid />
