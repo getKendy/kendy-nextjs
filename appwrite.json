@@ -1,5 +1,5 @@
 {
-    "projectId": "632f552c4ce9c579196e",
+    "projectId": "631db1da6e495d8a4abb",
     "projectName": "GetKendy",
     "functions": [
         {
@@ -12,7 +12,7 @@
                 "node_modules",
                 ".npm"
             ],
-            "execute": [],
+            "execute": ["any"],
             "events": [],
             "schedule": "",
             "timeout": 15
@@ -27,7 +27,7 @@
                 "node_modules",
                 ".npm"
             ],
-            "execute": [],
+            "execute": ["users"],
             "events": [],
             "schedule": "",
             "timeout": 15
