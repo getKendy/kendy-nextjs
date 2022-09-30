@@ -19,12 +19,12 @@ function Api() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-4">
-      <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center text-center space-y-4">
+      <div className="grid grid-cols-2 justify-center items-center">
         <div>Key</div>
         <input type="text" name="key" id="key" ref={apikey} defaultValue="" className="rounded bg-transparent border border-primary" />
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="grid grid-cols-2 justify-center items-center">
         <div>Secret</div>
         <input type="text" name="secret" id="secret" ref={apisecret} defaultValue="" className="rounded bg-transparent border border-primary" />
       </div>
