@@ -41,7 +41,8 @@ function Profile() {
   }
 
   return (
-    <form className="">
+    <form className="flex flex-col justify-center items-center text-center prose">
+      <h1 className="p-2 first-letter:text-primary-focus shadow rounded-full">Profile</h1>
       <div className="grid grid-cols-2 text-center items-center gap-2 ">
         <div>UserName</div>
         <input

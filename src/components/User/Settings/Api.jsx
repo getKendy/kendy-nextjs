@@ -19,7 +19,8 @@ function Api() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center text-center space-y-4">
+    <div className="flex flex-col justify-center items-center text-center space-y-4 prose">
+      <h1 className="p-2 first-letter:text-primary-focus shadow rounded-full">API</h1>
       <div className="grid grid-cols-2 justify-center items-center">
         <div>Key</div>
         <input type="text" name="key" id="key" ref={apikey} defaultValue="" className="rounded bg-transparent border border-primary" />
