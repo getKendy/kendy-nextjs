@@ -144,7 +144,7 @@ function Stats() {
             %
           </h1>
         </div>
-        <div className="truncate">{formatDate(baros[0]?.date)}</div>
+        <div className="truncate max-w-xs md:self-start lg:max-w-lg">{formatDate(baros[0]?.date)}</div>
       </div>
 
       <div className="p-1 flex flex-col flex-grow justify-center items-center">
