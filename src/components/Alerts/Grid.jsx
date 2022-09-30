@@ -77,7 +77,7 @@ function Grid() {
   };
 
   return (
-    <div className="flex flex-col flex-grow text-neutral-content">
+    <div className="flex flex-col flex-grow text-neutral-content bg-base-200">
       {/* <Test></Test> */}
       <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
       {
@@ -103,7 +103,7 @@ function Grid() {
                 </div>
               </div>
             </form>
-            <table className="mb-2 hidden md:table table-compact table-zebra">
+            <table className="mb-2 hidden md:table text-primary ">
               <thead className="">
                 <tr className="">
                   <th>Date</th>
@@ -131,7 +131,7 @@ function Grid() {
                 {
                   alerts.length > 0 ? alerts.map((alert) => (
 
-                    <tr key={alert.$id} className="">
+                    <tr key={alert.$id} className="bg-base-200">
                       <td>{formatDateAlert(alert.date)}</td>
                       <td>{alert.timeframe}</td>
                       <td>{alert.market}</td>
