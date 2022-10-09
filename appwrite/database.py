@@ -1,8 +1,9 @@
-from zipapp import create_archive
 from appwrite.client import Client
 from appwrite.services.databases import Databases
-from barometer import createBarometer, createBaroAtributes
-from alerts import createAlerts, createAlertAtributes
+
+from .database.barometer import createBarometer, createBaroAtributes
+from .database.alerts import createAlerts, createAlertAtributes
+
 client = Client()
 
 (client
