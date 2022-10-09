@@ -4,8 +4,8 @@ import { account } from '../../../appwrite/sdk';
 function Profile() {
   const [status, setStatus] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const getProfile = async () => {
@@ -16,28 +16,39 @@ function Profile() {
     getProfile();
   }, []);
 
-  async function saveProfile(item) {
-    setStatus('');
-    try {
-      switch (item) {
-        case 'username':
-          await account.updateName(username);
-          setStatus('username changed');
-          break;
-        case 'email':
-          if (password === '') {
-            setStatus('enter current password to change the email address');
-            break;
-          }
-          await account.updateEmail(email, password);
-          setStatus('email changed');
-          break;
-        default:
-          break;
+  useEffect(() => {
+    async function saveProfile() {
+      setStatus('');
+      if (username !== '') {
+        await account.updateName(username);
+        setStatus('username changed');
       }
-    } catch (error) {
-      setStatus(error);
     }
+    saveProfile();
+  }, [username]);
+
+  useEffect(() => {
+    async function saveProfile() {
+      setStatus('');
+      if (password === '') {
+        setStatus('enter current password to change the email address');
+      }
+      await account.updateEmail(email, password);
+      setStatus('email changed');
+    }
+    saveProfile();
+  }, [email, password]);
+
+  function onChangeUser(evt) {
+    setUsername(evt.target.value);
+  }
+
+  function onChangeEmail(evt) {
+    setEmail(evt.target.value);
+  }
+
+  function onChangePassword(evt) {
+    setPassword(evt.target.value);
   }
 
   return (
@@ -50,7 +61,7 @@ function Profile() {
           name="username"
           id="username"
           value={username}
-          onChange={(e) => { setUsername(e.target.value); saveProfile('username'); }}
+          onChange={onChangeUser}
           className="rounded bg-transparent border border-primary text-center"
         />
         <div>Email</div>
@@ -59,7 +70,7 @@ function Profile() {
           name="email"
           id="email"
           value={email}
-          onChange={(e) => { setEmail(e.target.value); saveProfile('email'); }}
+          onChange={onChangeEmail}
           className="rounded bg-transparent border border-primary text-center"
         />
         <div>Password</div>
@@ -68,7 +79,7 @@ function Profile() {
           name="password"
           id="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={onChangePassword}
           className="rounded bg-transparent border border-primary text-center"
         />
       </div>
