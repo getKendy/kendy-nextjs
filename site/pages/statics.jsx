@@ -35,7 +35,7 @@ function Statics() {
   }, [])
   return (
     <Layout>
-      .
+      {jwt}
     </Layout>
   );
 }
