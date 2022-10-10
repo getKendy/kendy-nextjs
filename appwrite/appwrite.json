@@ -98,7 +98,7 @@
             ],
             "events": [],
             "schedule": "* * * * *",
-            "timeout": 45
+            "timeout": 120
         }
     ]
 }

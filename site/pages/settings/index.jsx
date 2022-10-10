@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {useRouter} from 'next/router';
+
+import useUserStore from '../../utils/store/user';
+import useActiveTabStore from '../../utils/store/activeTab';
 
 import Page from '../../components/layout/Page';
 import Profile from '../../components/user/settings/Profile';
 import Api from '../../components/user/settings/Api';
 
 function Settings() {
+  const { user } = useUserStore();
+  const { setActiveTab } = useActiveTabStore();
+  const router = useRouter();
   const [settingId, setSettingId] = useState('profile');
 
+  useEffect(() => {
+    if (!user) {
+      router.push('/')
+    } else {
+      setActiveTab('settings')
+    }
+  }, [user]);
 
   return (
     <Page>
