@@ -1,2 +1,4 @@
-/backend
-/celery
+.old
+.old.src
+backend
+celery
