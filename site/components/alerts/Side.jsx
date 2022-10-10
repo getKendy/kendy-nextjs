@@ -146,17 +146,19 @@ function Side() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-grow">
-      <h2 className="mb-5 text-2xl text-center  border-b shadow-inner shadow-secondary">Tickers:</h2>
-      <div className="p-2 flex flex-col text-xl justify-center text-secondary-content">
-        <div className="flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2">
-          {!error && <TickerDisplay ticker={ethbusd} coin="ETH" />}
-          {!error && <TickerDisplay ticker={bnbbusd} coin="BNB" />}
+    error === '' ? (
+      <div className="flex flex-col flex-grow">
+        <h2 className="mb-5 text-2xl text-center  border-b shadow-inner shadow-secondary">Tickers:</h2>
+        <div className="p-2 flex flex-col text-xl justify-center text-secondary-content">
+          <div className="flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2">
+            <TickerDisplay ticker={ethbusd} coin="ETH" />
+            <TickerDisplay ticker={bnbbusd} coin="BNB" />
+          </div>
+          <TickerDisplay ticker={paxgbusd} coin="PAXG" />
         </div>
-        {!error && <TickerDisplay ticker={paxgbusd} coin="PAXG" />}
+        <Binance />
       </div>
-      <Binance />
-    </div>
+    ) : null
   );
 }
 
