@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import useUserStore from '../utils/store/user';
+import useActiveTabStore from '../utils/store/activeTab';
 
 import Page from '../components/layout/Page';
 import Stats from '../components/barometer/Stats';
@@ -11,10 +12,13 @@ import Side from '../components/alerts/Side';
 function Alerts() {
   const { user } = useUserStore();
   const router = useRouter();
+  const { setActiveTab } = useActiveTabStore();
 
   useEffect(() => {
     if (!user) {
       router.push('/')
+    } else {
+      setActiveTab('alerts')
     }
   }, [user])
 

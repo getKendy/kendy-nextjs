@@ -6,12 +6,12 @@ import Link from 'next/link';
 
 import { account } from '../../utils/sdk';
 import useUserStore from '../../utils/store/user';
-
+import useActiveTabStore from '../../utils/store/activeTab';
 import buttons from './buttons';
 
 function Header() {
   const [fetchError, setfetchError] = useState('')
-  const [activeTab, setActiveTab] = useState(0)
+  const {activeTab} = useActiveTabStore();
   const { user, setUser } = useUserStore();
   const router = useRouter();
 
@@ -31,7 +31,7 @@ function Header() {
   }, []);
 
   function changeTab(name, link) {
-    setActiveTab(name);
+    // setActiveTab(name);
     router.push(link);
   }
 

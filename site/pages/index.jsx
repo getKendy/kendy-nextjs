@@ -5,16 +5,21 @@ import Image from 'next/image';
 import { useRouter } from "next/router";
 
 import { serverless } from "../utils/sdk";
+import useActiveTabStore from "../utils/store/activeTab";
 import useUserStore from "../utils/store/user";
 import Page from "../components/layout/Page";
 
 export default function Home() {
   const { user } = useUserStore();
-
+  const { setActiveTab } = useActiveTabStore();
   const [btcbusd, setBtcbusd] = useState();
   const [ethbusd, setEthbusd] = useState();
   const [bnbbusd, setBnbbusd] = useState();
   const router = useRouter();
+
+  useEffect(() => {
+    setActiveTab('home')
+  }, [user])
 
   useEffect(() => {
     const fetchdata = async () => {
