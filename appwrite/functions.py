@@ -17,8 +17,10 @@ redis_db = ''
 endpoint = ''       #  Appwrite
 projectId = ''
 api_key = ''
-databaseId = ''
+getKendyId = ''     # databaseId
 barometerId = ''
+binanceId = ''       # databaseId
+col_apiId = ''
 
 functions = Functions(client)
 
@@ -39,7 +41,7 @@ functions.create_variable('update_barometer', 'REDIS_DB', redis_db)
 functions.create_variable('update_barometer', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
 functions.create_variable('update_barometer', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
 functions.create_variable('update_barometer', 'APPWRITE_FUNCTION_API_KEY', api_key)
-functions.create_variable('update_barometer', 'APPWRITE_DATABASEID', databaseId)
+functions.create_variable('update_barometer', 'APPWRITE_DATABASEID', getKendyId)
 functions.create_variable('update_barometer', 'APPWRITE_BAROMETERID', barometerId)
 
 functions.create_variable('calculate_bitcoin_price', 'REDIS_CACHE', redis_cache)
@@ -48,3 +50,8 @@ functions.create_variable('calculate_bitcoin_price', 'REDIS_DB', redis_db)
 functions.create_variable('calculate_bitcoin_price', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
 functions.create_variable('calculate_bitcoin_price', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
 functions.create_variable('calculate_bitcoin_price', 'APPWRITE_FUNCTION_API_KEY', api_key)
+
+functions.create_variable('StoreApi', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('StoreApi', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('StoreApi', 'APPWRITE_DATABASEID', binanceId)
+functions.create_variable('StoreApi', 'APPWRITE_COL_APIID', col_apiId)
