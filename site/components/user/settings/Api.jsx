@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { account } from '../../../utils/sdk';
+import { serverless } from '../../../utils/sdk';
+import useJWT from '../../../utils/useJwt';
 
 function Api() {
   const [apikey, setApikey] = useState('');
   const [apisecret, setApisecret] = useState('');
   const [status, setStatus] = useState('');
   const router = useRouter();
-
-  useEffect(() => {
-    const saveApi = async () => {
-      setStatus('');
-      if (apikey !== '' && apisecret !== '') {
-        await account.updatePrefs({
-          apiKey: apikey,
-          apiSecret: apisecret,
-        });
-        setStatus('Api Saved');
-        router.push('/alerts');
-      }
-    };
-    saveApi();
-  }, [apikey, apisecret]);
+  const newJWT = useJWT();
 
   function onChangeApikey(evt) {
     setApikey(evt.target.value);
@@ -29,6 +16,17 @@ function Api() {
 
   function onChangeApisecret(evt) {
     setApisecret(evt.target.value);
+  }
+
+  async function submitApi() {
+    setStatus('');
+    try {
+      await serverless.createExecution('StoreApi', JSON.stringify({ token: await newJWT, apiKey: apikey, apiSecret: apisecret }));
+      setStatus('Api Saved');
+      router.reload();
+    } catch (error) {
+      setStatus('Something went wrong while saving. try again.');
+    }
   }
 
   return (
@@ -42,6 +40,7 @@ function Api() {
         <div>Secret</div>
         <input type="text" name="secret" id="secret" value={apisecret} onChange={onChangeApisecret} className="rounded bg-transparent border border-primary" />
       </div>
+      <div><button type='button' className='btn btn-sm' onClick={submitApi}>Save Api</button></div>
       <div>{status}</div>
     </div>
   );

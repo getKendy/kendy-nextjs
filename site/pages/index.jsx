@@ -16,6 +16,7 @@ export default function Home() {
   const [ethbusd, setEthbusd] = useState();
   const [bnbbusd, setBnbbusd] = useState();
   const router = useRouter();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setActiveTab('home')
@@ -23,9 +24,14 @@ export default function Home() {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
-      const { ticker } = JSON.parse(response);
-      setBtcbusd(ticker);
+      try {
+        const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
+        const { ticker } = JSON.parse(response);
+        setBtcbusd(ticker);
+        setError(false);
+      } catch (err) {
+        setError(true);
+      }
     };
     fetchdata();
     const interval = setInterval(() => {
@@ -36,9 +42,14 @@ export default function Home() {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const { response } = await serverless.createExecution('GetTicker', 'ETHBUSD');
-      const { ticker } = JSON.parse(response);
-      setEthbusd(ticker);
+      try {
+        const { response } = await serverless.createExecution('GetTicker', 'ETHBUSD');
+        const { ticker } = JSON.parse(response);
+        setEthbusd(ticker);
+        setError(false);
+      } catch (err) {
+        setError(true);
+      }
     };
     fetchdata();
     const interval = setInterval(() => {
@@ -49,9 +60,14 @@ export default function Home() {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const { response } = await serverless.createExecution('GetTicker', 'BNBBUSD');
-      const { ticker } = JSON.parse(response);
-      setBnbbusd(ticker);
+      try {
+        const { response } = await serverless.createExecution('GetTicker', 'BNBBUSD');
+        const { ticker } = JSON.parse(response);
+        setBnbbusd(ticker);
+        setError(false);
+      } catch (err) {
+        setError(true);
+      }
     };
     fetchdata();
     const interval = setInterval(() => {
@@ -98,6 +114,7 @@ export default function Home() {
             )}
           </div>
         </div>
+      {error}
       </div>
     </Page>
   )

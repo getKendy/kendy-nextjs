@@ -1,5 +1,5 @@
 {
-    "projectId": "631db1da6e495d8a4abb",
+    "projectId": "632f552c4ce9c579196e",
     "projectName": "",
     "functions": [
         {
@@ -99,6 +99,40 @@
             "events": [],
             "schedule": "* * * * *",
             "timeout": 120
+        },
+        {
+            "$id": "StoreApi",
+            "name": "StoreApi",
+            "runtime": "node-16.0",
+            "path": "functions/StoreApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "CheckApi",
+            "name": "CheckApi",
+            "runtime": "node-16.0",
+            "path": "functions/CheckApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
         }
     ]
 }

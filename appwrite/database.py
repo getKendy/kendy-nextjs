@@ -1,8 +1,10 @@
 from appwrite.client import Client
 from appwrite.services.databases import Databases
 
-from .database.barometer import createBarometer, createBaroAtributes
-from .database.alerts import createAlerts, createAlertAtributes
+from database.barometer import createBarometer, createBaroAtributes
+from database.alerts import createAlerts, createAlertAtributes
+
+from database.binance import createApi, createApiAtributes
 
 client = Client()
 
@@ -12,6 +14,7 @@ client = Client()
   .set_key('') # Your secret API key
 )
 
+#### GetKendy data
 GetKendy = {}
 databases = Databases(client)
 foundDatabases = databases.list()
@@ -32,3 +35,22 @@ createBaroAtributes(client, GetKendy, barometer)
 
 alert = createAlerts(client, GetKendy)
 createAlertAtributes(client, GetKendy, alert)
+
+
+### Binance data
+Binance = {}
+databases = Databases(client)
+foundDatabases = databases.list()
+for result in foundDatabases['databases']:
+  if result['name'] == 'Binance':
+    Binance = result
+    
+if Binance != {}:
+  print('found')
+  print(Binance)
+else:
+  print('not found')
+  Binance = databases.create('unique()', 'Binance')
+  
+api = createApi(client, Binance)
+createApiAtributes(client, Binance, api)
