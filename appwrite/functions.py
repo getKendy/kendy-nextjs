@@ -55,3 +55,13 @@ functions.create_variable('StoreApi', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
 functions.create_variable('StoreApi', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
 functions.create_variable('StoreApi', 'APPWRITE_DATABASEID', binanceId)
 functions.create_variable('StoreApi', 'APPWRITE_COL_APIID', col_apiId)
+
+functions.create_variable('CheckApi', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('CheckApi', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('CheckApi', 'APPWRITE_DATABASEID', binanceId)
+functions.create_variable('CheckApi', 'APPWRITE_COL_APIID', binanceId)
+
+functions.create_variable('GetBinanceBalance', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('GetBinanceBalance', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('GetBinanceBalance', 'APPWRITE_DATABASEID', binanceId)
+functions.create_variable('GetBinanceBalance', 'APPWRITE_COL_APIID', binanceId)

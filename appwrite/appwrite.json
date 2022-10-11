@@ -116,6 +116,23 @@
             "events": [],
             "schedule": "",
             "timeout": 15
+        },
+        {
+            "$id": "CheckApi",
+            "name": "CheckApi",
+            "runtime": "node-16.0",
+            "path": "functions/CheckApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
         }
     ]
 }

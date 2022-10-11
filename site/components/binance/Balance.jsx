@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import { account, serverless } from '../../utils/sdk';
+import { serverless } from '../../utils/sdk';
+
+import useJWT from '../../utils/useJwt';
 
 function Balance() {
   const [balances, setBalances] = useState([]);
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
 
+  const newJWT = useJWT();
+
   useEffect(() => {
     const fetchBalance = async () => {
       try {
         setStatus('');
-        const prefs = await account.getPrefs();
-        const { apiKey, apiSecret } = prefs;
         let balTotal = 0;
-        const { response } = await serverless.createExecution('GetBinanceBalance', JSON.stringify({ apiKey, apiSecret }));
+        const { response } = await serverless.createExecution('GetBinanceBalance', await newJWT);
         const data = JSON.parse(response);
         if (data.length > 0) {
           setBalances(data);

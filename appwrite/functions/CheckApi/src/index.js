@@ -1,5 +1,4 @@
-const sdk = require('node-appwrite');
-const { Spot } = require('@binance/connector');
+const sdk = require("node-appwrite");
 
 /*
   'req' variable has:
@@ -16,7 +15,8 @@ const { Spot } = require('@binance/connector');
 
 module.exports = async function (req, res) {
   const client = new sdk.Client();
-  // // You can remove services you don't use
+
+  // You can remove services you don't use
   // const account = new sdk.Account(client);
   // const avatars = new sdk.Avatars(client);
   const database = new sdk.Databases(client);
@@ -38,14 +38,11 @@ module.exports = async function (req, res) {
       .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'])
       .setJWT(req.payload)
   }
+  
   const data = await database.listDocuments(req.variables['APPWRITE_DATABASEID'], req.variables['APPWRITE_COL_APIID'])
-  const { apiKey, apiSecret } = data.documents[0];
-  const binanceClient = new Spot(apiKey, apiSecret);
-  binanceClient.userAsset()
-    .then((response) => res.json(response.data))
-    .catch((error) => res.json(error));
-
-  // res.json({
-  //   api: data,
-  // });
+  if (data.total === 1) {
+    res.json({ api: true })
+  } else {
+    res.json({ api: false })
+  }
 };

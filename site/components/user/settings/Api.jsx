@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { account, serverless } from '../../../utils/sdk';
+import { serverless } from '../../../utils/sdk';
+import useJWT from '../../../utils/useJwt';
 
 function Api() {
   const [apikey, setApikey] = useState('');
   const [apisecret, setApisecret] = useState('');
   const [status, setStatus] = useState('');
   const router = useRouter();
+  const newJWT = useJWT();
 
   function onChangeApikey(evt) {
     setApikey(evt.target.value);
@@ -19,8 +21,7 @@ function Api() {
   async function submitApi() {
     setStatus('');
     try {
-      const token = await account.createJWT();
-      await serverless.createExecution('StoreApi', JSON.stringify({ token, apiKey: apikey, apiSecret: apisecret }));
+      await serverless.createExecution('StoreApi', JSON.stringify({ token: await newJWT, apiKey: apikey, apiSecret: apisecret }));
       setStatus('Api Saved');
       router.reload();
     } catch (error) {
