@@ -4,16 +4,16 @@ from appwrite.services.functions import Functions
 client = Client()
 
 (client
-  .set_endpoint('')   # Your API Endpoint
-  .set_project('')    # Your project ID
-  .set_key('')        # Your secret API key
+  .set_endpoint('') # Your API Endpoint
+  .set_project('') # Your project ID
+  .set_key('') # Your secret API key
 )
 
 app_env_api = ''    #  Backend FastAPI IP
 api = ''            #  http://<ip>:8000/api/   # Backend
 redis_cache = ''    #  IP
 redis_port = ''
-redis_db = ''
+redis_db = ''                 # 0
 endpoint = ''       #  Appwrite
 projectId = ''
 api_key = ''

@@ -4,7 +4,7 @@ from appwrite.role import Role
 
 def createApi(client, database):
   databases = Databases(client)
-  result = databases.create_collection(database['$id'], 'unique()', 'api',permissions=[Permission.create(Role.users)] , document_security=True)
+  result = databases.create_collection(database['$id'], 'unique()', 'api',permissions=[Permission.create(Role.users())] , document_security=True)
   return result
 
 def createApiAtributes(client,database,collection):
