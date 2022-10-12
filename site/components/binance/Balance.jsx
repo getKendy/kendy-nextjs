@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import { serverless } from '../../utils/sdk';
-
-import useJWT from '../../utils/useJwt';
+import { account, serverless } from '../../utils/sdk';
+import useJwtStore from '../../utils/store/jwt';
 
 function Balance() {
   const [balances, setBalances] = useState([]);
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
-
-  const newJWT = useJWT();
+  const { jwt, setJwt } = useJwtStore();
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
         setStatus('');
+        const tenMinuteAgo = new Date(Date.now() - 1000 * 60 * 10)
+        if (jwt.age < tenMinuteAgo) {
+          const token = await account.createJWT();
+          setJwt(token.jwt)
+        }
         let balTotal = 0;
-        const { response } = await serverless.createExecution('GetBinanceBalance', await newJWT);
+        const { response } = await serverless.createExecution('GetBinanceBalance', jwt.token);
         const data = JSON.parse(response);
         if (data.length > 0) {
           setBalances(data);

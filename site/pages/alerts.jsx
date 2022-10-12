@@ -23,7 +23,7 @@ function Alerts() {
   }, [user])
 
   return (
-    <Page>
+    <Page title="GetKendy - Alerts" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
       <div className="bg-base-200">
         <Stats />
         <div className="flex flex-row flex-wrap-reverse">
