@@ -16,7 +16,7 @@ function Api() {
     try {
       serverless.createExecution('StoreApi', JSON.stringify({ token: jwt.token, apiKey: apikey, apiSecret: apisecret }));
       setStatus('Api Saved');
-      // router.reload();
+      router.reload();
     } catch (error) {
       setStatus('Something went wrong while saving. try again.');
     };
