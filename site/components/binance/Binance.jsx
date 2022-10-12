@@ -14,7 +14,7 @@ function Binance() {
     const checkApi = async () => {
       try {
         setLoading(true);
-        const { api } = await JSON.parse((await serverless.createExecution('CheckApi', await newJWT)).response)
+        const { api } = await JSON.parse((await serverless.createExecution('CheckApi', await newJWT)).response);
         setApiFound(api);
         setLoading(false);
         setError('');
@@ -26,16 +26,12 @@ function Binance() {
   }, []);
 
   return (
-
     error !== '' ? error : (
       <>
         {!loading && apiFound && <Balance />}
         {!loading && !apiFound && <Api />}
       </>
-
     )
-
-
   );
 }
 

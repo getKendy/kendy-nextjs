@@ -8,8 +8,8 @@ async function useJWT() {
     setJwt(newtoken.jwt)
     return newtoken.jwt
   }
-  const fourteenMinuteAgo = new Date(Date.now() - 1000 * 60 * 14)
-  if (jwt.age < fourteenMinuteAgo) {
+  const tenMinuteAgo = new Date(Date.now() - 1000 * 60 * 10)
+  if (jwt.age < tenMinuteAgo) {
     const retoken = await account.createJWT();
     setJwt(retoken.jwt)
     return retoken.jwt

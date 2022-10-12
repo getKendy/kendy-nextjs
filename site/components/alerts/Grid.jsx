@@ -1,16 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Query } from 'appwrite';
-// import useAlertStore from '../../store/alertStore';
+import useAlertStore from '../../utils/store/alert';
 import { databases } from '../../utils/sdk';
 import { formatDateAlert } from '../../utils/formatDate';
+
+
 
 function Grid() {
   const [alerts, setAlerts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  // const { lastAlert, addAlert } = useAlertStore();
+  const { lastAlert, addAlert } = useAlertStore();
   const checkboxAllowAudio = useRef(false);
   const rangeAudioLevel = useRef(50);
+
+  const playAlert = () => {
+    const ding = new Audio('ding.mp3');
+    ding.volume = ((+(rangeAudioLevel.current.value)) / 100) || 0.50;
+    if (checkboxAllowAudio.current.checked) {
+      ding.play();
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,24 +34,21 @@ function Grid() {
         ],
       );
 
-      setAlerts(data.documents);
-      setTotalPages(1);
+      if (data.documents[0]) {
+        setAlerts(data.documents)
+        setTotalPages(data.total / 10)
+        if (!lastAlert) {
+          // console.log('setting lastalert for the fist time')
+          addAlert(data.documents[0])
+          return
+        }
 
-      // if (data.items[0]) {
-      //   setAlerts(data.items)
-      //   setTotalPages(data.total / data.size)
-      //   if (!lastAlert) {
-      //     // console.log('setting lastalert for the fist time')
-      //     addAlert(data.items[0])
-      //     return
-      //   } else {
-      //     if (lastAlert._id != data.items[0]._id) {
-      //       // console.log('new alert')
-      //       addAlert(data.items[0])
-      //       playAlert()
-      //     }
-      //   }
-      // }
+        if (lastAlert.$id !== data.documents[0].$id) {
+          // console.log('new alert')
+          addAlert(data.documents[0])
+          playAlert()
+        }
+      }
     };
     fetchData();
     const interval = setInterval(() => {
@@ -50,13 +57,7 @@ function Grid() {
     return () => clearInterval(interval);
   }, [currentPage, totalPages]);
 
-  // const playAlert = () => {
-  //   const ding = new Audio('ding.mp3');
-  //   ding.volume = ((+(rangeAudioLevel.current.value)) / 100) || 0.50;
-  //   if (checkboxAllowAudio.current.checked) {
-  //     ding.play();
-  //   }
-  // };
+
 
   const handlePageUp = () => {
     // console.log({ 'page': currentPage })
