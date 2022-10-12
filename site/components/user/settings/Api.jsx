@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { account, serverless } from '../../../utils/sdk';
-import useJwtStore from '../../../utils/store/jwt';
 
 function Api() {
   const [apikey, setApikey] = useState('');
   const [apisecret, setApisecret] = useState('');
   const [status, setStatus] = useState('');
-  const { jwt, setJwt } = useJwtStore();
   const router = useRouter();
 
   async function submitApi(evt) {
     evt.preventDefault();
     setStatus('');
     try {
-      serverless.createExecution('StoreApi', JSON.stringify({ token: jwt.token, apiKey: apikey, apiSecret: apisecret }));
+      const token = await account.createJWT();
+      serverless.createExecution('StoreApi', JSON.stringify({ token: token.jwt, apiKey: apikey, apiSecret: apisecret }));
       setStatus('Api Saved');
       router.reload();
     } catch (error) {
@@ -22,16 +21,6 @@ function Api() {
     };
   }
 
-  useEffect(() => {
-    const checkJwt = async () => {
-      const tenMinuteAgo = new Date(Date.now() - 1000 * 60 * 10);
-      if (jwt.age < tenMinuteAgo) {
-        const token = await account.createJWT();
-        setJwt(token.jwt);
-      };
-    };
-    checkJwt();
-  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center text-center space-y-4 prose">
