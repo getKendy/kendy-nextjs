@@ -23,7 +23,7 @@ function Settings() {
   }, [user]);
 
   return (
-    <Page>
+    <Page title="GetKendy - Settings" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
       <div className="flex flex-row items-center justify-center">
         <div className="p-5 text-xl flex flex-col self-start justify-start items-start">
 

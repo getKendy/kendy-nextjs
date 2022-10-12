@@ -5,7 +5,7 @@ import useUserStore from '../utils/store/user';
 import useActiveTabStore from '../utils/store/activeTab';
 
 // import { account, serverless } from '../utils/sdk';
-import Layout from '../components/layout/Page';
+import Page from '../components/layout/Page';
 
 function Statics() {
   const { user } = useUserStore();
@@ -21,11 +21,10 @@ function Statics() {
     }
   }, [user])
 
-
   return (
-    <Layout>
-      ok
-    </Layout>
+    <Page title="GetKendy - Statics" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
+      <div>ok</div>
+    </Page>
   );
 }
 

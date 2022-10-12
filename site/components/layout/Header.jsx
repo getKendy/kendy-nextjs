@@ -8,11 +8,13 @@ import { account } from '../../utils/sdk';
 import useUserStore from '../../utils/store/user';
 import useActiveTabStore from '../../utils/store/activeTab';
 import buttons from './buttons';
+import useJwtStore from '../../utils/store/jwt';
 
 function Header() {
   const [fetchError, setfetchError] = useState('')
-  const {activeTab} = useActiveTabStore();
+  const { activeTab } = useActiveTabStore();
   const { user, setUser } = useUserStore();
+  const { jwt, setJwt } = useJwtStore();
   const router = useRouter();
 
   // console.log(router);
@@ -22,13 +24,24 @@ function Header() {
         try {
           const curUser = await account.get();
           setUser(curUser);
+          return
         } catch (error) {
           setfetchError(error);
-        }
+          return
+        };
       };
-    }
+      if (!jwt.token) {
+        const token = await account.createJWT();
+        setJwt(token.jwt);
+      }
+      const tenMinuteAgo = new Date(Date.now() - 1000 * 60 * 10);
+      if (jwt.age < tenMinuteAgo) {
+        const token = await account.createJWT();
+        setJwt(token.jwt);
+      };
+    };
     fetchAccount();
-  }, []);
+  }, [user]);
 
   function changeTab(name, link) {
     // setActiveTab(name);

@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { serverless } from '../../utils/sdk';
+import { account, serverless } from '../../utils/sdk';
 import Api from '../user/settings/Api';
 import Balance from './Balance';
-import useJWT from '../../utils/useJwt';
+import useJwtStore from '../../utils/store/jwt';
 
 function Binance() {
   const [apiFound, setApiFound] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const newJWT = useJWT();
+  const { jwt, setJwt } = useJwtStore();
 
   useEffect(() => {
     const checkApi = async () => {
       try {
         setLoading(true);
-        const { api } = await JSON.parse((await serverless.createExecution('CheckApi', await newJWT)).response);
+        const tenMinuteAgo = new Date(Date.now() - 1000 * 60 * 10)
+        if (jwt.age < tenMinuteAgo) {
+          const token = await account.createJWT();
+          setJwt(token.jwt)
+        }
+        const { api } = await JSON.parse((await serverless.createExecution('CheckApi', jwt.token)).response);
         setApiFound(api);
         setLoading(false);
         setError('');
@@ -26,12 +31,10 @@ function Binance() {
   }, []);
 
   return (
-    error !== '' ? error : (
-      <>
-        {!loading && apiFound && <Balance />}
-        {!loading && !apiFound && <Api />}
-      </>
-    )
+    <>
+      {!error && !loading && apiFound && <Balance />}
+      {!error && !loading && !apiFound && <Api />}
+    </>
   );
 }
 
