@@ -50,7 +50,7 @@ function Grid() {
       fetchData();
     }, 10000);
     return () => clearInterval(interval);
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, addAlert, lastAlert]);
 
   const handlePageUp = () => {
     // console.log({ 'page': currentPage })

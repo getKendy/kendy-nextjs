@@ -20,7 +20,7 @@ function Settings() {
     } else {
       setActiveTab('settings');
     }
-  }, [user]);
+  }, [user, router, setActiveTab]);
 
   return (
     <Page title="GetKendy - Settings" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">

@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     setActiveTab('home');
-  }, [user]);
+  }, [user, setActiveTab]);
 
   useEffect(() => {
     const fetchdata = async () => {

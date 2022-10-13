@@ -2,17 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { account } from '../../utils/sdk';
 import Page from '../../components/layout/Page';
 import useActiveTabStore from '../../utils/store/activeTab';
-import useUserStore from '../../utils/store/user';
 
 function Login() {
   const email = useRef();
   const [mailStatus, setMailStatus] = useState();
   const { setActiveTab } = useActiveTabStore();
-  const { user } = useUserStore();
 
   useEffect(() => {
     setActiveTab('login');
-  }, [user]);
+  }, [setActiveTab]);
 
   const loginUser = async (e) => {
     e.preventDefault();

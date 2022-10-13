@@ -10,7 +10,7 @@ import Page from '../../components/layout/Page';
 function Magic() {
   const router = useRouter();
   const { userId, secret } = router.query;
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
   const { setActiveTab } = useActiveTabStore();
   const [status, setStatus] = useState({
     status: null,
@@ -18,7 +18,7 @@ function Magic() {
   });
   useEffect(() => {
     setActiveTab('login');
-  }, [user]);
+  }, [setActiveTab]);
 
   useEffect(() => {
     const magicLogin = async () => {
@@ -36,7 +36,7 @@ function Magic() {
     } else {
       setStatus('no input received from query');
     }
-  }, [router.query]);
+  }, [router, secret, setUser, userId]);
 
   return (
     <Page title="GetKendy - Login" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">

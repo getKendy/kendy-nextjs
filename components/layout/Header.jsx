@@ -28,7 +28,7 @@ function Header() {
       }
     };
     fetchAccount();
-  }, [user]);
+  }, [user, setUser]);
 
   function changeTab(name, link) {
     // setActiveTab(name);

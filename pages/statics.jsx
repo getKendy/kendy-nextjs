@@ -18,7 +18,7 @@ function Statics() {
     } else {
       setActiveTab('statics');
     }
-  }, [user]);
+  }, [user, router, setActiveTab]);
 
   return (
     <Page title="GetKendy - Statics" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
