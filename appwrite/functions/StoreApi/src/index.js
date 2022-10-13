@@ -1,4 +1,5 @@
-const sdk = require("node-appwrite");
+// eslint-disable-next-line import/no-unresolved
+const sdk = require('node-appwrite');
 
 /*
   'req' variable has:
@@ -13,6 +14,7 @@ const sdk = require("node-appwrite");
   If an error is thrown, a response with code 500 will be returned.
 */
 
+// eslint-disable-next-line func-names
 module.exports = async function (req, res) {
   const client = new sdk.Client();
   // You can remove services you don't use
@@ -30,54 +32,49 @@ module.exports = async function (req, res) {
   const payload = JSON.parse(req.payload);
   const { token, apiKey, apiSecret } = payload;
   // res.json({ token, apiKey, apiSecret })
-  if (
-    !req.variables['APPWRITE_FUNCTION_ENDPOINT'] ||
-    !req.variables['APPWRITE_FUNCTION_PROJECT_ID']
-  ) {
-    res.send("Environment variables are not set. Function cannot use Appwrite SDK.");
-
+  if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_PROJECT_ID) {
+    res.send('Environment variables are not set. Function cannot use Appwrite SDK.');
   } else {
     client
-      .setEndpoint(req.variables['APPWRITE_FUNCTION_ENDPOINT'])
-      .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'])
-      .setJWT(token.jwt)
+      .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT)
+      .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID)
+      .setJWT(token.jwt);
   }
-  
+
   const curUser = await account.get();
-  const docs = await databases.listDocuments(
-    req.variables['APPWRITE_DATABASEID'],
-    req.variables['APPWRITE_COL_APIID'],
-  )
+  const docs = await databases.listDocuments(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COL_APIID);
   if (docs.total === 0) {
     // Create new
     await databases.createDocument(
-      req.variables['APPWRITE_DATABASEID'],
-      req.variables['APPWRITE_COL_APIID'],
+      req.variables.APPWRITE_DATABASEID,
+      req.variables.APPWRITE_COL_APIID,
       'unique()',
-      { apiKey: apiKey, apiSecret: apiSecret, userId: curUser.$id },
+      { apiKey, apiSecret, userId: curUser.$id },
       [
         sdk.Permission.read(sdk.Role.user(curUser.$id)),
         sdk.Permission.update(sdk.Role.user(curUser.$id)),
         sdk.Permission.delete(sdk.Role.user(curUser.$id)),
-      ]);
+      ]
+    );
   } else {
     // Update current
     await databases.updateDocument(
-      req.variables['APPWRITE_DATABASEID'],
-      req.variables['APPWRITE_COL_APIID'],
+      req.variables.APPWRITE_DATABASEID,
+      req.variables.APPWRITE_COL_APIID,
       docs.documents[0].$id,
-      { apiKey: apiKey, apiSecret: apiSecret },
+      { apiKey, apiSecret }
     );
   }
 
   if (docs.total > 1) {
-    for (let i = 1; i < docs.documents.length; i++) {
-      await databases.deleteDocument(
-        req.variables['APPWRITE_DATABASEID'],
-        req.variables['APPWRITE_COL_APIID'],
-        docs.documents[i].$id)
+    for (let i = 1; i < docs.documents.length; i += 1) {
+      databases.deleteDocument(
+        req.variables.APPWRITE_DATABASEID,
+        req.variables.APPWRITE_COL_APIID,
+        docs.documents[i].$id
+      );
     }
   }
 
-  res.send('ok')
+  res.send('ok');
 };

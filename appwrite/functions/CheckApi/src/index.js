@@ -1,4 +1,5 @@
-const sdk = require("node-appwrite");
+// eslint-disable-next-line import/no-unresolved
+const sdk = require('node-appwrite');
 
 /*
   'req' variable has:
@@ -27,22 +28,19 @@ module.exports = async function (req, res) {
   // const teams = new sdk.Teams(client);
   // const users = new sdk.Users(client);
 
-  if (
-    !req.variables['APPWRITE_FUNCTION_ENDPOINT'] ||
-    !req.variables['APPWRITE_FUNCTION_PROJECT_ID']
-  ) {
-    res.send("Environment variables are not set. Function cannot use Appwrite SDK.");
+  if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_PROJECT_ID) {
+    res.send('Environment variables are not set. Function cannot use Appwrite SDK.');
   } else {
     client
-      .setEndpoint(req.variables['APPWRITE_FUNCTION_ENDPOINT'])
-      .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'])
-      .setJWT(req.payload)
+      .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT)
+      .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID)
+      .setJWT(req.payload);
   }
-  
-  const data = await database.listDocuments(req.variables['APPWRITE_DATABASEID'], req.variables['APPWRITE_COL_APIID'])
+
+  const data = await database.listDocuments(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COL_APIID);
   if (data.total === 1) {
-    res.json({ api: true })
+    res.json({ api: true });
   } else {
-    res.json({ api: false })
+    res.json({ api: false });
   }
 };

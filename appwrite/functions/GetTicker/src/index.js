@@ -1,4 +1,5 @@
-const sdk = require('node-appwrite');
+// const sdk = require('node-appwrite');
+// eslint-disable-next-line import/no-unresolved
 const axios = require('axios');
 /*
   'req' variable has:

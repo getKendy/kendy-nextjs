@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const sdk = require('node-appwrite');
 const { Spot } = require('@binance/connector');
 
@@ -27,21 +28,19 @@ module.exports = async function (req, res) {
   // const teams = new sdk.Teams(client);
   // const users = new sdk.Users(client);
 
-  if (
-    !req.variables['APPWRITE_FUNCTION_ENDPOINT'] ||
-    !req.variables['APPWRITE_FUNCTION_PROJECT_ID']
-  ) {
-    res.send("Environment variables are not set. Function cannot use Appwrite SDK.");
+  if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_PROJECT_ID) {
+    res.send('Environment variables are not set. Function cannot use Appwrite SDK.');
   } else {
     client
-      .setEndpoint(req.variables['APPWRITE_FUNCTION_ENDPOINT'])
-      .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'])
-      .setJWT(req.payload)
+      .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT)
+      .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID)
+      .setJWT(req.payload);
   }
-  const data = await database.listDocuments(req.variables['APPWRITE_DATABASEID'], req.variables['APPWRITE_COL_APIID'])
+  const data = await database.listDocuments(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COL_APIID);
   const { apiKey, apiSecret } = data.documents[0];
   const binanceClient = new Spot(apiKey, apiSecret);
-  binanceClient.userAsset()
+  binanceClient
+    .userAsset()
     .then((response) => res.json(response.data))
     .catch((error) => res.json(error));
 
