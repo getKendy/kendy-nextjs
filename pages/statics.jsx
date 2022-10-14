@@ -77,6 +77,42 @@ function Statics() {
           </LineChart>
         </div>
       </div>
+      <div className="flex flex-wrap items-center justify-center">
+        <div className="m-1 border rounded-xl border-primary-focus prose">
+          <h3 className="text-center">BTC Volume</h3>
+          <LineChart width={600} height={300} data={baros}>
+            <Line type="monotone" dataKey="fiatBtcVolume" stroke="#8884d4" />
+            <Line type="monotone" dataKey="btcAltVolume" stroke="#82ca9d" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Legend verticalAlign="top" height={30} />
+            <XAxis hide />
+            <YAxis />
+          </LineChart>
+        </div>
+        <div className="m-1 border rounded-xl border-primary-focus prose">
+          <h3 className="text-center">ETH Volume</h3>
+          <LineChart width={600} height={300} data={baros}>
+            <Line type="monotone" dataKey="fiatEthVolume" stroke="#8884d4" />
+            <Line type="monotone" dataKey="ethAltVolume" stroke="#82ca9d" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Legend verticalAlign="top" height={30} />
+            <XAxis hide />
+            <YAxis />
+          </LineChart>
+        </div>
+        <div className="m-1 border rounded-xl border-primary-focus prose">
+          <h3 className="text-center">BNB Volume</h3>
+          <LineChart width={600} height={300} data={baros}>
+            <Line type="monotone" dataKey="fiatBnbVolume" stroke="#8884d4" />
+            <Line type="monotone" dataKey="bnbAltVolume" stroke="#82ca9d" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Legend verticalAlign="top" height={30} />
+            <XAxis hide />
+            <YAxis />
+          </LineChart>
+        </div>
+      </div>
+      <div className="mb-20" />
     </Page>
   );
 }
