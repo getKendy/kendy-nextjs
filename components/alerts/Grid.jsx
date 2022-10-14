@@ -26,19 +26,19 @@ function Grid() {
       const data = await databases.listDocuments(
         process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
         process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-        [Query.orderDesc('$id'), Query.limit(10)]
+        [Query.orderDesc('$id'), Query.limit(10), Query.offset((currentPage - 1) * 10 || 0)]
       );
 
       if (data.documents[0]) {
         setAlerts(data.documents);
         setTotalPages(data.total / 10);
-        if (!lastAlert) {
+        if (!lastAlert && currentPage === 1) {
           // console.log('setting lastalert for the fist time')
           addAlert(data.documents[0]);
           return;
         }
 
-        if (lastAlert.$id !== data.documents[0].$id) {
+        if (lastAlert.$id !== data.documents[0].$id && currentPage === 1) {
           // console.log('new alert')
           addAlert(data.documents[0]);
           playAlert();
@@ -71,13 +71,13 @@ function Grid() {
   };
 
   return (
-    <div className="flex flex-col flex-grow text-neutral-content bg-base-200">
+    <div className="flex flex-col flex-grow bg-base-200">
       {/* <Test></Test> */}
       <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
       {alerts.length > 0 ? (
-        <>
+        <div className="justify-center items-center self-center">
           <form onSubmit={formSubmitHandler}>
-            <div className="flex flex-grow justify-between items-center">
+            <div className="flex justify-around items-center">
               <div>
                 <div className="label cursor-pointer space-x-2">
                   <span className="label-text">Enable Audio Alerts</span>
@@ -107,7 +107,7 @@ function Grid() {
               </div>
             </div>
           </form>
-          <table className="mb-2 hidden md:table text-primary ">
+          <table className="mb-2 hidden md:block table-normal">
             <thead className="">
               <tr className="">
                 <th>Date</th>
@@ -133,7 +133,7 @@ function Grid() {
             <tbody>
               {alerts.length > 0
                 ? alerts.map((alert) => (
-                    <tr key={alert.$id} className="bg-base-200">
+                    <tr key={alert.$id} className="shadow shadow-primary-content rounded-2xl">
                       <td>{formatDateAlert(alert.date)}</td>
                       <td>{alert.timeframe}</td>
                       <td>{alert.market}</td>
@@ -159,6 +159,7 @@ function Grid() {
                 : null}
             </tbody>
           </table>
+          {/* small view */}
           <div className="md:hidden mb-6">
             {alerts.length > 0
               ? alerts.map((alert) => (
@@ -192,12 +193,13 @@ function Grid() {
                 ))
               : null}
           </div>
-        </>
+        </div>
       ) : (
         <div className="h-screen text-center ">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
       )}
+      {/* Pagination */}
       {alerts.length > 0 ? (
-        <div className="mb-20 md:mb-2 lg:mb-20 xl:mb-0 btn-group justify-center mt-1">
+        <div className="mb-20 md:mb-2 lg:mb-20  btn-group justify-center mt-1">
           <button
             type="button"
             className={currentPage === 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'}
