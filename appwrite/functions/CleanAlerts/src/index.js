@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
 const sdk = require('node-appwrite');
-const { Spot } = require('@binance/connector');
+const moment = require('moment');
 
 /*
   'req' variable has:
@@ -17,10 +16,11 @@ const { Spot } = require('@binance/connector');
 
 module.exports = async function (req, res) {
   const client = new sdk.Client();
-  // // You can remove services you don't use
+
+  // You can remove services you don't use
   // const account = new sdk.Account(client);
   // const avatars = new sdk.Avatars(client);
-  const database = new sdk.Databases(client);
+  const databases = new sdk.Databases(client);
   // const functions = new sdk.Functions(client);
   // const health = new sdk.Health(client);
   // const locale = new sdk.Locale(client);
@@ -28,23 +28,24 @@ module.exports = async function (req, res) {
   // const teams = new sdk.Teams(client);
   // const users = new sdk.Users(client);
 
-  if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_PROJECT_ID) {
+  if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_API_KEY) {
     res.send('Environment variables are not set. Function cannot use Appwrite SDK.');
   } else {
     client
       .setEndpoint(req.variables.APPWRITE_FUNCTION_ENDPOINT)
       .setProject(req.variables.APPWRITE_FUNCTION_PROJECT_ID)
-      .setJWT(req.payload);
+      .setKey(req.variables.APPWRITE_FUNCTION_API_KEY);
   }
-  const data = await database.listDocuments(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COL_APIID);
-  const { apiKey, apiSecret } = data.documents[0];
-  const binanceClient = new Spot(apiKey, apiSecret);
-  binanceClient
-    .userAsset()
-    .then((response) => res.json(response.data))
-    .catch((error) => res.json(error));
 
-  // res.json({
-  //   api: data,
-  // });
+  const db = await databases.listDocuments(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COLID);
+  const twoDaysAgo = moment().subtract(2, 'days');
+  const oldAlerts = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (const doc of db.documents) {
+    if (moment(doc.$createdAt) < twoDaysAgo) {
+      oldAlerts.push(doc);
+      databases.deleteDocument(req.variables.APPWRITE_DATABASEID, req.variables.APPWRITE_COLID, doc.$id);
+    }
+  }
+  res.send(`deleted ${oldAlerts.length} alerts`);
 };

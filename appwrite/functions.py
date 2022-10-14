@@ -19,6 +19,7 @@ projectId = ''
 api_key = ''
 getKendyId = ''     # databaseId
 barometerId = ''
+alertId = ''
 binanceId = ''       # databaseId
 col_apiId = ''
 
@@ -65,3 +66,9 @@ functions.create_variable('GetBinanceBalance', 'APPWRITE_FUNCTION_ENDPOINT', end
 functions.create_variable('GetBinanceBalance', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
 functions.create_variable('GetBinanceBalance', 'APPWRITE_DATABASEID', binanceId)
 functions.create_variable('GetBinanceBalance', 'APPWRITE_COL_APIID', col_apiId)
+
+functions.create_variable('CleanAlerts', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('CleanAlerts', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('CleanAlerts', 'APPWRITE_FUNCTION_API_KEY', api_key)
+functions.create_variable('CleanAlerts', 'APPWRITE_DATABASEID', getKendyId)
+functions.create_variable('CleanAlerts', 'APPWRITE_COLID', alertId)
