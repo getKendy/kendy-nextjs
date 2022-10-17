@@ -78,7 +78,7 @@ export default function Home() {
 
   return (
     <Page title="GetKendy - Home" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
-      <div className="hero pb-32 bg-base-200">
+      <div className="hero">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="max-w-sm rounded-lg shadow-2xl" />
           <Image src="/GetKendyLogo.png" width={600} height={600} alt="Logo" />

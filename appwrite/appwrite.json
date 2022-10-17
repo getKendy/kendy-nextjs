@@ -1,5 +1,5 @@
 {
-    "projectId": "632f552c4ce9c579196e",
+    "projectId": "631db1da6e495d8a4abb",
     "projectName": "",
     "functions": [
         {
@@ -149,6 +149,36 @@
             ],
             "events": [],
             "schedule": "* * * * *",
+            "timeout": 15
+        },
+        {
+            "$id": "DailyBalance",
+            "name": "DailyBalance",
+            "runtime": "node-16.0",
+            "path": "functions/DailyBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "0 0 * * *",
+            "timeout": 30
+        },
+        {
+            "$id": "SaveDailyBalance",
+            "name": "SaveDailyBalance",
+            "runtime": "node-16.0",
+            "path": "functions/SaveDailyBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
             "timeout": 15
         }
     ]

@@ -51,29 +51,31 @@ function Balance() {
       <div className="text-left">
         {balances && (
           <div>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th>Asset</th>
-                  <th>Free</th>
-                  <th>Used</th>
-                  <th>BTC</th>
-                </tr>
-              </thead>
-              <tbody>
-                {balances.map(
-                  (balance) =>
-                    balance.btcValuation > 0 && (
-                      <tr key={balance.asset} className="border-b border-primary">
-                        <td>{balance.asset}</td>
-                        <td>{balance.free}</td>
-                        <td>{balance.locked}</td>
-                        <td>{balance.btcValuation}</td>
-                      </tr>
-                    )
-                )}
-              </tbody>
-            </table>
+            <Link href="/user/balance">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th>Asset</th>
+                    <th>Free</th>
+                    <th>Used</th>
+                    <th>BTC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {balances.map(
+                    (balance) =>
+                      balance.btcValuation > 0 && (
+                        <tr key={balance.asset} className="border-b border-primary">
+                          <td>{balance.asset}</td>
+                          <td>{balance.free}</td>
+                          <td>{balance.locked}</td>
+                          <td>{balance.btcValuation}</td>
+                        </tr>
+                      )
+                  )}
+                </tbody>
+              </table>
+            </Link>
           </div>
         )}
       </div>

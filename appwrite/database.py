@@ -5,7 +5,7 @@ from database.barometer import createBarometer, createBaroAtributes
 from database.alerts import createAlerts, createAlertAtributes
 
 from database.binance import createApi, createApiAtributes
-
+from database.balances import createBalance, createBalanceAtributes
 client = Client()
 
 (client
@@ -54,3 +54,6 @@ else:
   
 api = createApi(client, Binance)
 createApiAtributes(client, Binance, api)
+
+balances = createBalance(client, Binance)
+createBalanceAtributes(client, Binance, balances)
