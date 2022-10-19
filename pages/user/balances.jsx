@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { LineChart, Line, CartesianGrid } from 'recharts';
 
 import { Query } from 'appwrite';
 import useUserStore from '../../utils/store/user';
 import Page from '../../components/layout/Page';
 import { account, databases, serverless } from '../../utils/sdk';
+import Balance from '../../components/user/Balance';
 
-function Balance() {
+function Balances() {
   const { user } = useUserStore();
   const router = useRouter();
   const [balances, setBalances] = useState([]);
@@ -48,34 +48,11 @@ function Balance() {
       </div>
       <div className="mb-20 flex flex-wrap items-center justify-center">
         {balances.map((balance) => (
-          <Bal key={balance.asset} balance={balance} balances24h={balances24h} />
+          <Balance key={balance.asset} balance={balance} balances24h={balances24h} />
         ))}
       </div>
     </Page>
   );
 }
 
-function Bal({ balance, balances24h }) {
-  const oldbal = balances24h.filter((old) => old.asset === balance.asset);
-  if (balance.btcValuation === '0') {
-    return null;
-  }
-  return (
-    <div className="m-3 grid grid-cols-2 shadow shadow-primary-content rounded-xl bg-base-200 prose">
-      <h2 className="col-span-2 text-center text-primary">{balance.asset}</h2>
-      <div className="ml-2">Free</div>
-      <div>{balance.free}</div>
-      <div className="ml-2">Used</div>
-      <div>{balance.locked}</div>
-      <div className="ml-2">BTC total</div>
-      <div>{balance.btcValuation}</div>
-      <div className="col-span-2">
-        <LineChart width={300} height={150} data={oldbal}>
-          <Line type="monotone" dataKey="btcValuation" stroke="#82ca9d" dot={false} activeDot={false} />
-          <CartesianGrid strokeDasharray="3 3" />
-        </LineChart>
-      </div>
-    </div>
-  );
-}
-export default Balance;
+export default Balances;
