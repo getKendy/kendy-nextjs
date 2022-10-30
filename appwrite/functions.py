@@ -85,3 +85,14 @@ functions.create_variable('SaveDailyBalance', 'APPWRITE_FUNCTION_PROJECT_ID', pr
 functions.create_variable('SaveDailyBalance', 'APPWRITE_FUNCTION_API_KEY', api_key)
 functions.create_variable('SaveDailyBalance', 'APPWRITE_DATABASEID', binanceId)
 functions.create_variable('SaveDailyBalance', 'APPWRITE_COLID', col_balancesId)
+
+functions.create_variable('build_indicators_from_candles', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('build_indicators_from_candles', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('build_indicators_from_candles', 'APPWRITE_FUNCTION_API_KEY', api_key)
+functions.create_variable('build_indicators_from_candles', 'REDIS_CACHE', redis_cache)
+functions.create_variable('build_indicators_from_candles', 'REDIS_PORT', redis_port)
+functions.create_variable('build_indicators_from_candles', 'REDIS_DB', redis_db)
+
+functions.create_variable('volume_24h_check', 'REDIS_CACHE', redis_cache)
+functions.create_variable('volume_24h_check', 'REDIS_PORT', redis_port)
+functions.create_variable('volume_24h_check', 'REDIS_DB', redis_db)

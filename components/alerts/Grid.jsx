@@ -75,7 +75,7 @@ function Grid() {
       {/* <Test></Test> */}
       <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
       {alerts.length > 0 ? (
-        <div className="justify-center items-center self-center">
+        <div className="m-1 p-1 justify-center items-center self-center shadow shadow-primary rounded-xl">
           <form onSubmit={formSubmitHandler}>
             <div className="flex justify-around items-center">
               <div>
