@@ -51,7 +51,7 @@ function Balance() {
       <div className="text-left">
         {balances && (
           <div>
-            <Link href="/user/balance">
+            <Link href="/user/balances">
               <table className="w-full">
                 <thead>
                   <tr className="border-b">

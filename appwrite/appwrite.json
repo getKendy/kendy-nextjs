@@ -1,5 +1,5 @@
 {
-    "projectId": "631db1da6e495d8a4abb",
+    "projectId": "632f552c4ce9c579196e",
     "projectName": "",
     "functions": [
         {
@@ -175,6 +175,34 @@
             "ignore": [
                 "node_modules",
                 ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "build_indicators_from_candles",
+            "name": "build_indicators_from_candles",
+            "runtime": "python-3.10",
+            "path": "functions/build_indicators_from_candles",
+            "entrypoint": "src/index.py",
+            "ignore": [
+                "__pypackages__"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "volume_24h_check",
+            "name": "volume_24h_check",
+            "runtime": "python-3.10",
+            "path": "functions/volume_24h_check",
+            "entrypoint": "src/index.py",
+            "ignore": [
+                "__pypackages__"
             ],
             "execute": [],
             "events": [],
