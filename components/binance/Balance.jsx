@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { account, serverless } from '../../utils/sdk';
+import useBusdBtcStore from '../../utils/store/busdbtcPrice';
 
 function Balance() {
   const [balances, setBalances] = useState([]);
   const [total, setTotal] = useState(0);
   const [status, setStatus] = useState('');
+  const { busdBtcPrice } = useBusdBtcStore();
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -58,7 +60,7 @@ function Balance() {
                     <th>Asset</th>
                     <th>Free</th>
                     <th>Used</th>
-                    <th>BTC</th>
+                    <th className="text-center">Value</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,7 +71,9 @@ function Balance() {
                           <td>{balance.asset}</td>
                           <td>{balance.free}</td>
                           <td>{balance.locked}</td>
-                          <td>{balance.btcValuation}</td>
+                          <td>
+                            ${(balance.btcValuation * busdBtcPrice.c).toFixed(2)} - ₿{balance.btcValuation}
+                          </td>
                         </tr>
                       )
                   )}

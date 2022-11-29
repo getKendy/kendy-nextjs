@@ -7,6 +7,7 @@ import { Query } from 'appwrite';
 
 import { formatDate } from '../../utils/formatDate';
 import { serverless, databases } from '../../utils/sdk';
+import useBusdBtcStore from '../../utils/store/busdbtcPrice';
 
 function UpDownRender({ begin, end, timeframe }) {
   // console.log(begin, end, timeframe)
@@ -73,8 +74,8 @@ UpDownRender.propTypes = {
 function Stats() {
   const [btcbusd, setBtcbusd] = useState({});
   const [baros, setBaros] = useState([]);
-
   const [error, setError] = useState('');
+  const { setBusdBtcPrice } = useBusdBtcStore();
   // test socket
   // useEffect(() => {
   //   console.log('starting');
@@ -112,6 +113,7 @@ function Stats() {
         const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
         const { ticker } = JSON.parse(response);
         setBtcbusd(ticker);
+        setBusdBtcPrice(ticker);
       } catch (err) {
         setError(err);
       }
@@ -121,7 +123,7 @@ function Stats() {
       fetchdata();
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [setBusdBtcPrice]);
 
   return (
     <div className="flex flex-col md:flex-row  bg-base-200 ">
