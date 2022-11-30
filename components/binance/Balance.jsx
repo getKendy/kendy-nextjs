@@ -44,7 +44,9 @@ function Balance() {
       <div className="flex justify-between items-center">
         <div className="flex space-x-4 text-xl font-black">
           <div>Balance Total:</div>
-          <div>₿{total}</div>
+          <div>
+            ₿{total} - ${(total * busdBtcPrice.c).toFixed(2)}
+          </div>
         </div>
         <Link href="/settings" className="btn bnt-sm">
           Edit API
