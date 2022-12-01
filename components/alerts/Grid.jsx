@@ -128,6 +128,7 @@ function Grid() {
                   </div>
                 </th>
                 <th className="text-center">Sto %K/%D</th>
+                <th className="text-center">Trend 24h</th>
               </tr>
             </thead>
             <tbody>
@@ -154,6 +155,7 @@ function Grid() {
                       <td className="text-center">
                         {alert.stochk}/{alert.stockd}
                       </td>
+                      <td>{alert.trend24h}</td>
                     </tr>
                   ))
                 : null}

@@ -21,3 +21,4 @@ def createAlertAtributes(client,database,collection):
   databases.create_float_attribute(database['$id'], collection['$id'], 'stochk', True)
   databases.create_float_attribute(database['$id'], collection['$id'], 'stockd', True)
   databases.create_datetime_attribute(database['$id'], collection['$id'], 'date', True)
+  databases.create_string_attribute(database['$id'], collection['$id'], 'trend24h', 50, True)
