@@ -92,6 +92,7 @@ functions.create_variable('build_indicators_from_candles', 'APPWRITE_FUNCTION_AP
 functions.create_variable('build_indicators_from_candles', 'REDIS_CACHE', redis_cache)
 functions.create_variable('build_indicators_from_candles', 'REDIS_PORT', redis_port)
 functions.create_variable('build_indicators_from_candles', 'REDIS_DB', redis_db)
+functions.create_variable('build_indicators_from_candles', 'API', api)
 
 functions.create_variable('volume_24h_check', 'REDIS_CACHE', redis_cache)
 functions.create_variable('volume_24h_check', 'REDIS_PORT', redis_port)
