@@ -27,15 +27,6 @@ function Statics() {
   useEffect(() => {
     const fetchBaros = async () => {
       const allbaros = [];
-      const data = await databases.listDocuments(
-        process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-        process.env.NEXT_PUBLIC_APPWRITE_BAROMETER,
-        [Query.orderDesc('$createdAt'), Query.limit(100)]
-      );
-      data.documents.forEach((baro) => {
-        allbaros.push(baro);
-      });
-      setBaros(allbaros.reverse());
       for (let index = 0; index < 10; index += 1) {
         // eslint-disable-next-line no-await-in-loop
         const moreData = await databases.listDocuments(
