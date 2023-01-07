@@ -99,7 +99,11 @@ export default function Home() {
                 </button>
               </Link>
             ) : (
-              <button type="button" className="btn btn-primary" onClick={() => router.push('/auth/login')}>
+              <button
+                type="button"
+                className="btn btn-primary hover:bg-primary-focus"
+                onClick={() => router.push('/auth/login')}
+              >
                 Get Started
               </button>
             )}
