@@ -38,7 +38,7 @@ export default function Home() {
   }, []);
 
   // render news cards
-  const renderNews = () => news.slice(0,9).map((article) => <NewsCard key={article.title} article={article} />);
+  const renderNews = () => news.slice(0, 9).map((article) => <NewsCard key={article.title} article={article} />);
 
   useEffect(() => {
     setActiveTab('home');
@@ -132,6 +132,19 @@ export default function Home() {
           </div>
         </div>
         {error}
+      </div>
+      <div className="text-section">
+        <h2 className="text-2xl font-bold text-center mb-4">Welcome to GetKendy</h2>
+        <p className="text-gray-600 text-center mb-4">
+          GetKendy is a free crypto scanner and trading alert tool that helps you stay on top of the crypto market.
+        </p>
+        <p className="text-gray-600 text-center mb-4">
+          Our scanner GUI allows you to monitor multiple crypto assets and exchanges in real-time, so you can make
+          informed trades and investments.
+        </p>
+        <p className="text-gray-600 text-center mb-4">
+          Sign up now and start tracking your favorite crypto assets and stay ahead of the market trends.
+        </p>
       </div>
       <div className="news-section mx-2 mb-20">
         <h2 className="text-2xl font-bold text-center mb-4">Latest News</h2>
