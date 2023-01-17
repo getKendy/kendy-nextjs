@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { NextSeo } from 'next-seo';
 
 import { serverless } from '../utils/sdk';
 import useActiveTabStore from '../utils/store/activeTab';
@@ -25,9 +26,7 @@ export default function Home() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const { data } = await axios.get(
-          'https://newsapi.org/v2/top-headlines?sources=crypto-coins-news&apiKey=76bc65a61ba549c489e6738da9d45aec'
-        );
+        const { data } = await axios.get('/api/news');
         setNews(data.articles);
         setError(false);
       } catch (err) {
@@ -100,6 +99,22 @@ export default function Home() {
 
   return (
     <Page title="GetKendy - Home" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
+      <NextSeo
+        title="GetKendy - Home"
+        description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI"
+        openGraph={{
+          title: 'GetKendy - Home',
+          description: 'Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI',
+          url: 'https://crypto.hezik.nl',
+          images: [
+            {
+              url: 'https://crypto.hezik.nl/GetKendyLogoXS.png',
+              alt: 'GetKendy logo',
+            },
+          ],
+          site_name: 'GetKendy',
+        }}
+      />
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="max-w-sm rounded-lg shadow-2xl" />
