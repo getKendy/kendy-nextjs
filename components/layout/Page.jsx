@@ -12,6 +12,11 @@ function Page({ title, description, children }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="robots" content="follow, index" />
         <meta name="description" content={description} />
+        <meta property="og:title" content="GetKendy - Home" />
+        <meta property="og:description" content="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI" />
+        <meta property="og:image" content="https://crypto.hezik.nl/GetKendyLogoS.png" />
+        <link rel="canonical" href="https://crypto.hezik.nl" />
+
         {/* <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
