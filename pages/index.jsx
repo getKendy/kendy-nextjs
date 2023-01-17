@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 import { serverless } from '../utils/sdk';
 import useActiveTabStore from '../utils/store/activeTab';
 import useUserStore from '../utils/store/user';
 import Page from '../components/layout/Page';
+import NewsCard from '../components/NewsCard';
 
 export default function Home() {
   const { user } = useUserStore();
@@ -17,6 +19,26 @@ export default function Home() {
   const [bnbbusd, setBnbbusd] = useState();
   const router = useRouter();
   const [error, setError] = useState(false);
+  const [news, setNews] = useState([]);
+
+  // useEffect hook to fetch news data
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const { data } = await axios.get(
+          'https://newsapi.org/v2/top-headlines?sources=crypto-coins-news&apiKey=76bc65a61ba549c489e6738da9d45aec'
+        );
+        setNews(data.articles);
+        setError(false);
+      } catch (err) {
+        setError(true);
+      }
+    };
+    fetchNews();
+  }, []);
+
+  // render news cards
+  const renderNews = () => news.slice(0,9).map((article) => <NewsCard key={article.title} article={article} />);
 
   useEffect(() => {
     setActiveTab('home');
@@ -110,6 +132,10 @@ export default function Home() {
           </div>
         </div>
         {error}
+      </div>
+      <div className="news-section mx-2 mb-20">
+        <h2 className="text-2xl font-bold text-center mb-4">Latest News</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">{renderNews()}</div>
       </div>
     </Page>
   );
