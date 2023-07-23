@@ -28,7 +28,7 @@ function Grid() {
         process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
         [Query.orderDesc('$id'), Query.limit(10), Query.offset((currentPage - 1) * 10 || 0)]
       );
-
+      console.log(data)
       if (data.documents[0]) {
         setAlerts(data.documents);
         setTotalPages(data.total / 10);
@@ -111,6 +111,7 @@ function Grid() {
             <thead className="">
               <tr className="">
                 <th>Date</th>
+                <th>Exchange</th>
                 <th className="truncate">Interval</th>
                 <th>Market</th>
                 <th>Volume 24h</th>
@@ -134,30 +135,31 @@ function Grid() {
             <tbody>
               {alerts.length > 0
                 ? alerts.map((alert) => (
-                    <tr key={alert.$id} className="shadow shadow-primary-content rounded-2xl">
-                      <td>{formatDateAlert(alert.date)}</td>
-                      <td>{alert.timeframe}</td>
-                      <td>{alert.market}</td>
-                      <td>{alert.volume24h}</td>
-                      <td>{alert.close}</td>
-                      <td className="">
-                        <div className="flex space-x-1">
-                          <div>{alert.bbl}</div>
-                          <div>/</div>
-                          <div>{alert.bbm}</div>
-                        </div>
-                        <div className="flex space-x-1">
-                          <div>{alert.bbu}</div>
-                          <div>/</div>
-                          <div>{alert.bbb}%</div>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        {alert.stochk}/{alert.stockd}
-                      </td>
-                      <td>{alert.trend24h}</td>
-                    </tr>
-                  ))
+                  <tr key={alert.$id} className="shadow shadow-primary-content rounded-2xl">
+                    <td>{formatDateAlert(alert.date)}</td>
+                    <td>{alert.exchange}</td>
+                    <td>{alert.timeframe}</td>
+                    <td>{alert.market}</td>
+                    <td>{alert.volume24h}</td>
+                    <td>{alert.close}</td>
+                    <td className="">
+                      <div className="flex space-x-1">
+                        <div>{alert.bbl}</div>
+                        <div>/</div>
+                        <div>{alert.bbm}</div>
+                      </div>
+                      <div className="flex space-x-1">
+                        <div>{alert.bbu}</div>
+                        <div>/</div>
+                        <div>{alert.bbb}%</div>
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      {alert.stochk}/{alert.stockd}
+                    </td>
+                    <td>{alert.trend24h}</td>
+                  </tr>
+                ))
                 : null}
             </tbody>
           </table>
@@ -165,34 +167,34 @@ function Grid() {
           <div className="md:hidden mb-6">
             {alerts.length > 0
               ? alerts.map((alert) => (
-                  <div
-                    key={alert.$id}
-                    className=" grid grid-cols-2 p-2 m-2 border border-primary rounded-lg shadow shadow-secondary"
-                  >
-                    <div>Date:</div>
-                    <div className="">{formatDateAlert(alert.date)}</div>
-                    <div>Timeframe:</div>
-                    <div className="">{alert.timeframe}</div>
-                    <div>Market:</div>
-                    <div className="">{alert.market}</div>
-                    <div>Volume 24h:</div>
-                    <div className="">{alert.volume24h}</div>
-                    <div>Close:</div>
-                    <div className="">{alert.close}</div>
-                    <div>BBL:</div>
-                    <div className="">{alert.bbl}</div>
-                    <div>BBM:</div>
-                    <div className="">{alert.bbm}</div>
-                    <div>BBU:</div>
-                    <div className="">{alert.bbu}</div>
-                    <div>BBB:</div>
-                    <div className="">{alert.bbb}%</div>
-                    <div>Stoch %K/%D:</div>
-                    <div className="">
-                      {alert.stochk}/{alert.stochk}
-                    </div>
+                <div
+                  key={alert.$id}
+                  className=" grid grid-cols-2 p-2 m-2 border border-primary rounded-lg shadow shadow-secondary"
+                >
+                  <div>Date:</div>
+                  <div className="">{formatDateAlert(alert.date)}</div>
+                  <div>Timeframe:</div>
+                  <div className="">{alert.timeframe}</div>
+                  <div>Market:</div>
+                  <div className="">{alert.market}</div>
+                  <div>Volume 24h:</div>
+                  <div className="">{alert.volume24h}</div>
+                  <div>Close:</div>
+                  <div className="">{alert.close}</div>
+                  <div>BBL:</div>
+                  <div className="">{alert.bbl}</div>
+                  <div>BBM:</div>
+                  <div className="">{alert.bbm}</div>
+                  <div>BBU:</div>
+                  <div className="">{alert.bbu}</div>
+                  <div>BBB:</div>
+                  <div className="">{alert.bbb}%</div>
+                  <div>Stoch %K/%D:</div>
+                  <div className="">
+                    {alert.stochk}/{alert.stochk}
                   </div>
-                ))
+                </div>
+              ))
               : null}
           </div>
         </div>
