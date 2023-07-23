@@ -38,6 +38,7 @@ services:
     restart: unless-stopped
     ports:
       - 6379:6379
+      
   celery_worker1_1:
     build:
       context: ./celery
@@ -58,7 +59,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance 
+    command: celery -A src worker --loglevel=INFO -Q binance,kucoin
     volumes:
       - ./celery:/app
     env_file:
@@ -73,7 +74,7 @@ services:
       context: ./celery
       dockerfile: ./Dockerfile
     image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance 
+    command: celery -A src worker --loglevel=INFO -Q kucoin 
     volumes:
       - ./celery:/app
     env_file:
