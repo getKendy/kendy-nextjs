@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Query } from 'appwrite';
+import axios from 'axios';
 import useAlertStore from '../../utils/store/alert';
-import { databases } from '../../utils/sdk';
+import { databases, getJWT } from '../../utils/sdk';
 import { formatDateAlert } from '../../utils/formatDate';
+import useAutotradeStore from '../../utils/store/autotrade';
 
 function Grid() {
   const [alerts, setAlerts] = useState([]);
@@ -11,6 +13,7 @@ function Grid() {
   const { lastAlert, addAlert } = useAlertStore();
   const checkboxAllowAudio = useRef(false);
   const rangeAudioLevel = useRef(50);
+  const { autotrade } = useAutotradeStore();
 
   const playAlert = () => {
     const ding = new Audio('ding.mp3');
@@ -22,27 +25,31 @@ function Grid() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
-      const data = await databases.listDocuments(
-        process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-        process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-        [Query.orderDesc('$id'), Query.limit(10), Query.offset((currentPage - 1) * 10 || 0)]
-      );
-      console.log(data);
-      if (data.documents[0]) {
-        setAlerts(data.documents);
-        setTotalPages(data.total / 10);
-        if (!lastAlert && currentPage === 1) {
-          // console.log('setting lastalert for the fist time')
-          addAlert(data.documents[0]);
-          return;
-        }
+      try {
+        // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
+        const data = await databases.listDocuments(
+          process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+          process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+          [Query.orderDesc('$id'), Query.limit(10), Query.offset((currentPage - 1) * 10 || 0)]
+        );
+        // console.log(data);
+        if (data.documents[0]) {
+          setAlerts(data.documents);
+          setTotalPages(data.total / 10);
+          if (!lastAlert && currentPage === 1) {
+            // console.log('setting lastalert for the fist time')
+            addAlert(data.documents[0]);
+            return;
+          }
 
-        if (lastAlert.$id !== data.documents[0].$id && currentPage === 1) {
-          // console.log('new alert')
-          addAlert(data.documents[0]);
-          playAlert();
+          if (lastAlert.$id !== data.documents[0].$id && currentPage === 1) {
+            // console.log('new alert')
+            addAlert(data.documents[0]);
+            playAlert();
+          }
         }
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchData();
@@ -70,10 +77,20 @@ function Grid() {
     e.preventDefault();
   };
 
+  async function handleBuyKucoin(coin) {
+    try {
+      console.log(coin);
+      const data = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="flex flex-col flex-grow bg-base-200">
       {/* <Test></Test> */}
-      <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Binance Scanner Alerts:</h2>
+      <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Scanner Alerts:</h2>
       {alerts.length > 0 ? (
         <div className="m-1 p-1 justify-center items-center self-center shadow shadow-primary rounded-xl">
           <form onSubmit={formSubmitHandler}>
@@ -130,6 +147,7 @@ function Grid() {
                 </th>
                 <th className="text-center">Sto %K/%D</th>
                 <th className="text-center">Trend 24h</th>
+                <th className="text-center"> </th>
               </tr>
             </thead>
             <tbody>
@@ -158,6 +176,17 @@ function Grid() {
                         {alert.stochk}/{alert.stockd}
                       </td>
                       <td>{alert.trend24h}</td>
+                      <td>
+                        {alert.exchange === 'kucoin' && (
+                          <button
+                            type="button"
+                            className={`btn btn-sm  ${autotrade ? 'btn-primary' : 'btn-error'}`}
+                            onClick={() => handleBuyKucoin(alert)}
+                          >
+                            buy
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))
                 : null}

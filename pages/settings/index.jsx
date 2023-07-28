@@ -7,6 +7,7 @@ import useActiveTabStore from '../../utils/store/activeTab';
 import Page from '../../components/layout/Page';
 import Profile from '../../components/user/settings/Profile';
 import Api from '../../components/user/settings/Api';
+import KuApi from '../../components/kucoin/KuApi';
 
 function Settings() {
   const { user } = useUserStore();
@@ -33,10 +34,14 @@ function Settings() {
           <button type="button" onClick={() => setSettingId('api')} className="self-stretch btn btn-sm btn-ghost">
             API
           </button>
+          <button type="button" onClick={() => setSettingId('kuapi')} className="self-stretch btn btn-sm btn-ghost">
+            Kucoin API
+          </button>
         </div>
         <div className="flex flex-grow justify-center items-center mt-5">
           {settingId === 'profile' && <Profile />}
           {settingId === 'api' && <Api />}
+          {settingId === 'kuapi' && <KuApi />}
         </div>
       </div>
     </Page>

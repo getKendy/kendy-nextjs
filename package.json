@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "daisyui": "^2.52.0",
     "encoding": "^0.1.13",
+    "kucoin-node-sdk": "^1.0.5",
     "moment": "^2.29.4",
     "next": "13.0.1",
     "next-connect": "^0.13.0",

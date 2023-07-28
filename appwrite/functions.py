@@ -23,6 +23,8 @@ alertId = ''
 binanceId = ''       # databaseId
 col_apiId = ''
 col_balancesId = ''
+kucoinId = ''
+col_apiKuId = ''
 
 functions = Functions(client)
 
@@ -97,3 +99,8 @@ functions.create_variable('build_indicators_from_candles', 'API', api)
 functions.create_variable('volume_24h_check', 'REDIS_CACHE', redis_cache)
 functions.create_variable('volume_24h_check', 'REDIS_PORT', redis_port)
 functions.create_variable('volume_24h_check', 'REDIS_DB', redis_db)
+
+functions.create_variable('StoreKuApi', 'APPWRITE_FUNCTION_ENDPOINT', endpoint)
+functions.create_variable('StoreKuApi', 'APPWRITE_FUNCTION_PROJECT_ID', projectId)
+functions.create_variable('StoreKuApi', 'APPWRITE_DATABASEID', kucoinId)
+functions.create_variable('StoreKuApi', 'APPWRITE_COL_APIID', col_apiKuId)

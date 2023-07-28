@@ -3,7 +3,7 @@ from appwrite.services.databases import Databases
 
 from database.barometer import createBarometer, createBaroAtributes
 from database.alerts import createAlerts, createAlertAtributes
-
+from database.kucoin import createKuApi, createKuApiAtributes
 from database.binance import createApi, createApiAtributes
 from database.balances import createBalance, createBalanceAtributes
 client = Client()
@@ -57,3 +57,25 @@ createApiAtributes(client, Binance, api)
 
 balances = createBalance(client, Binance)
 createBalanceAtributes(client, Binance, balances)
+
+
+### Kucoin data
+Kucoin = {}
+databases = Databases(client)
+foundDatabases = databases.list()
+for result in foundDatabases['databases']:
+  if result['name'] == 'Kucoin':
+    Kucoin = result
+    
+if Kucoin != {}:
+  print('found')
+  print(Kucoin)
+else:
+  print('not found')
+  Kucoin = databases.create('unique()', 'Kucoin')
+  
+api = createKuApi(client, Kucoin)
+createKuApiAtributes(client, Kucoin, api)
+
+# balances = createBalance(client, Kucoin)
+# createBalanceAtributes(client, Kucoin, balances)

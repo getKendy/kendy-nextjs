@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { account, serverless } from '../../../utils/sdk';
+import { account, serverless } from '../../utils/sdk';
 
-function Api() {
+function KuApi() {
   const [apikey, setApikey] = useState('');
   const [apisecret, setApisecret] = useState('');
+  const [apipassphrase, setApipassphrase] = useState('');
   const [status, setStatus] = useState('');
   const router = useRouter();
 
@@ -14,8 +15,8 @@ function Api() {
     try {
       const token = await account.createJWT();
       await serverless.createExecution(
-        'StoreApi',
-        JSON.stringify({ token: token.jwt, apiKey: apikey, apiSecret: apisecret })
+        'StoreKuApi',
+        JSON.stringify({ token: token.jwt, apiKey: apikey, apiSecret: apisecret, apiPassphrase: apipassphrase })
       );
       setStatus('Api Saved');
       router.reload();
@@ -50,6 +51,17 @@ function Api() {
             className="rounded bg-transparent border border-primary"
           />
         </div>
+        <div className="grid grid-cols-2 justify-center items-center">
+          <div>Passphrase</div>
+          <input
+            type="text"
+            name="passphrase"
+            id="passphrase"
+            value={apipassphrase}
+            onChange={(evt) => setApipassphrase(evt.target.value)}
+            className="rounded bg-transparent border border-primary"
+          />
+        </div>
         <div>
           <button type="submit" className="btn btn-sm">
             Save Api
@@ -61,4 +73,4 @@ function Api() {
   );
 }
 
-export default Api;
+export default KuApi;

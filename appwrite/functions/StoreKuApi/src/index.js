@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-const sdk = require('node-appwrite');
+const sdk = require("node-appwrite");
 
 /*
   'req' variable has:
@@ -14,9 +13,9 @@ const sdk = require('node-appwrite');
   If an error is thrown, a response with code 500 will be returned.
 */
 
-// eslint-disable-next-line func-names
 module.exports = async function (req, res) {
   const client = new sdk.Client();
+
   // You can remove services you don't use
   const account = new sdk.Account(client);
   // const avatars = new sdk.Avatars(client);
@@ -27,10 +26,9 @@ module.exports = async function (req, res) {
   // const storage = new sdk.Storage(client);
   // const teams = new sdk.Teams(client);
   // const users = new sdk.Users(client);
-  // const jwt = JSON.parse(req.payload);
-  // res.json(jwt);
+
   const payload = JSON.parse(req.payload);
-  const { token, apiKey, apiSecret } = payload;
+  const { token, apiKey, apiSecret, apiPassphrase } = payload;
   // res.json({ token, apiKey, apiSecret })
   if (!req.variables.APPWRITE_FUNCTION_ENDPOINT || !req.variables.APPWRITE_FUNCTION_PROJECT_ID) {
     res.send('Environment variables are not set. Function cannot use Appwrite SDK.');
@@ -49,7 +47,7 @@ module.exports = async function (req, res) {
       req.variables.APPWRITE_DATABASEID,
       req.variables.APPWRITE_COL_APIID,
       'unique()',
-      { apiKey, apiSecret, userId: curUser.$id },
+      { apiKey, apiSecret, apiPassphrase, userId: curUser.$id },
       [
         sdk.Permission.read(sdk.Role.user(curUser.$id)),
         sdk.Permission.update(sdk.Role.user(curUser.$id)),
@@ -62,7 +60,7 @@ module.exports = async function (req, res) {
       req.variables.APPWRITE_DATABASEID,
       req.variables.APPWRITE_COL_APIID,
       docs.documents[0].$id,
-      { apiKey, apiSecret }
+      { apiKey, apiSecret, apiPassphrase }
     );
   }
 

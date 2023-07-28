@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 
 import { serverless } from '../../utils/sdk';
+import Trades from '../trade/Trades';
+
 // import Binance from '../binance/Binance';
 
 function TickerDisplay({ ticker, coin }) {
@@ -13,14 +15,14 @@ function TickerDisplay({ ticker, coin }) {
         +ticker?.c - +ticker?.o > 0
           ? (+ticker?.c * 100) / +ticker?.o - 100 > 1
             ? (+ticker?.c * 100) / +ticker?.o - 100 > 5
-              ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-lg text-white bg-green-800 shadow-green-600 p-2 rounded-xl'
-              : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-md bg-green-500 shadow-green-300 p-2 rounded-xl'
-            : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-green-500 p-2 rounded-xl'
+              ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-lg text-white bg-green-800 shadow-green-600 p-2 rounded-xl'
+              : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-md bg-green-500 shadow-green-300 p-2 rounded-xl'
+            : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-inner shadow-green-500 p-2 rounded-xl'
           : (+ticker?.c * 100) / +ticker?.o - 100 < -1
           ? (+ticker?.c * 100) / +ticker?.o - 100 < -5
-            ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-lg text-white bg-red-800 shadow-red-600 p-2 rounded-xl'
-            : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-md bg-red-500 shadow-red-300 p-2 rounded-xl'
-          : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-3 mb-5 shadow-inner shadow-red-500 p-2 rounded-xl'
+            ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-lg text-white bg-red-800 shadow-red-600 p-2 rounded-xl'
+            : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-md bg-red-500 shadow-red-300 p-2 rounded-xl'
+          : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-inner shadow-red-500 p-2 rounded-xl'
       }
     >
       <div className="flex space-x-2 justify-center">
@@ -135,11 +137,12 @@ function Side() {
           <div className="flex flex-col md:flex-row md:space-x-2 xl:flex-row xl:space-x-2">
             <TickerDisplay ticker={ethbusd} coin="ETH" />
             <TickerDisplay ticker={bnbbusd} coin="BNB" />
+            <TickerDisplay ticker={paxgbusd} coin="PAXG" />
           </div>
-          <TickerDisplay ticker={paxgbusd} coin="PAXG" />
         </div>
         <div className="text-red-500 text-center">{error}</div>
         {/* <Binance /> */}
+        <Trades />
       </div>
     </div>
   );

@@ -2,12 +2,13 @@
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import { Query } from 'appwrite';
 
 import { formatDate } from '../../utils/formatDate';
 import { serverless, databases } from '../../utils/sdk';
 import useBusdBtcStore from '../../utils/store/busdbtcPrice';
+import useAutotradeStore from '../../utils/store/autotrade';
 
 function UpDownRender({ begin, end, timeframe }) {
   // console.log(begin, end, timeframe)
@@ -76,6 +77,8 @@ function Stats() {
   const [baros, setBaros] = useState([]);
   const [error, setError] = useState('');
   const { setBusdBtcPrice } = useBusdBtcStore();
+  const { setVolatility } = useAutotradeStore();
+
   // test socket
   // useEffect(() => {
   //   console.log('starting');
@@ -114,6 +117,9 @@ function Stats() {
         const { ticker } = JSON.parse(response);
         setBtcbusd(ticker);
         setBusdBtcPrice(ticker);
+        const volat = ((+ticker.c * 100) / +ticker?.o - 100).toFixed(2);
+        // console.log(volat)
+        setVolatility(+volat);
       } catch (err) {
         setError(err);
       }
