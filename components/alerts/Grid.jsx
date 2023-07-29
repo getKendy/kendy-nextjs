@@ -147,7 +147,7 @@ function Grid() {
                 </th>
                 <th className="text-center">Sto %K/%D</th>
                 <th className="text-center">Trend 24h</th>
-                <th className="text-center"> </th>
+                <th className="text-center w-14"> </th>
               </tr>
             </thead>
             <tbody>

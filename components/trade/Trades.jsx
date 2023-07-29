@@ -5,20 +5,22 @@ import { getJWT } from '../../utils/sdk';
 import useAutotradeStore from '../../utils/store/autotrade';
 
 function Trades() {
+  const [btcPrec, setBtcPerc] = useState({ total: 0, btc: 0 });
   const [activeTrades, setActiveTrades] = useState([]);
   const { autotrade, coins, trades, volatility, setAutotrade, setCoins, setTrades } = useAutotradeStore();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const { data } = await axios.get(`/api/kucoin/funds?jwt=${await getJWT()}`);
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`/api/kucoin/funds?jwt=${await getJWT()}`);
+        // console.log(data);
+        setBtcPerc(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +63,7 @@ function Trades() {
   return (
     <div className="flex flex-col max-w-full">
       <h1 className={`text-lg font-bold ${autotrade ? 'text-green-500' : 'text-red-500'}`}>
-        Open trades: {trades} in {coins} market(s).
+        Open trades: {trades} in {coins} market(s). - {((btcPrec.btc * 100) / btcPrec.total).toFixed(2)}% BTC
       </h1>
       {/* <KuApi /> */}
       <div className="flex flex-wrap">
