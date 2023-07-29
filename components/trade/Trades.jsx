@@ -20,6 +20,10 @@ function Trades() {
       }
     };
     fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+    }, 300000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
