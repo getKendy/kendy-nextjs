@@ -29,6 +29,7 @@ col_apiKuId = ''
 functions = Functions(client)
 
 functions.create_variable('GetTicker', 'APP_ENV_API', app_env_api)
+functions.create_variable('GetKuTicker', 'APP_ENV_API', app_env_api)
 
 functions.create_variable('get_database_price_for_pair', 'API', api)
 

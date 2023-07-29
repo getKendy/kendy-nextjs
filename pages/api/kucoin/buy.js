@@ -12,7 +12,7 @@ handler.post(async (req, res) => {
   const { query, body } = req;
   const { jwt } = query;
   const { coin } = body;
-  console.log(body);
+  // console.log(body);
   if (!jwt) {
     return res.status(401).send({ error: 'Missing JWT' });
   }

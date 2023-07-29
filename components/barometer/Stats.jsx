@@ -113,11 +113,12 @@ function Stats() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
+        const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
         const { ticker } = JSON.parse(response);
+        // console.log(ticker);
         setBtcbusd(ticker);
         setBusdBtcPrice(ticker);
-        const volat = ((+ticker.c * 100) / +ticker?.o - 100).toFixed(2);
+        const volat = ((+ticker.close * 100) / +ticker?.open - 100).toFixed(2);
         // console.log(volat)
         setVolatility(+volat);
       } catch (err) {
@@ -160,44 +161,50 @@ function Stats() {
       </div>
 
       <div className="p-1 flex flex-col flex-grow justify-center items-center">
-        <div className="flex self-start">Ticker BTC/BUSD</div>
+        <div className="flex self-start">Ticker BTC/USDT</div>
         <div className="prose">
-          <h1 className="text-secondary-content">${+btcbusd.c}</h1>
+          <h1 className="text-secondary-content">${+btcbusd.close}</h1>
         </div>
-        {(+btcbusd?.c * 100) / +btcbusd?.o - 100 > 0 ? (
-          (+btcbusd?.c * 100) / +btcbusd?.o - 100 > 1 ? (
-            (+btcbusd?.c * 100) / +btcbusd?.o - 100 > 5 ? (
+        {(+btcbusd?.close * 100) / +btcbusd?.open - 100 > 0 ? (
+          (+btcbusd?.close * 100) / +btcbusd?.open - 100 > 1 ? (
+            (+btcbusd?.close * 100) / +btcbusd?.open - 100 > 5 ? (
               <div className="text-white bg-green-800 shadow-lg shadow-green-600 rounded-lg pl-2 ">
-                24h: ↗︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+                24h: ↗︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+                {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
                 %)
               </div>
             ) : (
               <div className="text-white bg-green-500 shadow-md shadow-green-300 rounded-lg pl-2 ">
-                24h: ↗︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+                24h: ↗︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+                {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
                 %)
               </div>
             )
           ) : (
             <div className=" text-green-500">
-              24h: ↗︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+              24h: ↗︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+              {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
               %)
             </div>
           )
-        ) : (+btcbusd?.c * 100) / +btcbusd?.o - 100 < -1 ? (
-          (+btcbusd?.c * 100) / +btcbusd?.o - 100 < -5 ? (
+        ) : (+btcbusd?.close * 100) / +btcbusd?.open - 100 < -1 ? (
+          (+btcbusd?.close * 100) / +btcbusd?.open - 100 < -5 ? (
             <div className=" text-white bg-red-800 shadow-lg shadow-red-600 rounded-lg pl-2 ">
-              24h: ↘︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+              24h: ↘︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+              {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
               %)
             </div>
           ) : (
             <div className=" text-white bg-red-500 shadow-md shadow-red-300 rounded-lg pl-2 ">
-              24h: ↘︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+              24h: ↘︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+              {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
               %)
             </div>
           )
         ) : (
           <div className=" text-red-500">
-            24h: ↘︎ ${(+btcbusd.c - +btcbusd.o).toFixed()} ({((+btcbusd?.c * 100) / +btcbusd?.o - 100).toFixed(2)}
+            24h: ↘︎ ${(+btcbusd.close - +btcbusd.open).toFixed()} (
+            {((+btcbusd?.close * 100) / +btcbusd?.open - 100).toFixed(2)}
             %)
           </div>
         )}

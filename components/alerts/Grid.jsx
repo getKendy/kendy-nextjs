@@ -80,7 +80,7 @@ function Grid() {
   async function handleBuyKucoin(coin) {
     try {
       console.log(coin);
-      const data = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin });
+      const { data } = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin });
       console.log(data);
     } catch (error) {
       console.log(error);

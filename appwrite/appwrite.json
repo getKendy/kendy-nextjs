@@ -225,6 +225,23 @@
             "events": [],
             "schedule": "",
             "timeout": 15
+        },
+        {
+            "$id": "GetKuTicker",
+            "name": "GetKuTicker",
+            "runtime": "node-18.0",
+            "path": "functions/GetKuTicker",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
         }
     ]
 }

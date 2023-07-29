@@ -46,7 +46,7 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BTCBUSD');
+        const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
         const { ticker } = JSON.parse(response);
         setBtcbusd(ticker);
         setError(false);
@@ -64,8 +64,9 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'ETHBUSD');
+        const { response } = await serverless.createExecution('GetTicker', 'ETHUSDT');
         const { ticker } = JSON.parse(response);
+        // const { data: ticker } = await axios.get(`/api/binance/ticker?symbol=ETHBUSD`);
         setEthbusd(ticker);
         setError(false);
       } catch (err) {
@@ -82,7 +83,7 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BNBBUSD');
+        const { response } = await serverless.createExecution('GetTicker', 'BNBUSDT');
         const { ticker } = JSON.parse(response);
         setBnbbusd(ticker);
         setError(false);
@@ -122,11 +123,11 @@ export default function Home() {
           <div>
             <div className="grid grid-cols-3">
               <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.c).toFixed()}</div>
+              <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.close).toFixed()}</div>
               <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.c).toFixed()}</div>
+              <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.close).toFixed()}</div>
               <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.c).toFixed()}</div>
+              <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.close).toFixed()}</div>
             </div>
             <p className="py-6">Crypto Scanner Trading Alerts</p>
             {user ? (

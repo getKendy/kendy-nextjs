@@ -8,6 +8,18 @@ function Trades() {
   const [activeTrades, setActiveTrades] = useState([]);
   const { autotrade, coins, trades, volatility, setAutotrade, setCoins, setTrades } = useAutotradeStore();
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await axios.get(`/api/kucoin/funds?jwt=${await getJWT()}`);
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

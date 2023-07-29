@@ -41,8 +41,8 @@ module.exports = async function (req, res) {
   //     .setSelfSigned(true);
   // }
 
-  const { data } = await axios.get(
-    `http://${req.variables.APP_ENV_API}:8000/api/v2/tickerredis/${req.payload}?exchange=binance`
+  const { data } = await axios(
+    `http://${req.variables.APP_ENV_API}:8000/api/v2/tickerredis/${req.payload}?exchange=kucoin`
   );
   res.json({
     ticker: data,
