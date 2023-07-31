@@ -11,7 +11,7 @@ handler.use(cors());
 handler.post(async (req, res) => {
   const { query, body } = req;
   const { jwt } = query;
-  const { coin } = body;
+  const { coin, profitPerc, tradePerc } = body;
   // console.log(body);
   if (!jwt) {
     return res.status(401).send({ error: 'Missing JWT' });
@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
     });
     const { data: balance } = await API.rest.User.Account.getAccountsList({ type: 'trade', currency: 'BTC' });
     // console.log(balance);
-    const tradeAmount = balance[0].available * 0.05;
+    const tradeAmount = balance[0].available * (tradePerc / 100);
     // console.log(tradeAmount);
     const { data: buymarkettrade } = await API.rest.Trade.Orders.postOrder(
       {
@@ -51,7 +51,7 @@ handler.post(async (req, res) => {
     // const sellPrice = parseFloat(order.price) * 1.15;
     const buyPrice = tradeAmount / +order.dealSize;
     // console.log({ buy: buyPrice });
-    const sellPrice = buyPrice * 1.0075;
+    const sellPrice = buyPrice * (1 + profitPerc / 100);
     // console.log({ sell: sellPrice });
     const selllimittrade = await API.rest.Trade.Orders.postOrder(
       {

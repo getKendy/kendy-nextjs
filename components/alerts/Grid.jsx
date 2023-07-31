@@ -13,7 +13,7 @@ function Grid() {
   const { lastAlert, addAlert } = useAlertStore();
   const checkboxAllowAudio = useRef(false);
   const rangeAudioLevel = useRef(50);
-  const { autotrade } = useAutotradeStore();
+  const { autotrade, profitPerc, tradePerc } = useAutotradeStore();
 
   const playAlert = () => {
     const ding = new Audio('ding.mp3');
@@ -79,8 +79,8 @@ function Grid() {
 
   async function handleBuyKucoin(coin) {
     try {
-      console.log(coin);
-      const { data } = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin });
+      // console.log(coin);
+      const { data } = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin, profitPerc, tradePerc });
       console.log(data);
     } catch (error) {
       console.log(error);
