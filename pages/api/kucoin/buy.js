@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
     });
     const { data: balance } = await API.rest.User.Account.getAccountsList({ type: 'trade', currency: 'BTC' });
     // console.log(balance);
-    const tradeAmount = balance[0].available * 0.1;
+    const tradeAmount = balance[0].available * 0.05;
     // console.log(tradeAmount);
     const { data: buymarkettrade } = await API.rest.Trade.Orders.postOrder(
       {
@@ -49,7 +49,10 @@ handler.post(async (req, res) => {
     const { data: order } = await API.rest.Trade.Orders.getOrderByID(buymarkettrade.orderId);
     // console.log(order);
     // const sellPrice = parseFloat(order.price) * 1.15;
-    // console.log(sellPrice);
+    const buyPrice = tradeAmount / +order.dealSize;
+    // console.log({ buy: buyPrice });
+    const sellPrice = buyPrice * 1.0075;
+    // console.log({ sell: sellPrice });
     const selllimittrade = await API.rest.Trade.Orders.postOrder(
       {
         clientOid: generateUUID(),
@@ -59,8 +62,7 @@ handler.post(async (req, res) => {
         tradeType: 'TRADE',
       },
       {
-        // price: sellPrice.toFixed(8),
-        price: coin.bbm,
+        price: sellPrice.toFixed(8),
         size: parseFloat(order.dealSize),
       }
     );

@@ -183,7 +183,7 @@ function Grid() {
                             className={`btn btn-sm  ${autotrade ? 'btn-primary' : 'btn-error'}`}
                             onClick={() => handleBuyKucoin(alert)}
                           >
-                            buy
+                            market buy
                           </button>
                         )}
                       </td>
