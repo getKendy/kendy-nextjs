@@ -100,71 +100,73 @@ export default function Home() {
 
   return (
     <Page title="GetKendy - Home" description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI">
-      <NextSeo
-        title="GetKendy - Home"
-        description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI"
-        openGraph={{
-          title: 'GetKendy - Home',
-          description: 'Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI',
-          url: 'https://crypto.hezik.nl',
-          images: [
-            {
-              url: 'https://crypto.hezik.nl/GetKendyLogoXS.png',
-              alt: 'GetKendy logo',
-            },
-          ],
-          site_name: 'GetKendy',
-        }}
-      />
-      <div className="hero">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="max-w-sm rounded-lg shadow-2xl" />
-          <Image src="/GetKendyLogo.png" width={600} height={600} alt="Logo" />
-          <div>
-            <div className="grid grid-cols-3">
-              <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.close).toFixed()}</div>
-              <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.close).toFixed()}</div>
-              <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
-              <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.close).toFixed()}</div>
-            </div>
-            <p className="py-6">Crypto Scanner Trading Alerts</p>
-            {user ? (
-              <Link href="/alerts">
-                <button type="button" className="btn btn-primary">
-                  Open Dashboard
+      <div>
+        <NextSeo
+          title="GetKendy - Home"
+          description="Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI"
+          openGraph={{
+            title: 'GetKendy - Home',
+            description: 'Free Crypto Scanner Trading Alerts. CryptoCoiners Scanner GUI',
+            url: 'https://crypto.hezik.nl',
+            images: [
+              {
+                url: 'https://crypto.hezik.nl/GetKendyLogoXS.png',
+                alt: 'GetKendy logo',
+              },
+            ],
+            site_name: 'GetKendy',
+          }}
+        />
+        <div className="hero">
+          <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="max-w-sm rounded-lg shadow-2xl" />
+            <Image src="/GetKendyLogo.png" width={600} height={600} alt="Logo" />
+            <div>
+              <div className="grid grid-cols-3">
+                <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.close).toFixed()}</div>
+                <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.close).toFixed()}</div>
+                <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.close).toFixed()}</div>
+              </div>
+              <p className="py-6">Crypto Scanner Trading Alerts</p>
+              {user ? (
+                <Link href="/alerts">
+                  <button type="button" className="btn btn-primary">
+                    Open Dashboard
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary hover:bg-primary-focus"
+                  onClick={() => router.push('/auth/login')}
+                >
+                  Get Started
                 </button>
-              </Link>
-            ) : (
-              <button
-                type="button"
-                className="btn btn-primary hover:bg-primary-focus"
-                onClick={() => router.push('/auth/login')}
-              >
-                Get Started
-              </button>
-            )}
+              )}
+            </div>
           </div>
+          {error}
         </div>
-        {error}
-      </div>
-      <div className="text-section">
-        <h2 className="text-2xl font-bold text-center mb-4">Welcome to GetKendy</h2>
-        <p className="text-gray-600 text-center mb-4">
-          GetKendy is a free crypto scanner and trading alert tool that helps you stay on top of the crypto market.
-        </p>
-        <p className="text-gray-600 text-center mb-4">
-          Our scanner GUI allows you to monitor multiple crypto assets and exchanges in real-time, so you can make
-          informed trades and investments.
-        </p>
-        <p className="text-gray-600 text-center mb-4">
-          Sign up now and start tracking your favorite crypto assets and stay ahead of the market trends.
-        </p>
-      </div>
-      <div className="news-section mx-2 mb-20">
-        <h2 className="text-2xl font-bold text-center mb-4">Latest News</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">{renderNews()}</div>
+        <div className="text-section">
+          <h2 className="text-2xl font-bold text-center mb-4">Welcome to GetKendy</h2>
+          <p className="text-gray-600 text-center mb-4">
+            GetKendy is a free crypto scanner and trading alert tool that helps you stay on top of the crypto market.
+          </p>
+          <p className="text-gray-600 text-center mb-4">
+            Our scanner GUI allows you to monitor multiple crypto assets and exchanges in real-time, so you can make
+            informed trades and investments.
+          </p>
+          <p className="text-gray-600 text-center mb-4">
+            Sign up now and start tracking your favorite crypto assets and stay ahead of the market trends.
+          </p>
+        </div>
+        <div className="news-section mx-2 mb-20">
+          <h2 className="text-2xl font-bold text-center mb-4">Latest News</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">{renderNews()}</div>
+        </div>
       </div>
     </Page>
   );

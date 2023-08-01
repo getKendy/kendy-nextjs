@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import KuApi from '../kucoin/KuApi';
 import Link from 'next/link';
+import Image from 'next/image';
 import { account, getJWT } from '../../utils/sdk';
 import useAutotradeStore from '../../utils/store/autotrade';
 
@@ -92,7 +93,7 @@ function Trades() {
 
   if (!funds) {
     return (
-      <div>
+      <div className="flex justify-center items-center">
         <button type="button">
           <Link href="/settings">enter kucoin api</Link>
         </button>
@@ -102,7 +103,7 @@ function Trades() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-around gap-x-5 text-lg font-bold">
+      <div className="flex flex-wrap justify-around gap-x-5 text-lg font-bold">
         <div className={autotrade ? 'text-green-500' : 'text-red-500'}>
           Open trades: {trades} in {coins} market(s). - {((btcPrec.btc * 100) / btcPrec.total).toFixed(2)}% BTC
         </div>
@@ -139,17 +140,27 @@ function Trades() {
           </div>
         </div>
       </div>
-      {/* <KuApi /> */}
-      <div className="flex">
+      {/* kucoin trades */}
+      <div className="flex flex-wrap justify-around items-center">
         {activeTrades.map((trade) => (
-          <div key={trade.id} className="flex flex-col m-1 p-2 border border-primary rounded-lg">
-            <div className="flex gap-x-4">
-              <div>{trade.symbol}</div>
-              <div>{trade.price}</div>
+          <div
+            key={trade.id}
+            className="flex flex-col justify-around items-center gap-x-2 m-1 p-2 border border-primary rounded-lg shdow shadow-lg shadow-secondary"
+          >
+            <div className="flex items-center justify-around gap-x-2">
+              <div>
+                <Image alt="kucoin" src="/kucoin.png" width={35} height={35} />
+              </div>
+              <div className="flex flex-col  items-end">
+                <div className="flex items-center gap-x-2">
+                  <div className="text-xs text-primary-focus font-bold">{trade.size}</div>
+                  <div>{trade.side}</div>
+                </div>
+                <div>{trade.symbol}</div>
+              </div>
             </div>
             <div className="flex gap-x-2">
-              <div>{trade.side}</div>
-              <div>{trade.size}</div>
+              <div>{trade.price}</div>
             </div>
           </div>
         ))}

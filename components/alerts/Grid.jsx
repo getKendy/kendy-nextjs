@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Query } from 'appwrite';
 import axios from 'axios';
+import Image from 'next/image';
 import useAlertStore from '../../utils/store/alert';
 import { account, databases, getJWT } from '../../utils/sdk';
 import { formatDateAlert } from '../../utils/formatDate';
@@ -11,12 +12,9 @@ function Grid() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { lastAlert, addAlert } = useAlertStore();
-  const checkboxAllowAudio = useRef(true);
+  const checkboxAllowAudio = useRef(false);
   const rangeAudioLevel = useRef(25);
-  // const { autotrade } = useAutotradeStore();
   const [prefs, setPrefs] = useState({});
-  // const checkboxAllowAudio = useRef(false);
-  // const rangeAudioLevel = useRef(50);
   const { autotrade, profitPerc, tradePerc } = useAutotradeStore();
 
   const playAlert = () => {
@@ -49,7 +47,12 @@ function Grid() {
           if (lastAlert.$id !== data.documents[0].$id && currentPage === 1) {
             // console.log('new alert')
             addAlert(data.documents[0]);
-            playAlert();
+            if (
+              (data.documents[0].exchange === 'binance' && prefs.binanceAlerts) ||
+              (data.documents[0].exchange === 'kucoin' && prefs.kucoinAlerts)
+            ) {
+              playAlert();
+            }
           }
         }
       } catch (error) {
@@ -87,7 +90,7 @@ function Grid() {
   };
 
   const formSubmitHandler = (e) => {
-    e.preventDefault();
+    e.prevendivefault();
   };
 
   async function handleBuyKucoin(coin) {
@@ -101,7 +104,7 @@ function Grid() {
   }
 
   return (
-    <div className="flex flex-col flex-grow bg-base-200">
+    <div className="flex flex-col bg-base-200">
       {/* <Test></Test> */}
       <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Scanner Alerts:</h2>
       {alerts.length > 0 ? (
@@ -114,7 +117,7 @@ function Grid() {
                   <input
                     id="allowAudio"
                     type="checkbox"
-                    defaultChecked
+                    defaultChecked={false}
                     ref={checkboxAllowAudio}
                     className="checkbox checkbox-primary"
                   />
@@ -126,7 +129,7 @@ function Grid() {
                   <input
                     id="binanceAlerts"
                     type="checkbox"
-                    checked={prefs.binanceAlerts ?? false}
+                    checked={prefs.binanceAlerts ?? true}
                     className="checkbox checkbox-primary"
                     onChange={() => {
                       setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
@@ -141,7 +144,7 @@ function Grid() {
                   <input
                     id="kucoinAlerts"
                     type="checkbox"
-                    checked={prefs.kucoinAlerts ?? false}
+                    checked={prefs.kucoinAlerts ?? true}
                     className="checkbox checkbox-primary"
                     onChange={() => {
                       setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
@@ -167,8 +170,9 @@ function Grid() {
               </div>
             </div>
           </form>
-          <table className="mb-2 hidden md:block table-normal">
-            <thead className="">
+
+          <div className="mb-2">
+            {/* <thead className="">
               <tr className="">
                 <th>Date</th>
                 <th>Exchange</th>
@@ -192,40 +196,60 @@ function Grid() {
                 <th className="text-center">Trend 24h</th>
                 <th className="text-center w-14"> </th>
               </tr>
-            </thead>
-            <tbody>
+            </thead> */}
+            <div className="flex flex-wrap justify-evenly">
               {alerts.length > 0
                 ? alerts.map((alert) => (
-                    <tr
+                    <div
                       key={alert.$id}
-                      className={`shadow shadow-primary-content rounded-2xl ${
+                      className={`m-1 p-1 shadow shadow-primary-content rounded-2xl ${
                         (alert.exchange === 'binance' && !prefs.binanceAlerts && 'hidden') ||
                         (alert.exchange === 'kucoin' && !prefs.kucoinAlerts && 'hidden')
                       }`}
                     >
-                      <td>{formatDateAlert(alert.date)}</td>
-                      <td>{alert.exchange}</td>
-                      <td>{alert.timeframe}</td>
-                      <td>{alert.market}</td>
-                      <td>{alert.volume24h}</td>
-                      <td>{alert.close}</td>
-                      <td className="">
-                        <div className="flex space-x-1">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          {alert.exchange === 'kucoin' && (
+                            <Image alt="kucoin" src="/kucoin.png" width={40} height={40} />
+                          )}
+                          {alert.exchange === 'binance' && (
+                            <Image alt="binance" src="/binance.png" width={40} height={40} />
+                          )}
+                        </div>
+                        <div className="text-2xl font-bold">{alert.market}</div>
+                      </div>
+                      <div className="flex justify-between items-center font-bold">
+                        <div>{formatDateAlert(alert.date)}</div>
+                        <div>{alert.timeframe}</div>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <div>24h Vol. {alert.volume24h} ₿</div>
+                        <div>{alert.trend24h}</div>
+                      </div>
+                      <div className="text-center text-primary-focus">Candle Close {alert.close}</div>
+                      <div className="flex justify-evenly items-center">
+                        <div>BB</div>
+                        <div className="text-xs">
+                          <div>(low / medium)</div>
+                          <div>(upper / perc)</div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="flex justify-evenly">
                           <div>{alert.bbl}</div>
                           <div>/</div>
                           <div>{alert.bbm}</div>
                         </div>
-                        <div className="flex space-x-1">
+                        <div className="flex justify-evenly">
                           <div>{alert.bbu}</div>
                           <div>/</div>
                           <div>{alert.bbb}%</div>
                         </div>
-                      </td>
-                      <td className="text-center">
-                        {alert.stochk}/{alert.stockd}
-                      </td>
-                      <td>{alert.trend24h}</td>
-                      <td>
+                      </div>
+                      <div className="text-center">
+                        Stoch {alert.stochk}/{alert.stockd}
+                      </div>
+                      <div className="items-center text-center">
                         {alert.exchange === 'kucoin' && (
                           <button
                             type="button"
@@ -235,46 +259,13 @@ function Grid() {
                             market buy
                           </button>
                         )}
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   ))
                 : null}
-            </tbody>
-          </table>
-          {/* small view */}
-          <div className="md:hidden mb-6">
-            {alerts.length > 0
-              ? alerts.map((alert) => (
-                  <div
-                    key={alert.$id}
-                    className=" grid grid-cols-2 p-2 m-2 border border-primary rounded-lg shadow shadow-secondary"
-                  >
-                    <div>Date:</div>
-                    <div className="">{formatDateAlert(alert.date)}</div>
-                    <div>Timeframe:</div>
-                    <div className="">{alert.timeframe}</div>
-                    <div>Market:</div>
-                    <div className="">{alert.market}</div>
-                    <div>Volume 24h:</div>
-                    <div className="">{alert.volume24h}</div>
-                    <div>Close:</div>
-                    <div className="">{alert.close}</div>
-                    <div>BBL:</div>
-                    <div className="">{alert.bbl}</div>
-                    <div>BBM:</div>
-                    <div className="">{alert.bbm}</div>
-                    <div>BBU:</div>
-                    <div className="">{alert.bbu}</div>
-                    <div>BBB:</div>
-                    <div className="">{alert.bbb}%</div>
-                    <div>Stoch %K/%D:</div>
-                    <div className="">
-                      {alert.stochk}/{alert.stochk}
-                    </div>
-                  </div>
-                ))
-              : null}
+            </div>
           </div>
+          {/* small view */}
         </div>
       ) : (
         <div className="h-screen text-center ">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
