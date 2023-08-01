@@ -30,7 +30,7 @@ const buttons = [
         />
       </svg>
     ),
-    Label: 'Alerts - Binance',
+    Label: 'Alerts',
     link: '/alerts',
   },
   {

@@ -27,14 +27,46 @@ function Grid() {
 
   useEffect(() => {
     const fetchData = async () => {
+      let data = {};
       try {
         // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
-        const data = await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-          [Query.orderDesc('$id'), Query.limit(10), Query.offset((currentPage - 1) * 10 || 0)]
-        );
-        // console.log(data);
+        if (prefs.binanceAlerts && !prefs.kucoinAlerts) {
+          data = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+            [
+              Query.equal('exchange', 'binance'),
+              // Query.equal('exchange', 'kucoin'),
+              Query.orderDesc('$id'),
+              Query.limit(20),
+              Query.offset((currentPage - 1) * 20 || 0),
+            ]
+          );
+        } else if (!prefs.binanceAlerts && prefs.kucoinAlerts) {
+          data = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+            [
+              // Query.equal('exchange', 'binance'),
+              Query.equal('exchange', 'kucoin'),
+              Query.orderDesc('$id'),
+              Query.limit(20),
+              Query.offset((currentPage - 1) * 20 || 0),
+            ]
+          );
+        } else {
+          data = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+            [
+              // Query.equal('exchange', 'binance'),
+              // Query.equal('exchange', 'kucoin'),
+              Query.orderDesc('$id'),
+              Query.limit(20),
+              Query.offset((currentPage - 1) * 20 || 0),
+            ]
+          );
+        }
         if (data.documents[0]) {
           setAlerts(data.documents);
           setTotalPages(data.total / 10);
@@ -64,12 +96,12 @@ function Grid() {
       fetchData();
     }, 10000);
     return () => clearInterval(interval);
-  }, [currentPage, totalPages, addAlert, lastAlert]);
+  }, [currentPage, totalPages, addAlert, lastAlert, prefs]);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await account.getPrefs();
-      console.log(data);
+      // console.log(data);
       setPrefs(data);
     };
     fetchData();
@@ -104,11 +136,43 @@ function Grid() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-around bg-base-200">
+    <div className="flex flex-col flex-grow items-center justify-around bg-base-200">
       {/* <Test></Test> */}
-      <h2 className="text-2xl text-center border-b shadow-inner shadow-secondary">Scanner Alerts:</h2>
+      <div className="flex justify-around text-2xl w-full text-center border-b shadow-inner shadow-secondary">
+        <div>Scanner Alerts:</div>
+        <div>
+          <div className="label cursor-pointer space-x-2">
+            <span className="label-text">Enable Binance</span>
+            <input
+              id="binanceAlerts"
+              type="checkbox"
+              checked={prefs.binanceAlerts ?? true}
+              className="checkbox checkbox-primary"
+              onChange={() => {
+                setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+                account.updatePrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+              }}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="label cursor-pointer space-x-2">
+            <span className="label-text">Enable Kucoin</span>
+            <input
+              id="kucoinAlerts"
+              type="checkbox"
+              checked={prefs.kucoinAlerts ?? true}
+              className="checkbox checkbox-primary"
+              onChange={() => {
+                setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+                account.updatePrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+              }}
+            />
+          </div>
+        </div>
+      </div>
       {alerts.length > 0 ? (
-        <div className="m-1 p-1 justify-center items-center self-center shadow shadow-primary rounded-xl">
+        <div className="m-1 p-1 w-full shadow shadow-primary rounded-xl">
           <form onSubmit={formSubmitHandler}>
             <div className="flex justify-around items-center">
               <div>
@@ -123,36 +187,7 @@ function Grid() {
                   />
                 </div>
               </div>
-              <div>
-                <div className="label cursor-pointer space-x-2">
-                  <span className="label-text">Enable Binance Alerts</span>
-                  <input
-                    id="binanceAlerts"
-                    type="checkbox"
-                    checked={prefs.binanceAlerts ?? true}
-                    className="checkbox checkbox-primary"
-                    onChange={() => {
-                      setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
-                      account.updatePrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
-                    }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="label cursor-pointer space-x-2">
-                  <span className="label-text">Enable Kucoin Alerts</span>
-                  <input
-                    id="kucoinAlerts"
-                    type="checkbox"
-                    checked={prefs.kucoinAlerts ?? true}
-                    className="checkbox checkbox-primary"
-                    onChange={() => {
-                      setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
-                      account.updatePrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
-                    }}
-                  />
-                </div>
-              </div>
+
               <div className="flex">
                 <div className="text-center ">
                   Alert Volume
@@ -207,7 +242,7 @@ function Grid() {
                         (alert.exchange === 'kucoin' && !prefs.kucoinAlerts && 'hidden')
                       }`}
                     >
-                      <div className="flex justify-between items-center">
+                      <div className="flex gap-x-2 justify-between items-center">
                         <div>
                           {alert.exchange === 'kucoin' && (
                             <Image alt="kucoin" src="/kucoin.png" width={40} height={40} />
@@ -218,15 +253,17 @@ function Grid() {
                         </div>
                         <div className="text-2xl font-bold">{alert.market}</div>
                       </div>
-                      <div className="flex justify-between items-center font-bold">
+                      <div className="mt-1 flex text-xs justify-between font-bold">
                         <div>{formatDateAlert(alert.date)}</div>
-                        <div>{alert.timeframe}</div>
+                        <div className="text-primary-focus font-extrabold">{alert.timeframe}</div>
                       </div>
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="mt-1 flex justify-between items-center text-xs">
                         <div>24h Vol. {alert.volume24h} ₿</div>
-                        <div>{alert.trend24h}</div>
+                        <div className={`font-bold ${alert.trend24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                          {alert.trend24h}
+                        </div>
                       </div>
-                      <div className="text-center text-primary-focus">Candle Close {alert.close}</div>
+                      <div className="text-primary-focus font-bold border-b">Close: {alert.close}</div>
                       <div className="flex justify-evenly items-center">
                         <div>BB</div>
                         <div className="text-xs">
@@ -234,7 +271,7 @@ function Grid() {
                           <div>(upper / perc)</div>
                         </div>
                       </div>
-                      <div className="">
+                      <div className="border-b">
                         <div className="flex justify-evenly">
                           <div>{alert.bbl}</div>
                           <div>/</div>
@@ -247,7 +284,8 @@ function Grid() {
                         </div>
                       </div>
                       <div className="text-center">
-                        Stoch {alert.stochk}/{alert.stockd}
+                        Stoch <span className="mr-5 text-xs">(K/D)</span>
+                        {alert.stochk}/{alert.stockd}
                       </div>
                       <div className="items-center text-center">
                         {alert.exchange === 'kucoin' && (

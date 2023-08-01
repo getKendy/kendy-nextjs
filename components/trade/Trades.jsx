@@ -103,18 +103,18 @@ function Trades() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-wrap justify-around gap-x-5 text-lg font-bold">
+      <div className="flex flex-wrap justify-around gap-x-5 text-sm font-bold">
         <div className={autotrade ? 'text-green-500' : 'text-red-500'}>
           Open trades: {trades} in {coins} market(s). - {((btcPrec.btc * 100) / btcPrec.total).toFixed(2)}% BTC
         </div>
-        <div className="flex gap-x-5 border border-primary rounded-lg px-2 ">
+        <div className="flex flex-wrap items-center justify-center gap-x-2 border border-primary rounded-lg px-2 ">
           <div>
             <input
               type="text"
               name="profitPerc"
               id="profitPrec"
               value={prefs.profitPerc}
-              className="bg-transparent px-2 w-20 text-right"
+              className="bg-transparent px-2 w-20 text-right text-orange-500"
               onChange={(e) => {
                 setPrefs({ ...prefs, profitPerc: e.currentTarget.value });
                 setProfitPerc(e.currentTarget.value);
@@ -129,7 +129,7 @@ function Trades() {
               name="tradePerc"
               id="tradePrec"
               value={prefs.tradePerc}
-              className="bg-transparent px-2 w-20 text-right"
+              className="bg-transparent px-2 w-20 text-right text-orange-500"
               onChange={(e) => {
                 setPrefs({ ...prefs, tradePerc: e.currentTarget.value });
                 setTradePerc(e.currentTarget.value);
