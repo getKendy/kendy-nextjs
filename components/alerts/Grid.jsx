@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Query } from 'appwrite';
 import axios from 'axios';
 import useAlertStore from '../../utils/store/alert';
-import { databases, getJWT } from '../../utils/sdk';
+import { account, databases, getJWT } from '../../utils/sdk';
 import { formatDateAlert } from '../../utils/formatDate';
 import useAutotradeStore from '../../utils/store/autotrade';
 
@@ -11,9 +11,10 @@ function Grid() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { lastAlert, addAlert } = useAlertStore();
-  const checkboxAllowAudio = useRef(false);
-  const rangeAudioLevel = useRef(50);
+  const checkboxAllowAudio = useRef(true);
+  const rangeAudioLevel = useRef(25);
   const { autotrade } = useAutotradeStore();
+  const [prefs, setPrefs] = useState({});
 
   const playAlert = () => {
     const ding = new Audio('ding.mp3');
@@ -59,6 +60,15 @@ function Grid() {
     return () => clearInterval(interval);
   }, [currentPage, totalPages, addAlert, lastAlert]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await account.getPrefs();
+      console.log(data);
+      setPrefs(data);
+    };
+    fetchData();
+  }, []);
+
   const handlePageUp = () => {
     // console.log({ 'page': currentPage })
     if (currentPage < totalPages) {
@@ -79,7 +89,7 @@ function Grid() {
 
   async function handleBuyKucoin(coin) {
     try {
-      console.log(coin);
+      // console.log(coin);
       const { data } = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin });
       console.log(data);
     } catch (error) {
@@ -101,9 +111,39 @@ function Grid() {
                   <input
                     id="allowAudio"
                     type="checkbox"
-                    defaultChecked={false}
+                    defaultChecked
                     ref={checkboxAllowAudio}
                     className="checkbox checkbox-primary"
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="label cursor-pointer space-x-2">
+                  <span className="label-text">Enable Binance Alerts</span>
+                  <input
+                    id="binanceAlerts"
+                    type="checkbox"
+                    checked={prefs.binanceAlerts ?? false}
+                    className="checkbox checkbox-primary"
+                    onChange={() => {
+                      setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+                      account.updatePrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="label cursor-pointer space-x-2">
+                  <span className="label-text">Enable Kucoin Alerts</span>
+                  <input
+                    id="kucoinAlerts"
+                    type="checkbox"
+                    checked={prefs.kucoinAlerts ?? false}
+                    className="checkbox checkbox-primary"
+                    onChange={() => {
+                      setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+                      account.updatePrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+                    }}
                   />
                 </div>
               </div>
@@ -116,7 +156,7 @@ function Grid() {
                     min="0"
                     max="100"
                     ref={rangeAudioLevel}
-                    defaultValue={50}
+                    defaultValue={25}
                     className="range range-md range-secondary bg-primary"
                     step="5"
                   />
@@ -153,7 +193,13 @@ function Grid() {
             <tbody>
               {alerts.length > 0
                 ? alerts.map((alert) => (
-                    <tr key={alert.$id} className="shadow shadow-primary-content rounded-2xl">
+                    <tr
+                      key={alert.$id}
+                      className={`shadow shadow-primary-content rounded-2xl ${
+                        (alert.exchange === 'binance' && !prefs.binanceAlerts && 'hidden') ||
+                        (alert.exchange === 'kucoin' && !prefs.kucoinAlerts && 'hidden')
+                      }`}
+                    >
                       <td>{formatDateAlert(alert.date)}</td>
                       <td>{alert.exchange}</td>
                       <td>{alert.timeframe}</td>
