@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NextSeo } from 'next-seo';
 
-import { serverless } from '../utils/sdk';
 import useActiveTabStore from '../utils/store/activeTab';
 import useUserStore from '../utils/store/user';
 import Page from '../components/layout/Page';
@@ -46,8 +45,9 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=BTCUSDT&exchange=binance');
         setBtcbusd(ticker);
         setError(false);
       } catch (err) {
@@ -64,9 +64,9 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'ETHUSDT');
-        const { ticker } = JSON.parse(response);
-        // const { data: ticker } = await axios.get(`/api/binance/ticker?symbol=ETHBUSD`);
+        // const { response } = await serverless.createExecution('GetTicker', 'ETHUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=ETHUSDT&exchange=binance');
         setEthbusd(ticker);
         setError(false);
       } catch (err) {
@@ -83,8 +83,9 @@ export default function Home() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BNBUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'BNBUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=BNBUSDT&exchange=binance');
         setBnbbusd(ticker);
         setError(false);
       } catch (err) {

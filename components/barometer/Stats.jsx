@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes, { number } from 'prop-types';
 import { Query } from 'appwrite';
 
+import axios from 'axios';
 import { formatDate } from '../../utils/formatDate';
 import { serverless, databases } from '../../utils/sdk';
 import useBusdBtcStore from '../../utils/store/busdbtcPrice';
@@ -113,12 +114,13 @@ function Stats() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=BTCUSDT&exchange=binance');
         // console.log(ticker);
         setBtcbusd(ticker);
         setBusdBtcPrice(ticker);
-        const volat = ((+ticker.close * 100) / +ticker?.open - 100).toFixed(2);
+        const volat = ((+ticker?.close * 100) / +ticker?.open - 100).toFixed(2);
         // console.log(volat)
         setVolatility(+volat);
       } catch (err) {

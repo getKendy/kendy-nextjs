@@ -1,7 +1,8 @@
 import connect from 'next-connect';
 import cors from 'cors';
 import API from 'kucoin-node-sdk';
-import { databases, serverless } from '../../../utils/sdk';
+import axios from 'axios';
+import { databases } from '../../../utils/sdk';
 
 const handler = connect();
 
@@ -29,24 +30,33 @@ handler.get(async (req, res) => {
       },
       authVersion: 2, // KC-API-KEY-VERSION. Notice: for v2 API-KEY, not required for v1 version.
     });
-    const { data } = await API.rest.User.Account.getAccountsList();
+    const { data: account } = await API.rest.User.Account.getAccountsList();
     let total = 0.0;
-    data.forEach(async (coin) => {
-      let ticker = null;
-      if (coin.currency === 'BTC') {
-        total += parseFloat(coin.balance);
-      } else {
-        try {
-          const { response } = await serverless.createExecution('GetKuTicker', `${coin.currency}BTC`);
-          ticker = JSON.parse(response);
-        } catch (error) {
-          // console.log(coin.currency);
-          ticker = null;
-        }
-        if (ticker) {
-          const funds = parseFloat(ticker.ticker.c) * parseFloat(coin.balance);
-          // console.log(coin.currency, funds);
-          total += funds;
+    account.forEach(async (coin) => {
+      // console.log(coin);
+      if (+coin.balance > 0) {
+        let ticker = null;
+        if (coin.currency === 'BTC') {
+          total += parseFloat(coin.balance);
+        } else {
+          try {
+            // const { response } = await serverless.createExecution('GetKuTicker', `${coin.currency}BTC`);
+            // ticker = JSON.parse(response);
+            const { data } = await axios.get(
+              `${process.env.NEXT_PUBLIC_DOMAIN}/api/fastapi/ticker?market=${coin.currency}BTC&exchange=kucoin`
+            );
+            // console.log(data);
+            ticker = data;
+          } catch (error) {
+            // console.log(coin.currency);
+            // console.log(error);
+            ticker = null;
+          }
+          if (ticker) {
+            const funds = ticker.close * parseFloat(coin.balance);
+            // console.log(coin.currency, funds);
+            total += funds;
+          }
         }
       }
     });

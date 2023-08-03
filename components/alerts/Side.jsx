@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 
-import { serverless } from '../../utils/sdk';
+// import { serverless } from '../../utils/sdk';
+import axios from 'axios';
 import Trades from '../trade/Trades';
 
 // import Binance from '../binance/Binance';
@@ -78,8 +79,9 @@ function Side() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'ETHUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'ETHUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=ETHUSDT&exchange=binance');
         setEthbusd(ticker);
         setError('');
       } catch (err) {
@@ -96,8 +98,9 @@ function Side() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'BNBUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'BNBUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=BNBUSDT&exchange=binance');
         setBnbbusd(ticker);
         setError('');
       } catch (err) {
@@ -114,8 +117,9 @@ function Side() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const { response } = await serverless.createExecution('GetTicker', 'PAXGUSDT');
-        const { ticker } = JSON.parse(response);
+        // const { response } = await serverless.createExecution('GetTicker', 'PAXGUSDT');
+        // const { ticker } = JSON.parse(response);
+        const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=PAXGUSDT&exchange=binance');
         setPaxgbusd(ticker);
         setError('');
       } catch (err) {
