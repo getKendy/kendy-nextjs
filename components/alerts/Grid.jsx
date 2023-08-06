@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Query } from 'appwrite';
+// import { Query } from 'appwrite';
 import axios from 'axios';
 import Image from 'next/image';
 import useAlertStore from '../../utils/store/alert';
-import { account, databases, getJWT } from '../../utils/sdk';
+import { account, getJWT } from '../../utils/sdk';
 import { formatDateAlert } from '../../utils/formatDate';
 import useAutotradeStore from '../../utils/store/autotrade';
 
@@ -31,57 +31,63 @@ function Grid() {
       try {
         // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
         if (prefs.binanceAlerts && !prefs.kucoinAlerts) {
-          data = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-            [
-              Query.equal('exchange', 'binance'),
-              // Query.equal('exchange', 'kucoin'),
-              Query.orderDesc('$id'),
-              Query.limit(20),
-              Query.offset((currentPage - 1) * 20 || 0),
-            ]
-          );
+          // data = await databases.listDocuments(
+          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+          //   [
+          //     Query.equal('exchange', 'binance'),
+          //     // Query.equal('exchange', 'kucoin'),
+          //     Query.orderDesc('$id'),
+          //     Query.limit(20),
+          //     Query.offset((currentPage - 1) * 20 || 0),
+          //   ]
+          // );
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=binance&jwt=${await getJWT()}`);
         } else if (!prefs.binanceAlerts && prefs.kucoinAlerts) {
-          data = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-            [
-              // Query.equal('exchange', 'binance'),
-              Query.equal('exchange', 'kucoin'),
-              Query.orderDesc('$id'),
-              Query.limit(20),
-              Query.offset((currentPage - 1) * 20 || 0),
-            ]
-          );
+          // data = await databases.listDocuments(
+          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+          //   [
+          //     // Query.equal('exchange', 'binance'),
+          //     Query.equal('exchange', 'kucoin'),
+          //     Query.orderDesc('$id'),
+          //     Query.limit(20),
+          //     Query.offset((currentPage - 1) * 20 || 0),
+          //   ]
+          // );
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=kucoin&jwt=${await getJWT()}`);
         } else {
-          data = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-            process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-            [
-              // Query.equal('exchange', 'binance'),
-              // Query.equal('exchange', 'kucoin'),
-              Query.orderDesc('$id'),
-              Query.limit(20),
-              Query.offset((currentPage - 1) * 20 || 0),
-            ]
-          );
+          // data = await databases.listDocuments(
+          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
+          //   [
+          //     // Query.equal('exchange', 'binance'),
+          //     // Query.equal('exchange', 'kucoin'),
+          //     Query.orderDesc('$id'),
+          //     Query.limit(20),
+          //     Query.offset((currentPage - 1) * 20 || 0),
+          //   ]
+          // );
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=all&jwt=${await getJWT()}`);
         }
-        if (data.documents[0]) {
-          setAlerts(data.documents);
-          setTotalPages(data.total / 10);
+        data = data.data;
+        // console.log(data);
+        if (data.items[0]) {
+          setAlerts(data.items);
+          setTotalPages(data.pages);
           if (!lastAlert && currentPage === 1) {
             // console.log('setting lastalert for the fist time')
-            addAlert(data.documents[0]);
+            addAlert(data.items[0]);
             return;
           }
 
-          if (lastAlert.$id !== data.documents[0].$id && currentPage === 1) {
+          // eslint-disable-next-line no-underscore-dangle
+          if (lastAlert._id !== data.items[0]._id && currentPage === 1) {
             // console.log('new alert')
-            addAlert(data.documents[0]);
+            addAlert(data.items[0]);
             if (
-              (data.documents[0].exchange === 'binance' && prefs.binanceAlerts) ||
-              (data.documents[0].exchange === 'kucoin' && prefs.kucoinAlerts)
+              (data.items[0].exchange === 'binance' && prefs.binanceAlerts) ||
+              (data.items[0].exchange === 'kucoin' && prefs.kucoinAlerts)
             ) {
               playAlert();
             }

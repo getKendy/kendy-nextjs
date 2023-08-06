@@ -11,9 +11,9 @@ handler.get(async (req, res) => {
 
   try {
     const { data: token } = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN}/api/fastapi/token`);
-    // console.log(token);
+    // console.log(token.access_token);
     if (!token) {
-      return res.status(500).send({ error: 'MIssing JWT FastAPI' });
+      return res.status(500).send({ error: 'Missing JWT FastAPI' });
     }
     const config = {
       headers: {
@@ -29,6 +29,7 @@ handler.get(async (req, res) => {
     // console.log(ticker);
     return res.status(200).send(ticker);
   } catch (error) {
+    console.log(error.message);
     return res.status(500).send(error);
   }
 });

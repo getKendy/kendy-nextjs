@@ -142,8 +142,8 @@ function Side() {
         <TickerDisplay ticker={paxgbusd} coin="PAXG" />
 
         {/* <Binance /> */}
-        <Trades />
       </div>
+      <Trades />
       <div className="text-red-500 text-center hidden">{error}</div>
     </div>
   );

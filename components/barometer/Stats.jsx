@@ -7,7 +7,7 @@ import { Query } from 'appwrite';
 
 import axios from 'axios';
 import { formatDate } from '../../utils/formatDate';
-import { serverless, databases } from '../../utils/sdk';
+import { serverless, databases, getJWT } from '../../utils/sdk';
 import useBusdBtcStore from '../../utils/store/busdbtcPrice';
 import useAutotradeStore from '../../utils/store/autotrade';
 
@@ -94,12 +94,14 @@ function Stats() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          process.env.NEXT_PUBLIC_APPWRITE_BAROMETER,
-          [Query.orderDesc('$id'), Query.limit(60)]
-        );
-        setBaros(data.documents);
+        // const data = await databases.listDocuments(
+        //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+        //   process.env.NEXT_PUBLIC_APPWRITE_BAROMETER,
+        //   [Query.orderDesc('$id'), Query.limit(60)]
+        // );
+        const { data } = await axios.get(`/api/fastapi/barometer/?page=1&size=60&jwt=${await getJWT()}`);
+        // console.log(data)
+        setBaros(data.items);
       } catch (err) {
         setBaros([]);
       }

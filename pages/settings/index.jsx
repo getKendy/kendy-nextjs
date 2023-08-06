@@ -32,7 +32,7 @@ function Settings() {
           </button>
 
           <button type="button" onClick={() => setSettingId('api')} className="self-stretch btn btn-sm btn-ghost">
-            API
+            Binance API
           </button>
           <button type="button" onClick={() => setSettingId('kuapi')} className="self-stretch btn btn-sm btn-ghost">
             Kucoin API

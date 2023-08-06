@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend } from 'recharts';
 
-import { Query } from 'appwrite';
+// import { Query } from 'appwrite';
+import axios from 'axios';
 import useUserStore from '../utils/store/user';
 import useActiveTabStore from '../utils/store/activeTab';
 
 // import { account, serverless } from '../utils/sdk';
 import Page from '../components/layout/Page';
-import { databases } from '../utils/sdk';
+import { getJWT } from '../utils/sdk';
 
 function Statics() {
   const { user } = useUserStore();
@@ -26,19 +27,23 @@ function Statics() {
 
   useEffect(() => {
     const fetchBaros = async () => {
-      const allbaros = [];
-      for (let index = 0; index < 10; index += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        const moreData = await databases.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          process.env.NEXT_PUBLIC_APPWRITE_BAROMETER,
-          [Query.orderDesc('$createdAt'), Query.offset(index * 100), Query.limit(100)]
-        );
-        moreData.documents.forEach((baro) => {
-          allbaros.push(baro);
-        });
-        setBaros(allbaros.reverse());
-      }
+      // const allbaros = [];
+      // for (let index = 0; index < 10; index += 1) {
+      //   // eslint-disable-next-line no-await-in-loop
+      //   const moreData = await databases.listDocuments(
+      //     process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
+      //     process.env.NEXT_PUBLIC_APPWRITE_BAROMETER,
+      //     [Query.orderDesc('$createdAt'), Query.offset(index * 100), Query.limit(100)]
+      //   );
+      //   moreData.documents.forEach((baro) => {
+      //     allbaros.push(baro);
+      //   });
+      //   setBaros(allbaros.reverse());
+      // }
+      const { data } = await axios.get(`/api/fastapi/barometer/?page=1&size=60&jwt=${await getJWT()}`);
+      setBaros(data.items);
+      // console.log(baros[0].date)
+      // console.log(baros[59].date)
     };
     fetchBaros();
     const interval = setInterval(() => {

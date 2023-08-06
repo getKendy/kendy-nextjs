@@ -18,8 +18,11 @@ async function setJwtToken() {
   };
   const data = { username: process.env.FASTAPI_USER, password: process.env.FASTAPI_PASSWORD };
   const { data: jwt } = await axios.post(`${process.env.FASTAPI}login/`, data, config);
-  console.log(jwt);
-  redis.set('fastapi_token', JSON.stringify(jwt), { TTL: 1420 * 60 * 60 });
+  // console.log({ newToken: jwt });
+  const jwtExpires = Date.now() + 2 * 60 * 1000;
+  // console.log(jwtExpires);
+
+  redis.set('fastapi_token', JSON.stringify({ jwt, jwtExpires }), 5 * 60);
   return jwt;
 }
 
@@ -35,14 +38,23 @@ handler.get(async (req, res) => {
 
     const token = await redis.get('fastapi_token');
     if (!token) {
-      // console.log('request new token');
       const newToken = await setJwtToken();
-      // console.log(newToken);
       return res.status(200).send(newToken);
     }
-    // console.log(token);
-    return res.status(200).send(JSON.parse(token));
+    const { jwt, jwtExpires } = JSON.parse(token);
+    if (!jwt || !jwtExpires) {
+      const newToken = await setJwtToken();
+      return res.status(200).send(newToken);
+    }
+    if (jwtExpires < Date.now()) {
+      const newToken = await setJwtToken();
+      // console.log(newToken.access_token);
+      return res.status(200).send(newToken);
+    }
+    // if (token)
+    return res.status(200).send(jwt);
   } catch (error) {
+    // console.log(error);
     return res.statusCode(500).send(error);
   }
 });

@@ -94,7 +94,7 @@ function Trades() {
   if (!funds) {
     return (
       <div className="flex justify-center items-center">
-        <button type="button">
+        <button type="button" className="btn btn-sm btn-outline btn-primary mt-4">
           <Link href="/settings">enter kucoin api</Link>
         </button>
       </div>

@@ -3,12 +3,13 @@ import cors from 'cors';
 import axios from 'axios';
 
 const handler = connect();
-
 handler.use(cors());
 
 handler.get(async (req, res) => {
-  const { market, exchange } = req.query;
-
+  const { jwt, page, exchange } = req.query;
+  if (!jwt) {
+    return res.status(401).send({ error: 'Missing JWT' });
+  }
   try {
     const { data: token } = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN}/api/fastapi/token`);
     // console.log(token);
@@ -22,10 +23,15 @@ handler.get(async (req, res) => {
         Authorization: `${token.token_type} ${token.access_token}`,
       },
     };
-    const { data: ticker } = await axios.get(`${process.env.FASTAPI}ticker/${market}?exchange=${exchange}`, config);
-    // console.log(ticker);
-    return res.status(200).send(ticker);
+    // console.log(exchange);
+    const { data: alerts } = await axios.get(
+      `${process.env.FASTAPI}alert/?size=20&page=${page}&exchange=${exchange}`,
+      config
+    );
+    // console.log(alerts);
+    return res.status(200).send(alerts);
   } catch (error) {
+    // console.log(error.message);
     return res.status(500).send(error);
   }
 });

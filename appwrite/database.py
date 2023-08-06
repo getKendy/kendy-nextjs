@@ -15,26 +15,26 @@ client = Client()
 )
 
 #### GetKendy data
-GetKendy = {}
-databases = Databases(client)
-foundDatabases = databases.list()
-for result in foundDatabases['databases']:
-  if result['name'] == 'GetKendy':
-    GetKendy = result
+# GetKendy = {}
+# databases = Databases(client)
+# foundDatabases = databases.list()
+# for result in foundDatabases['databases']:
+#   if result['name'] == 'GetKendy':
+#     GetKendy = result
     
-if GetKendy != {}:
-  print('found')
-  print(GetKendy)
-else:
-  print('not found')
-  GetKendy = databases.create('unique()', 'GetKendy')
+# if GetKendy != {}:
+#   print('found')
+#   print(GetKendy)
+# else:
+#   print('not found')
+#   GetKendy = databases.create('unique()', 'GetKendy')
   
 
-barometer = createBarometer(client, GetKendy)
-createBaroAtributes(client, GetKendy, barometer)
+# barometer = createBarometer(client, GetKendy)
+# createBaroAtributes(client, GetKendy, barometer)
 
-alert = createAlerts(client, GetKendy)
-createAlertAtributes(client, GetKendy, alert)
+# alert = createAlerts(client, GetKendy)
+# createAlertAtributes(client, GetKendy, alert)
 
 
 ### Binance data
