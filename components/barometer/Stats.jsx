@@ -3,7 +3,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import PropTypes, { number } from 'prop-types';
-import { Query } from 'appwrite';
+// import { Query } from 'appwrite';
 
 import axios from 'axios';
 import { formatDate } from '../../utils/formatDate';
@@ -100,7 +100,9 @@ function Stats() {
         //   [Query.orderDesc('$id'), Query.limit(60)]
         // );
         const { data } = await axios.get(`/api/fastapi/barometer/?page=1&size=60&jwt=${await getJWT()}`);
+        // const { data: reversed } = await axios.get(`/api/fastapi/barometer/?page=1&size=60&jwt=${await getJWT()}`);
         // console.log(data)
+        // setBarosRev(reversed.items.reverse());
         setBaros(data.items);
       } catch (err) {
         setBaros([]);
@@ -137,7 +139,7 @@ function Stats() {
   }, [setBusdBtcPrice]);
 
   return (
-    <div className="flex flex-col md:flex-row  bg-base-200 ">
+    <div className="flex flex-wrap md:flex-row  bg-base-200 ">
       <div className="p-1 flex flex-col flex-grow justify-center items-center">
         <div className="flex self-start">BTC - Fiat Binance Dominance</div>
         <div className="prose">
