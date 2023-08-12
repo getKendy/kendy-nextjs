@@ -9,9 +9,8 @@ const handler = connect();
 handler.use(cors());
 
 handler.post(async (req, res) => {
-  const { query, body } = req;
-  const { jwt } = query;
-  const { coin, profitPerc, tradePerc } = body;
+  const { jwt } = req.query;
+  const { coin, profitPerc, tradePerc } = req.body;
   // console.log(body);
   if (!jwt) {
     return res.status(401).send({ error: 'Missing JWT' });
@@ -35,6 +34,9 @@ handler.post(async (req, res) => {
     // console.log(balance);
     const tradeAmount = balance[0].available * (tradePerc / 100);
     // console.log(tradeAmount);
+    if (!tradeAmount || tradeAmount === 0.0) {
+      return res.status(500).send({ error: 'Nothing to trade with' });
+    }
     const { data: buymarkettrade } = await API.rest.Trade.Orders.postOrder(
       {
         clientOid: generateUUID(),
