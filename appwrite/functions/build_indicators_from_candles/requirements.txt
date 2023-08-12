@@ -1,5 +1,0 @@
-appwrite
-redis
-requests
-pandas
-pandas-ta

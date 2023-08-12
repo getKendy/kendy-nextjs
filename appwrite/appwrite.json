@@ -1,24 +1,7 @@
 {
-    "projectId": "64b90d92b5a4ec350f66",
+    "projectId": "64ce8c876695923fa07b",
     "projectName": "",
     "functions": [
-        {
-            "$id": "GetTicker",
-            "name": "GetTicker",
-            "runtime": "node-16.0",
-            "path": "functions/GetTicker",
-            "entrypoint": "src/index.js",
-            "ignore": [
-                "node_modules",
-                ".npm"
-            ],
-            "execute": [
-                "any"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
         {
             "$id": "GetBinanceBalance",
             "name": "GetBinanceBalance",
@@ -35,70 +18,6 @@
             "events": [],
             "schedule": "",
             "timeout": 15
-        },
-        {
-            "$id": "get_database_price_for_pair",
-            "name": "get_database_price_for_pair",
-            "runtime": "python-3.10",
-            "path": "functions/get_database_price_for_pair",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [
-                "users"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
-            "$id": "calculate_bitcoin_price",
-            "name": "calculate_bitcoin_price",
-            "runtime": "python-3.10",
-            "path": "functions/calculate_bitcoin_price",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [
-                "users"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
-            "$id": "calculate_dollar_price",
-            "name": "calculate_dollar_price",
-            "runtime": "python-3.10",
-            "path": "functions/calculate_dollar_price",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [
-                "users"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
-            "$id": "update_barometer",
-            "name": "update_barometer",
-            "runtime": "python-3.10",
-            "path": "functions/update_barometer",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [
-                "users"
-            ],
-            "events": [],
-            "schedule": "* * * * *",
-            "timeout": 120
         },
         {
             "$id": "StoreApi",
@@ -135,23 +54,6 @@
             "timeout": 15
         },
         {
-            "$id": "CleanAlerts",
-            "name": "CleanAlerts",
-            "runtime": "node-16.0",
-            "path": "functions/CleanAlerts",
-            "entrypoint": "src/index.js",
-            "ignore": [
-                "node_modules",
-                ".npm"
-            ],
-            "execute": [
-                "users"
-            ],
-            "events": [],
-            "schedule": "* * * * *",
-            "timeout": 15
-        },
-        {
             "$id": "DailyBalance",
             "name": "DailyBalance",
             "runtime": "node-16.0",
@@ -182,34 +84,6 @@
             "timeout": 15
         },
         {
-            "$id": "build_indicators_from_candles",
-            "name": "build_indicators_from_candles",
-            "runtime": "python-3.10",
-            "path": "functions/build_indicators_from_candles",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
-            "$id": "volume_24h_check",
-            "name": "volume_24h_check",
-            "runtime": "python-3.10",
-            "path": "functions/volume_24h_check",
-            "entrypoint": "src/index.py",
-            "ignore": [
-                "__pypackages__"
-            ],
-            "execute": [],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
             "$id": "StoreKuApi",
             "name": "StoreKuApi",
             "runtime": "node-18.0",
@@ -221,23 +95,6 @@
             ],
             "execute": [
                 "users"
-            ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15
-        },
-        {
-            "$id": "GetKuTicker",
-            "name": "GetKuTicker",
-            "runtime": "node-18.0",
-            "path": "functions/GetKuTicker",
-            "entrypoint": "src/index.js",
-            "ignore": [
-                "node_modules",
-                ".npm"
-            ],
-            "execute": [
-                "any"
             ],
             "events": [],
             "schedule": "",
