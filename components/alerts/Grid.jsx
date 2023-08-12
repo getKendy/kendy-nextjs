@@ -31,43 +31,10 @@ function Grid() {
       try {
         // const { data } = await axios.get(`/api/backend/alert/?size=10&page=${currentPage}`)
         if (prefs.binanceAlerts && !prefs.kucoinAlerts) {
-          // data = await databases.listDocuments(
-          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-          //   [
-          //     Query.equal('exchange', 'binance'),
-          //     // Query.equal('exchange', 'kucoin'),
-          //     Query.orderDesc('$id'),
-          //     Query.limit(20),
-          //     Query.offset((currentPage - 1) * 20 || 0),
-          //   ]
-          // );
           data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=binance&jwt=${await getJWT()}`);
         } else if (!prefs.binanceAlerts && prefs.kucoinAlerts) {
-          // data = await databases.listDocuments(
-          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-          //   [
-          //     // Query.equal('exchange', 'binance'),
-          //     Query.equal('exchange', 'kucoin'),
-          //     Query.orderDesc('$id'),
-          //     Query.limit(20),
-          //     Query.offset((currentPage - 1) * 20 || 0),
-          //   ]
-          // );
           data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=kucoin&jwt=${await getJWT()}`);
         } else {
-          // data = await databases.listDocuments(
-          //   process.env.NEXT_PUBLIC_APPWRITE_GETKENDY_DATA,
-          //   process.env.NEXT_PUBLIC_APPWRITE_ALERTS,
-          //   [
-          //     // Query.equal('exchange', 'binance'),
-          //     // Query.equal('exchange', 'kucoin'),
-          //     Query.orderDesc('$id'),
-          //     Query.limit(20),
-          //     Query.offset((currentPage - 1) * 20 || 0),
-          //   ]
-          // );
           data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=all&jwt=${await getJWT()}`);
         }
         data = data.data;
@@ -131,11 +98,30 @@ function Grid() {
     e.prevendivefault();
   };
 
-  async function handleBuyKucoin(coin) {
+  async function handleBuyMarketKucoin(coin) {
     try {
       // console.log(coin);
-      const { data } = await axios.post(`/api/kucoin/buy?jwt=${await getJWT()}`, { coin, profitPerc, tradePerc });
+      const { data } = await axios.post(`/api/kucoin/marketbuy?jwt=${await getJWT()}`, { coin, profitPerc, tradePerc });
       console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function checkBuyLimitKucoin(trade) {
+    try {
+      console.log(trade);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleBuyLimitKucoin(coin) {
+    try {
+      // console.log(coin);
+      const { data } = await axios.post(`/api/kucoin/limitbuy?jwt=${await getJWT()}`, { coin, profitPerc, tradePerc });
+      console.log(data);
+      checkBuyLimitKucoin(data);
     } catch (error) {
       console.log(error);
     }
@@ -213,31 +199,6 @@ function Grid() {
           </form>
 
           <div className="mb-2">
-            {/* <thead className="">
-              <tr className="">
-                <th>Date</th>
-                <th>Exchange</th>
-                <th className="truncate">Interval</th>
-                <th>Market</th>
-                <th>Volume 24h</th>
-                <th>Close</th>
-                <th className="">
-                  <div className="flex space-x-1">
-                    <div>BBL</div>
-                    <div>/</div>
-                    <div>BBM</div>
-                  </div>
-                  <div className="flex space-x-1">
-                    <div>BBU</div>
-                    <div>/</div>
-                    <div>BBB</div>
-                  </div>
-                </th>
-                <th className="text-center">Sto %K/%D</th>
-                <th className="text-center">Trend 24h</th>
-                <th className="text-center w-14"> </th>
-              </tr>
-            </thead> */}
             <div className="flex flex-wrap justify-evenly">
               {alerts.length > 0
                 ? alerts.map((alert) => (
@@ -265,8 +226,8 @@ function Grid() {
                       </div>
                       <div className="mt-1 flex justify-between items-center text-xs">
                         <div>24h Vol. {alert.volume24h} ₿</div>
-                        <div className={`font-bold ${alert.trend24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                          {alert.trend24h}
+                        <div className={`font-bold ${alert.trend24h > 0.0 ? 'text-green-500' : 'text-red-500'}`}>
+                          {alert.trend24h} %
                         </div>
                       </div>
                       <div className="text-primary-focus font-bold border-b">Close: {alert.close}</div>
@@ -295,13 +256,22 @@ function Grid() {
                       </div>
                       <div className="items-center text-center">
                         {alert.exchange === 'kucoin' && (
-                          <button
-                            type="button"
-                            className={`btn btn-sm  ${autotrade ? 'btn-primary' : 'btn-error'}`}
-                            onClick={() => handleBuyKucoin(alert)}
-                          >
-                            market buy
-                          </button>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              className={`btn btn-sm  ${autotrade ? 'btn-primary' : 'btn-error'}`}
+                              onClick={() => handleBuyMarketKucoin(alert)}
+                            >
+                              market buy
+                            </button>
+                            <button
+                              type="button"
+                              className={`btn btn-sm  ${autotrade ? 'btn-secondary' : 'btn-error'}`}
+                              onClick={() => handleBuyLimitKucoin(alert)}
+                            >
+                              limit buy
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>
