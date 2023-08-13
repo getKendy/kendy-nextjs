@@ -48,6 +48,7 @@ export default function Home() {
         // const { response } = await serverless.createExecution('GetTicker', 'BTCUSDT');
         // const { ticker } = JSON.parse(response);
         const { data: ticker } = await axios.get('/api/fastapi/tickerredis?market=BTCUSDT&exchange=binance');
+        // console.log(ticker);
         setBtcbusd(ticker);
         setError(false);
       } catch (err) {
@@ -125,11 +126,11 @@ export default function Home() {
             <div>
               <div className="grid grid-cols-3">
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BTC </div>
-                <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.close).toFixed()}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+btcbusd?.c).toFixed()}</div>
                 <div className="text-5xl font-bold text-right pr-3 text-primary">ETH </div>
-                <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.close).toFixed()}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+ethbusd?.c).toFixed()}</div>
                 <div className="text-5xl font-bold text-right pr-3 text-primary">BNB </div>
-                <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.close).toFixed()}</div>
+                <div className="text-5xl font-bold text-right col-span-2">${(+bnbbusd?.c).toFixed()}</div>
               </div>
               <p className="py-6">Crypto Scanner Trading Alerts</p>
               {user ? (

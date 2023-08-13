@@ -13,14 +13,14 @@ function TickerDisplay({ ticker, coin }) {
   return (
     <div
       className={
-        +ticker?.close - +ticker?.open > 0
-          ? (+ticker?.close * 100) / +ticker?.open - 100 > 1
-            ? (+ticker?.close * 100) / +ticker?.open - 100 > 5
+        +ticker?.c - +ticker?.o > 0
+          ? (+ticker?.c * 100) / +ticker?.o - 100 > 1
+            ? (+ticker?.c * 100) / +ticker?.o - 100 > 5
               ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-lg text-white bg-green-800 shadow-green-600 p-2 rounded-xl'
               : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-md bg-green-500 shadow-green-300 p-2 rounded-xl'
             : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-inner shadow-green-500 p-2 rounded-xl'
-          : (+ticker?.close * 100) / +ticker?.open - 100 < -1
-          ? (+ticker?.close * 100) / +ticker?.open - 100 < -5
+          : (+ticker?.c * 100) / +ticker?.o - 100 < -1
+          ? (+ticker?.c * 100) / +ticker?.o - 100 < -5
             ? 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-lg text-white bg-red-800 shadow-red-600 p-2 rounded-xl'
             : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-md bg-red-500 shadow-red-300 p-2 rounded-xl'
           : 'flex flex-col flex-shrink flex-grow justify-center md:flex-col-reverse space-x-2 mb-2 shadow-inner shadow-red-500 p-2 rounded-xl'
@@ -31,24 +31,24 @@ function TickerDisplay({ ticker, coin }) {
           {coin}
           /USDT:
         </div>
-        <div>${(+ticker.close).toFixed(2)}</div>
+        <div>${(+ticker.c).toFixed(2)}</div>
       </div>
       <div className="md:text-sm text-center justify-center flex space-x-2">
         <span>24h:</span>
-        {+ticker?.close - +ticker?.open > 0 ? (
-          (+ticker?.close * 100) / +ticker?.open - 100 > 1 ? (
-            <div className="text-white"> ↗︎ ${(+ticker.close - +ticker.open).toFixed(2)}</div>
+        {+ticker?.c - +ticker?.o > 0 ? (
+          (+ticker?.c * 100) / +ticker?.o - 100 > 1 ? (
+            <div className="text-white"> ↗︎ ${(+ticker.c - +ticker.o).toFixed(2)}</div>
           ) : (
-            <div className="text-green-600"> ↗︎ ${(+ticker.close - +ticker.open).toFixed(2)}</div>
+            <div className="text-green-600"> ↗︎ ${(+ticker.c - +ticker.o).toFixed(2)}</div>
           )
-        ) : (+ticker?.close * 100) / +ticker?.open - 100 < -1 ? (
-          <div className="text-white"> ↘︎ ${(+ticker.close - +ticker.open).toFixed(2)}</div>
+        ) : (+ticker?.c * 100) / +ticker?.o - 100 < -1 ? (
+          <div className="text-white"> ↘︎ ${(+ticker.c - +ticker.o).toFixed(2)}</div>
         ) : (
-          <div className="text-red-600"> ↘︎ ${(+ticker.close - +ticker.open).toFixed(2)}</div>
+          <div className="text-red-600"> ↘︎ ${(+ticker.c - +ticker.o).toFixed(2)}</div>
         )}
         <span>
           {' '}
-          ({((+ticker?.close * 100) / +ticker?.open - 100).toFixed(2)}
+          ({((+ticker?.c * 100) / +ticker?.o - 100).toFixed(2)}
           %)
         </span>
       </div>

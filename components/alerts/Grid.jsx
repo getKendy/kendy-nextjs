@@ -128,7 +128,7 @@ function Grid() {
   }
 
   return (
-    <div className="flex flex-col flex-grow items-center justify-around bg-base-200">
+    <div className="flex flex-col flex-grow items-center justify-around bg-base-200 max-w-5xl">
       {/* <Test></Test> */}
       <div className="flex justify-around text-2xl w-full text-center border-b shadow-inner shadow-secondary">
         <div>Scanner Alerts:</div>
