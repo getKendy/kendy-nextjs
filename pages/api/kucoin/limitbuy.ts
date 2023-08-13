@@ -12,6 +12,8 @@ handler.use(cors());
 handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const { jwt } = req.query;
   const { coin, tradePerc } = req.body;
+  // console.log(coin);
+  // console.log(tradePerc);
   if (!jwt) {
     return res.status(401).send({ error: 'Missing JWT' });
   }
@@ -37,7 +39,9 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     if (!tradeAmount || tradeAmount === 0.0) {
       return res.status(500).send({ error: 'Nothing to trade with' });
     }
-    const { data: buylimittrade } = await API.rest.Trade.Orders.postOrder(
+    const size = (tradeAmount / +coin.bbl).toFixed(8);
+    console.log(size);
+    const data = await API.rest.Trade.Orders.postOrder(
       {
         clientOid: generateUUID(),
         side: 'buy',
@@ -47,10 +51,11 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
       },
       {
         price: coin.bbl,
-        size: tradeAmount / +coin.bbl,
+        size,
       }
     );
-    return res.status(201).send(buylimittrade);
+    console.log(data);
+    return res.status(201).send(data);
   } catch (error) {
     console.log(error);
     return res.status(201).send(error);

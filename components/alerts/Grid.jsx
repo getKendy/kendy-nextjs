@@ -108,9 +108,17 @@ function Grid() {
     }
   }
 
-  async function checkBuyLimitKucoin(trade) {
+  async function checkBuyLimitKucoin(tradeId) {
     try {
-      console.log(trade);
+      console.log(tradeId);
+      const { data } = await axios.get(`/api/kucoin/checktrade?buymarkettrade=${tradeId}&jwt=${await getJWT()}`);
+      console.log(data);
+      if (data.isActive) {
+        checkBuyLimitKucoin(tradeId);
+      } else {
+        console.log('create sell trade');
+        // craate sell trade
+      }
     } catch (error) {
       console.log(error);
     }
@@ -121,7 +129,7 @@ function Grid() {
       // console.log(coin);
       const { data } = await axios.post(`/api/kucoin/limitbuy?jwt=${await getJWT()}`, { coin, profitPerc, tradePerc });
       console.log(data);
-      checkBuyLimitKucoin(data);
+      checkBuyLimitKucoin(data.orderId);
     } catch (error) {
       console.log(error);
     }
@@ -266,7 +274,7 @@ function Grid() {
                             </button>
                             <button
                               type="button"
-                              className={`btn btn-sm  ${autotrade ? 'btn-secondary' : 'btn-error'}`}
+                              className={`btn btn-sm disabled ${autotrade ? 'btn-secondary' : 'btn-error'}`}
                               onClick={() => handleBuyLimitKucoin(alert)}
                             >
                               limit buy
