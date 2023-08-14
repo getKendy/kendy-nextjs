@@ -274,7 +274,7 @@ function Grid() {
                             </button>
                             <button
                               type="button"
-                              className={`btn btn-sm disabled ${autotrade ? 'btn-secondary' : 'btn-error'}`}
+                              className={`btn btn-sm ${autotrade ? 'btn-secondary' : 'btn-error'}`}
                               onClick={() => handleBuyLimitKucoin(alert)}
                             >
                               limit buy

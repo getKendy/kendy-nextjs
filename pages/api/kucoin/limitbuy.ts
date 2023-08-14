@@ -39,7 +39,13 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     if (!tradeAmount || tradeAmount === 0.0) {
       return res.status(500).send({ error: 'Nothing to trade with' });
     }
-    const size = (tradeAmount / +coin.bbl).toFixed(8);
+    const { precision } = await API.rest.Market.getCurrencyDetail({ currency: coin.market.split('/')[0] });
+    if (!precision) {
+      return res.status(500).send('No precision for pair found');
+    }
+    console.log(precision);
+    const size = (tradeAmount / +coin.bbl).toFixed(precision);
+
     console.log(size);
     const data = await API.rest.Trade.Orders.postOrder(
       {
