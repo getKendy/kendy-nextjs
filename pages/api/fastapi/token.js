@@ -22,7 +22,7 @@ async function setJwtToken() {
   const jwtExpires = Date.now() + 2 * 60 * 1000;
   // console.log(jwtExpires);
 
-  redis.set('fastapi_token', JSON.stringify({ jwt, jwtExpires }), 5 * 60);
+  redis.set('fastapi_tr_token', JSON.stringify({ jwt, jwtExpires }), 5 * 60);
   return jwt;
 }
 
@@ -36,7 +36,7 @@ handler.get(async (req, res) => {
     redis.on('error', (err) => console.log('Redis Client Error', err));
     await redis.connect();
 
-    const token = await redis.get('fastapi_token');
+    const token = await redis.get('fastapi_tr_token');
     if (!token) {
       const newToken = await setJwtToken();
       return res.status(200).send(newToken);
