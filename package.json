@@ -33,6 +33,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
