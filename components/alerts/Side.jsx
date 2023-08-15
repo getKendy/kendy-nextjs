@@ -5,7 +5,7 @@ import Proptypes from 'prop-types';
 
 // import { serverless } from '../../utils/sdk';
 import axios from 'axios';
-import Trades from '../trade/Trades';
+// import Trades from '../trade/Trades';
 
 // import Binance from '../binance/Binance';
 
@@ -143,7 +143,7 @@ function Side() {
 
         {/* <Binance /> */}
       </div>
-      <Trades />
+      {/* <Trades /> */}
       <div className="text-red-500 text-center hidden">{error}</div>
     </div>
   );
