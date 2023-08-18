@@ -1,154 +1,32 @@
-version: '3.8'
+version: '3'
 
+ 
 services:
-  api:
+  nextjs:
     build:
-      context: ./backend
-      dockerfile: ./compose/local/fastapi/Dockerfile
-    image: getkendy/kendy-fastapi:latest
-    # '/start' is the shell script used to run the service
-    command: /start
-    # this volume is used to map the files and folders on the host to the container
-    # so if we change code on the host, code in the docker container will also be changed
-    volumes:
-      - ./backend:/app
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - NEXT_PUBLIC_APPWRITE_ENDPOINT='https://baas.hezik.nl/v1'
+        - NEXT_PUBLIC_APPWRITE_PROJECT='64ce8c876695923fa07b'
+        - NEXT_PUBLIC_APPWRITE_BINANCE_DATA='64cf6e2c4a9d40f7c365'
+        - NEXT_PUBLIC_APPWRITE_BALANCE='64cf6e2d55ef25372b3e'
+        - APPWRITE_APIKEY=''
+        - NEXT_PUBLIC_DOMAIN='http://localhost:3000'
+        - APPWRITE_KUCOIN_DATA='64cf6e2f197d1fce5222'
+        - APPWRITE_KUCOIN_API='64cf6e2f5eb1ac0275c0'
+        - FASTAPI='https://cryptoapi.hezik.nl/api/v2/'
+        - FASTAPI_USER='ron'
+        - FASTAPI_PASSWORD='Oldsch00l'
+        - APP_ENV_API='cryptoapi.hezik.nl'
+        - REDIS='redis://:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@10.20.30.23:6379/5'
+    image: back2basic/kendy-nextjs:latest
+    working_dir: /app
     ports:
-      - 8000:8000
-    env_file:
-      - ./backend/.env/.dev-sample
-    depends_on:
-      - redis
-      - mongo
-    restart: unless-stopped
-
-  
-  mongo:
-    image: mongo:latest
+      - 3000:3000
+    # stdin_open: true
     volumes:
-      - mongo_data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=p@ssword
-    ports:
-      - 27017:27017
+      - .env:/app/.env
+    networks:
+      - default
     restart: unless-stopped
-
-  # redis:
-  #   image: redis:6-alpine
-  #   restart: unless-stopped
-  #   ports:
-  #     - 6379:6379
-  redis:
-    image: redis:6.2-alpine
-    restart: unless-stopped
-    ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-
-  celery_worker1_1:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance 
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-      - api
-    restart: unless-stopped
-
-  celery_worker1_2:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q binance,kucoin
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-      - api
-    restart: unless-stopped
-    
-  celery_worker1_3:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q kucoin 
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-      - api
-    restart: unless-stopped
-
-  celery_worker2:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q barometer 
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-      - api
-    restart: unless-stopped
-
-  celery_worker3:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src worker --loglevel=INFO -Q candlealerts 
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-      - api
-    restart: unless-stopped
-  
-  celery_beat:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery -A src beat
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-    restart: unless-stopped
-
-  flower:
-    build:
-      context: ./celery
-      dockerfile: ./Dockerfile
-    image: getkendy/kendy-celery:latest
-    command: celery flower -A src --port=5555
-    ports:
-      - 5555:5555
-    volumes:
-      - ./celery:/app
-    env_file:
-      - ./celery/.env
-    depends_on:
-      - redis
-    restart: unless-stopped
-
-volumes:
-  mongo_data:
