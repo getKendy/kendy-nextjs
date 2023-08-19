@@ -1,0 +1,104 @@
+{
+    "projectId": "64ce8c876695923fa07b",
+    "projectName": "",
+    "functions": [
+        {
+            "$id": "GetBinanceBalance",
+            "name": "GetBinanceBalance",
+            "runtime": "node-16.0",
+            "path": "functions/GetBinanceBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "StoreApi",
+            "name": "StoreApi",
+            "runtime": "node-16.0",
+            "path": "functions/StoreApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "CheckApi",
+            "name": "CheckApi",
+            "runtime": "node-16.0",
+            "path": "functions/CheckApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "DailyBalance",
+            "name": "DailyBalance",
+            "runtime": "node-16.0",
+            "path": "functions/DailyBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "0 0 * * *",
+            "timeout": 30
+        },
+        {
+            "$id": "SaveDailyBalance",
+            "name": "SaveDailyBalance",
+            "runtime": "node-16.0",
+            "path": "functions/SaveDailyBalance",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "StoreKuApi",
+            "name": "StoreKuApi",
+            "runtime": "node-18.0",
+            "path": "functions/StoreKuApi",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}
