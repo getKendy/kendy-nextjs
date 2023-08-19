@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body>
+      <body className='flex min-h-screen flex-col bg-gradient-to-b from-[#362f3d] to-[#15162c] text-white'>
         <Main />
         <NextScript />
       </body>

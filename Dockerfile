@@ -95,7 +95,7 @@
 
 # Naively Simple Node Dockerfile
 FROM node:20-alpine
-
+RUN npm install -g npm
 RUN npm install -g pnpm
 RUN mkdir -p /app/ && chown -R node:node /app
 WORKDIR /app
