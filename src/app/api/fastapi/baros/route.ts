@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { env } from "~/env.mjs";
 
 import getJwtToken from "~/utils/fastapi"
 import type { Baros } from "~/utils/types";
@@ -18,10 +17,9 @@ export async function GET(request: Request) {
       },
     };
     const res: Response = await fetch(
-      `${env.FASTAPI_URL}baro/?page=${page}&size=${size}`,
+      `${process.env.FASTAPI}baro/?page=${page}&size=${size}`,
       headers,
     )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data: Baros = await res.json()
     // console.log(data)
     return NextResponse.json({ data })

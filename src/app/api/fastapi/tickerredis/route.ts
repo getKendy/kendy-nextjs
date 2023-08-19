@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import getJwtToken from "~/utils/fastapi"
-import { env } from "~/env.mjs"
 
 interface TickerData {
   symbol: string,
@@ -27,10 +26,9 @@ export async function GET(request: Request) {
       },
     };
     const res = await fetch(
-      `${env.FASTAPI_URL}tickerredis/${market}?exchange=${exchange}`,
+      `${process.env.FASTAPI}tickerredis/${market}?exchange=${exchange}`,
       headers,
     )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data: TickerData = await res.json()
     // console.log(data)
 

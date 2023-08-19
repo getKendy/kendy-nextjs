@@ -11,7 +11,6 @@ type DateFormatOptions = {
 };
 
 export const formatDate = (date: string, options: DateFormatOptions) =>
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   DateTime.fromISO(date)
     // Use the setZone method to set the time zone to UTC
     .setZone('UTC')

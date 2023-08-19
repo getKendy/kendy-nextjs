@@ -1,4 +1,4 @@
-# .env
+.env
 Dockerfile
 .dockerignore
 node_modules
@@ -7,8 +7,8 @@ README.md
 .next
 .git
 
-/.old1
-/.old2
+
+/.old*
 /appwrite
 /backend
 /celery

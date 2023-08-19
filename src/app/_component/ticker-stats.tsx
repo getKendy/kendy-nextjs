@@ -14,7 +14,6 @@ const TickerDisplay = (props: TickerProps) => {
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/fastapi/tickerredis?market=${props.market}&exchange=${props.exchange}`)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const {data}: {data: TickerState}  = await res.json()
         // console.log(data)
         setTicker(data)

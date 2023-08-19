@@ -1,4 +1,3 @@
-import { env } from "~/env.mjs";
 import {
   Client as Appwrite,
   Account,
@@ -42,8 +41,8 @@ const initAppwrite = (project: string, endpoint: string) => {
 };
 
 const sdk = initAppwrite(
-  env.NEXT_PUBLIC_APPWRITE_PROJECT,
-  env.NEXT_PUBLIC_APPWRITE_ENDPOINT
+  process.env.NEXT_PUBLIC_APPWRITE_PROJECT as string,
+  process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string
 );
 
 type JWT = () => Promise<string | null>

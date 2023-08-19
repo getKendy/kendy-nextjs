@@ -1,5 +1,5 @@
 export interface Alert {
-  '$id': string, exchange: string, market: string, date: string, timeframe: string, volume24h: string,
+  '_id': string, exchange: string, market: string, date: string, timeframe: string, volume24h: string,
   trend24h: number, bbl: string, bbm: string, bbu: string, bbb: string, stochk: string, stockd: string, close: number
 }
 

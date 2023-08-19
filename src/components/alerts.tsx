@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios from "axios";
 import type { FormEvent } from "react";
 import { getJWT } from "~/utils/sdk";
@@ -8,17 +5,7 @@ import type { Alert } from "~/utils/types";
 
 interface HandleBuyCoin { coin: Alert, profitPerc: number, tradePerc: number }
 
-export const playAlert = async (rangeAudioLevel: number, checkboxAllowAudio: boolean) => {
-  const ding = new Audio('ding.mp3');
-  ding.volume = rangeAudioLevel / 100 || 0.5;
-  if (checkboxAllowAudio) {
-    await ding.play();
-  }
-};
 
-export const formSubmitHandler = (e: FormEvent) => {
-  e.preventDefault();
-};
 
 export async function handleBuyMarketKucoin(props: HandleBuyCoin) {
   const { coin, profitPerc, tradePerc } = props

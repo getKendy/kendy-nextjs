@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client'
 import React, { useEffect, useState, type FormEvent } from 'react'
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { formSubmitHandler, playAlert } from '~/components/alerts';
+// import { AnimatePresence, motion } from 'framer-motion';
 // import { useAutotradeStore } from '~/store/global';
 import { formatDate } from '~/utils/formatDate';
 import sdk, { getJWT } from '~/utils/sdk';
@@ -23,18 +18,18 @@ interface AlertProps {
 
 const ShowAlert = (props: AlertProps) => {
   return (
-    <motion.div key={props.alert.$id}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className={`m-1 p-1 shadow shadow-primary-content rounded-2xl ${(props.alert.exchange === 'binance' && !props.prefs.binanceAlerts && 'hidden') ||
+    <div key={props.alert.$id}
+      // initial={{ opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // exit={{ opacity: 0 }}
+      className={`m-1 p-1 shadow shadow-primary rounded-2xl ${(props.alert.exchange === 'binance' && !props.prefs.binanceAlerts && 'hidden') ||
         (props.alert.exchange === 'kucoin' && !props.prefs.kucoinAlerts && 'hidden')
         }`}
     >
       <div className="flex gap-x-2 justify-between items-center">
-        <div>
+        <div className='h-12'>
           {props.alert.exchange === 'kucoin' && (
-            <Image alt="kucoin" src="/kucoin.png" width={40} height={40} />
+            <Image alt="kucoin" src="/kucoin.png" width={40} height={40} loading='lazy' />
           )}
           {props.alert.exchange === 'binance' && (
             <Image alt="binance" src="/binance.png" width={40} height={40} />
@@ -96,7 +91,7 @@ const ShowAlert = (props: AlertProps) => {
                           </div>
                         )}
                       </div> */}
-    </motion.div>
+    </div>
   )
 }
 
@@ -110,7 +105,18 @@ const AlertStats = () => {
   const [prefs, setPrefs] = useState<Prefs>({ binanceAlerts: true, kucoinAlerts: true });
   // const { autotrade, profitPerc, tradePerc } = useAutotradeStore();
 
+  
+
   useEffect(() => {
+    const playAlert = async (checkboxAllowAudio) => {
+      // console.log(checkboxAllowAudio)
+      const ding = new Audio('ding.mp3');
+      ding.volume = rangeAudioLevel / 100 || 0.5;
+      if (checkboxAllowAudio) {
+        ding.play();
+      }
+    };
+
     const fetchData = async () => {
       let data = null;
       try {
@@ -121,10 +127,10 @@ const AlertStats = () => {
         } else {
           data = await fetch(`/api/fastapi/alerts?page=${currentPage}&exchange=all&jwt=${await getJWT()}`);
         }
-
+        // console.log(checkboxAllowAudio)
         data = await data.json();
-        // console.log(data);
         data = data.data
+        // console.log(data);
         if (data.items[0]) {
           setAlerts(data);
           setTotalPages(data.pages);
@@ -135,14 +141,14 @@ const AlertStats = () => {
           }
 
 
-          if (lastAlert && lastAlert.$id !== data.items[0]._id && currentPage === 1) {
+          if (lastAlert && lastAlert._id !== data.items[0]._id && currentPage === 1) {
             // console.log('new alert')
             setLastAlert(data.items[0]);
             if (
               (data.items[0].exchange === 'binance' && prefs?.binanceAlerts) ??
               (data.items[0].exchange === 'kucoin' && prefs?.kucoinAlerts)
             ) {
-              void playAlert(rangeAudioLevel, checkboxAllowAudio);
+              void playAlert(checkboxAllowAudio);
             }
           }
         }
@@ -150,12 +156,13 @@ const AlertStats = () => {
         console.log(error);
       }
     };
+    // console.log('refr')
     void fetchData();
     const interval = setInterval(() => {
       void fetchData();
     }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [checkboxAllowAudio, prefs.binanceAlerts, prefs.kucoinAlerts, rangeAudioLevel, currentPage, lastAlert]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -180,119 +187,125 @@ const AlertStats = () => {
     }
   };
 
+
+
+  const formSubmitHandler = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="flex flex-col flex-grow items-center justify-around">
       {/* <Test></Test> */}
-      <AnimatePresence>
+      {/* <AnimatePresence> */}
 
-        <div className="flex justify-around text-2xl w-full text-center">
-          <div className='text-primary'>Scanner Alerts:</div>
-          <div>
-            <div className="label cursor-pointer space-x-2">
-              <span className="label-text text-slate-400">Enable Binance</span>
-              <input
-                id="binanceAlerts"
-                type="checkbox"
-                checked={prefs?.binanceAlerts ?? true}
-                className="checkbox checkbox-primary"
-                onChange={() => {
-                  void setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
-                  void sdk.account.updatePrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
-                }}
-              />
-            </div>
+      <div className="flex justify-around text-2xl w-full text-center">
+        <div className='text-primary'>Scanner Alerts:</div>
+        <div>
+          <div className="label cursor-pointer space-x-2">
+            <span className="label-text text-slate-400">Enable Binance</span>
+            <input
+              id="binanceAlerts"
+              type="checkbox"
+              checked={prefs?.binanceAlerts ?? true}
+              className="checkbox checkbox-primary"
+              onChange={() => {
+                void setPrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+                void sdk.account.updatePrefs({ ...prefs, binanceAlerts: !prefs.binanceAlerts });
+              }}
+            />
           </div>
-          <div>
-            <div className="label cursor-pointer space-x-2">
-              <span className="label-text text-slate-400">Enable Kucoin</span>
-              <input
-                id="kucoinAlerts"
-                type="checkbox"
-                checked={prefs?.kucoinAlerts ?? true}
-                className="checkbox checkbox-primary"
-                onChange={() => {
-                  setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
-                  void sdk.account.updatePrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
-                }}
-              />
+        </div>
+        <div>
+          <div className="label cursor-pointer space-x-2">
+            <span className="label-text text-slate-400">Enable Kucoin</span>
+            <input
+              id="kucoinAlerts"
+              type="checkbox"
+              checked={prefs?.kucoinAlerts ?? true}
+              className="checkbox checkbox-primary"
+              onChange={() => {
+                setPrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+                void sdk.account.updatePrefs({ ...prefs, kucoinAlerts: !prefs.kucoinAlerts });
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      {alerts?.items.length > 0 ? (
+        <div className="m-1 p-1 w-full shadow shadow-primary rounded-xl">
+          <form onSubmit={formSubmitHandler}>
+            <div className="flex justify-around items-center">
+              <div>
+                <div className="label cursor-pointer space-x-2">
+                  <span className="label-text text-slate-400">Enable Audio Alerts</span>
+                  <input
+                    id="allowAudio"
+                    className="checkbox checkbox-primary"
+                    type="checkbox"
+                    // defaultChecked={false}
+                    checked={checkboxAllowAudio}
+                    onChange={() => setCheckboxAllowAudio(!checkboxAllowAudio)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="text-center text-slate-400">
+                  Alert Volume
+                  <input
+                    id="audioLevel"
+                    type="range"
+                    min="0"
+                    max="100"
+                    className="range range-md range-secondary bg-primary"
+                    step="5"
+                    value={rangeAudioLevel}
+                    onChange={(e: FormEvent<HTMLInputElement>) => setRangeAudioLevel(+e.currentTarget.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div className="mb-2">
+            <div className="flex flex-wrap justify-evenly">
+              {(alerts?.items.length > 0)
+                && alerts?.items.map((alert: Alert) => (
+                  <ShowAlert key={alert._id} alert={alert} prefs={prefs} />
+                ))}
             </div>
           </div>
         </div>
-        {alerts?.items.length ?? 0 > 0 ? (
-          <div className="m-1 p-1 w-full shadow shadow-primary rounded-xl">
-            <form onSubmit={formSubmitHandler}>
-              <div className="flex justify-around items-center">
-                <div>
-                  <div className="label cursor-pointer space-x-2">
-                    <span className="label-text text-slate-400">Enable Audio Alerts</span>
-                    <input
-                      id="allowAudio"
-                      className="checkbox checkbox-primary"
-                      type="checkbox"
-                      // defaultChecked={false}
-                      checked={checkboxAllowAudio}
-                      onChange={() => setCheckboxAllowAudio(!checkboxAllowAudio)}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex">
-                  <div className="text-center text-slate-400">
-                    Alert Volume
-                    <input
-                      id="audioLevel"
-                      type="range"
-                      min="0"
-                      max="100"
-                      className="range range-md range-secondary bg-primary"
-                      step="5"
-                      value={rangeAudioLevel}
-                      onChange={(e: FormEvent<HTMLInputElement>) => setRangeAudioLevel(+e.currentTarget.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <div className="mb-2">
-              <div className="flex flex-wrap justify-evenly">
-                {(alerts?.items.length ?? 0 > 0)
-                  && alerts?.items.map((alert: Alert) => (
-                    <ShowAlert key={alert.$id} alert={alert} prefs={prefs} />
-                  ))}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="h-screen text-center text-primary">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
-        )}
-        {/* Pagination */}
-        {alerts?.items.length ?? 0 > 0 ? (
-          <div className="mb-20 md:mb-2 lg:mb-20  btn-group justify-center mt-1">
-            <button
-              type="button"
-              className={currentPage === 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'}
-              onClick={() => {
-                handlePageDown();
-              }}
-            >
-              «
-            </button>
-            <button type="button" className="btn btn-sm">
-              Page {currentPage}
-            </button>
-            <button
-              type="button"
-              className={currentPage >= totalPages ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'}
-              onClick={() => {
-                handlePageUp();
-              }}
-            >
-              »
-            </button>
-          </div>
-        ) : null}
-      </AnimatePresence>
+      ) : (
+        <div className="h-screen text-center text-primary">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
+      )}
+      {/* Pagination */}
+      {alerts?.items.length ?? 0 > 0 ? (
+        <div className="mb-20 md:mb-2 lg:mb-20  btn-group justify-center mt-1">
+          <button
+            type="button"
+            className={currentPage === 1 ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'}
+            onClick={() => {
+              handlePageDown();
+            }}
+          >
+            «
+          </button>
+          <button type="button" className="btn btn-sm">
+            Page {currentPage}
+          </button>
+          <button
+            type="button"
+            className={currentPage >= totalPages ? 'btn btn-sm btn-primary btn-disabled' : 'btn btn-sm btn-primary'}
+            onClick={() => {
+              handlePageUp();
+            }}
+          >
+            »
+          </button>
+        </div>
+      ) : null}
+      {/* </AnimatePresence> */}
     </div>
   )
 }

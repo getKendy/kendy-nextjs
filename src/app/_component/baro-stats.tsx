@@ -26,7 +26,6 @@ const BaroStats = () => {
     const fetchData = async () => {
       try {
         const res = await fetch('/api/fastapi/baros?page=1&size=60')
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const { data }: { data: Baros } = await res.json()
         setBaros(data)
         if (timer !== 30000) {

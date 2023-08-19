@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios from 'axios';
 import { createClient } from 'redis';
-import { env } from '~/env.mjs';
 import type { JWT } from './types'
 
 
 async function setJwtToken() {
   const redis = createClient({
-    url: env.REDIS,
+    url: process.env.REDIS,
   });
   redis.on('error', (err) => console.log('Redis Client Error', err));
 
@@ -18,8 +16,8 @@ async function setJwtToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   };
-  const data = { username: env.FASTAPI_USER, password: env.FASTAPI_PASSWORD };
-  const { data: jwt }: { data: JWT } = await axios.post(`${env.FASTAPI_URL}login/`, data, config);
+  const data = { username: process.env.FASTAPI_USER, password: process.env.FASTAPI_PASSWORD };
+  const { data: jwt }: { data: JWT } = await axios.post(`${process.env.FASTAPI}login/`, data, config);
   // console.log({ newToken: jwt });
   const jwtExpires = Date.now() + 2 * 60 * 1000;
   // console.log(jwtExpires);
@@ -31,7 +29,7 @@ async function setJwtToken() {
 
 async function getJwtToken() {
   const redis = createClient({
-    url: env.REDIS,
+    url: process.env.REDIS,
   });
   redis.on('error', (err) => console.log('Redis Client Error', err));
   await redis.connect();
