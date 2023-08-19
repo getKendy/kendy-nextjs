@@ -41,8 +41,8 @@ const initAppwrite = (project: string, endpoint: string) => {
 };
 
 const sdk = initAppwrite(
-  process.env.NEXT_PUBLIC_APPWRITE_PROJECT as string,
-  process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string
+  process.env.APPWRITE_PROJECT as string,
+  process.env.APPWRITE_ENDPOINT as string
 );
 
 type JWT = () => Promise<string | null>

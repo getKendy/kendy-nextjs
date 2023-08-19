@@ -17,8 +17,34 @@ interface AlertProps {
 // interface ShowAlertProps { }
 
 const ShowAlert = (props: AlertProps) => {
+  const [precision, setPrecision] = useState(8)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const coin = props.alert.market.split('-')
+  //       switch (props.alert.exchange) {
+  //         case 'kucoin':
+  //           // const kucoin = await fetch(`/api/kucoin/market/info/${coin[0]}`).then((res)=> res.json())
+  //           const { data: kucoin } = await axios.get(`/api/kucoin/market/info/${coin[0]}`)
+  //           setPrecision(kucoin)
+  //           // console.log(kucoin)
+  //           break;
+  //         case 'binance':
+  //           const { data: binance } = await axios.get(`/api/binance/market/info/${props.alert.market.replace('-','')}`)
+  //           // console.log(binance)
+  //           setPrecision(binance)
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   void fetchData()
+  // }, [props.alert.exchange, props.alert.market])
   return (
-    <div key={props.alert.$id}
+    <div key={props.alert._id}
       // initial={{ opacity: 0 }}
       // animate={{ opacity: 1 }}
       // exit={{ opacity: 0 }}
@@ -47,7 +73,7 @@ const ShowAlert = (props: AlertProps) => {
           {props.alert.trend24h} %
         </div>
       </div>
-      <div className="text-secondary-focus font-bold border-b">Close: {props.alert.close}</div>
+      <div className="text-secondary-focus font-bold border-b">Close: {props.alert.close.toFixed(precision)}</div>
       <div className="flex justify-evenly items-center">
         <div>BB</div>
         <div className="text-xs">
@@ -57,12 +83,12 @@ const ShowAlert = (props: AlertProps) => {
       </div>
       <div className="border-b">
         <div className="flex justify-evenly">
-          <div>{props.alert.bbl}</div>
+          <div>{(+props.alert.bbl).toFixed(precision)}</div>
           <div>/</div>
-          <div>{props.alert.bbm}</div>
+          <div>{(+props.alert.bbm).toFixed(precision)}</div>
         </div>
         <div className="flex justify-evenly">
-          <div>{props.alert.bbu}</div>
+          <div>{(+props.alert.bbu).toFixed(precision)}</div>
           <div>/</div>
           <div>{props.alert.bbb}%</div>
         </div>
@@ -105,10 +131,10 @@ const AlertStats = () => {
   const [prefs, setPrefs] = useState<Prefs>({ binanceAlerts: true, kucoinAlerts: true });
   // const { autotrade, profitPerc, tradePerc } = useAutotradeStore();
 
-  
+
 
   useEffect(() => {
-    const playAlert = async (checkboxAllowAudio) => {
+    const playAlert = async (checkboxAllowAudio: boolean, rangeAudioLevel: number) => {
       // console.log(checkboxAllowAudio)
       const ding = new Audio('ding.mp3');
       ding.volume = rangeAudioLevel / 100 || 0.5;
@@ -148,7 +174,7 @@ const AlertStats = () => {
               (data.items[0].exchange === 'binance' && prefs?.binanceAlerts) ??
               (data.items[0].exchange === 'kucoin' && prefs?.kucoinAlerts)
             ) {
-              void playAlert(checkboxAllowAudio);
+              void playAlert(checkboxAllowAudio, rangeAudioLevel);
             }
           }
         }
@@ -156,7 +182,7 @@ const AlertStats = () => {
         console.log(error);
       }
     };
-    // console.log('refr')
+    // console.log(rangeAudioLevel)
     void fetchData();
     const interval = setInterval(() => {
       void fetchData();
@@ -231,7 +257,7 @@ const AlertStats = () => {
           </div>
         </div>
       </div>
-      {alerts?.items.length > 0 ? (
+      {alerts?.items.length ?? 0 > 0 ? (
         <div className="m-1 p-1 w-full shadow shadow-primary rounded-xl">
           <form onSubmit={formSubmitHandler}>
             <div className="flex justify-around items-center">
@@ -269,7 +295,7 @@ const AlertStats = () => {
 
           <div className="mb-2">
             <div className="flex flex-wrap justify-evenly">
-              {(alerts?.items.length > 0)
+              {(alerts?.items.length ?? 0 > 0)
                 && alerts?.items.map((alert: Alert) => (
                   <ShowAlert key={alert._id} alert={alert} prefs={prefs} />
                 ))}
