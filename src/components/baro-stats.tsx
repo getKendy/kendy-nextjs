@@ -1,4 +1,4 @@
-'use client'
+import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
@@ -25,8 +25,7 @@ const BaroStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/fastapi/baros?page=1&size=60')
-        const { data }: { data: Baros } = await res.json()
+        const { data }: { data: Baros } = await axios.get('/api/fastapi/baros?page=1&size=60')
         setBaros(data)
         if (timer !== 30000) {
           setTimer(30000)

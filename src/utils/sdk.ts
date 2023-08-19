@@ -41,8 +41,8 @@ const initAppwrite = (project: string, endpoint: string) => {
 };
 
 const sdk = initAppwrite(
-  process.env.APPWRITE_PROJECT as string,
-  process.env.APPWRITE_ENDPOINT as string
+  '64ce8c876695923fa07b',
+  'https://baas.hezik.nl/v1'
 );
 
 type JWT = () => Promise<string | null>

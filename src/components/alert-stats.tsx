@@ -147,16 +147,16 @@ const AlertStats = () => {
       let data = null;
       try {
         if (prefs?.binanceAlerts && !prefs?.kucoinAlerts) {
-          data = await fetch(`/api/fastapi/alerts?page=${currentPage}&exchange=binance&jwt=${await getJWT()}`);
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=binance&jwt=${await getJWT()}`);
         } else if (!prefs?.binanceAlerts && prefs?.kucoinAlerts) {
-          data = await fetch(`/api/fastapi/alerts?page=${currentPage}&exchange=kucoin&jwt=${await getJWT()}`);
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=kucoin&jwt=${await getJWT()}`);
         } else {
-          data = await fetch(`/api/fastapi/alerts?page=${currentPage}&exchange=all&jwt=${await getJWT()}`);
+          data = await axios.get(`/api/fastapi/alerts?page=${currentPage}&exchange=all&jwt=${await getJWT()}`);
         }
-        // console.log(checkboxAllowAudio)
-        data = await data.json();
-        data = data.data
         // console.log(data);
+        // console.log(checkboxAllowAudio)
+        // data = await data.json();
+        data = data.data
         if (data.items[0]) {
           setAlerts(data);
           setTotalPages(data.pages);

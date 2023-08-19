@@ -13,8 +13,8 @@ const TickerDisplay = (props: TickerProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/fastapi/tickerredis?market=${props.market}&exchange=${props.exchange}`)
-        const { data }: { data: TickerState } = await res.json()
+        const { data }: { data: TickerState } = await axios.get(`/api/fastapi/tickerredis?market=${props.market}&exchange=${props.exchange}`)
+        // const { data }: { data: TickerState } = await res.json()
         // console.log(data)
         setTicker(data)
         if (timer !== 3000) {
@@ -52,6 +52,8 @@ const TickerDisplay = (props: TickerProps) => {
     </motion.div>
   }
   return (
+    <AnimatePresence>
+
     <motion.div key={`tick${props.market}`}
       className={`p-1 flex flex-col border  rounded-lg text-sm ${+ticker?.c - +ticker?.o > 0 ? (+ticker?.c * 100) / +ticker?.o - 100 > 1 ? 'shadow-lg shadow-green-600 border-green-600' : 'shadow-md shadow-green-600 border-green-600' : (+ticker?.c * 100) / +ticker?.o - 100 < -1 ? 'shadow-lg shadow-red-600 border-red-600' : 'shadow-md shadow-red-600 border-red-600'}`}
       initial={{ opacity: 0 }}
@@ -83,6 +85,7 @@ const TickerDisplay = (props: TickerProps) => {
         </span>
       </div>
     </motion.div>
+    </AnimatePresence>
   )
 }
 

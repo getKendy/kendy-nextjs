@@ -5,7 +5,7 @@ import type { JWT } from './types'
 
 async function setJwtToken() {
   const redis = createClient({
-    url: process.env.REDIS,
+    url: 'redis://:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@10.20.30.23:6379/5',
   });
   redis.on('error', (err) => console.log('Redis Client Error', err));
 
@@ -16,8 +16,8 @@ async function setJwtToken() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   };
-  const data = { username: process.env.FASTAPI_USER, password: process.env.FASTAPI_PASSWORD };
-  const { data: jwt }: { data: JWT } = await axios.post(`${process.env.FASTAPI}login/`, data, config);
+  const data = { username: 'ron', password: 'Oldsch00l' };
+  const { data: jwt }: { data: JWT } = await axios.post(`https://cryptoapi.hezik.nl/api/v2/login/`, data, config);
   // console.log({ newToken: jwt });
   const jwtExpires = Date.now() + 2 * 60 * 1000;
   // console.log(jwtExpires);
@@ -29,7 +29,7 @@ async function setJwtToken() {
 
 async function getJwtToken() {
   const redis = createClient({
-    url: process.env.REDIS,
+    url: 'redis://:eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81@10.20.30.23:6379/5',
   });
   redis.on('error', (err) => console.log('Redis Client Error', err));
   await redis.connect();
