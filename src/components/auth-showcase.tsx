@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useUserStore } from '~/store/global'
-import sdk from '~/utils/sdk'
+import { useUserStore } from '@/store/global'
+import sdk from '@/utils/sdk'
 
 // interface Props { }
 

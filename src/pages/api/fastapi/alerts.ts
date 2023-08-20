@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from 'next-connect';
-import getJwtToken from "~/utils/fastapi";
-import { Alerts, JWT } from "~/utils/types";
+import getJwtToken from "@/utils/fastapi";
+import { Alerts, JWT } from "@/utils/types";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
