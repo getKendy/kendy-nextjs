@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { FormEvent } from "react";
-import { getJWT } from "~/utils/sdk";
-import type { Alert } from "~/utils/types";
+import { getJWT } from "@/utils/sdk";
+import type { Alert } from "@/utils/types";
 
 interface HandleBuyCoin { coin: Alert, profitPerc: number, tradePerc: number }
 

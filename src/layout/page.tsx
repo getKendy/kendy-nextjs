@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/header'
-import TickerStats from '../components/ticker-stats'
-import BaroStats from '../components/baro-stats'
+import Header from '@/components/header'
+import TickerStats from '@/components/ticker-stats'
+import BaroStats from '@/components/baro-stats'
 
 type Props = { children: React.ReactNode }
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
-import type { Baros } from '~/utils/types'
+import type { Baros } from '@/utils/types'
 
 interface BaroProp { name: string, baro1: number, baro5: number, baro60: number }
 
