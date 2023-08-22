@@ -122,7 +122,7 @@ const ShowAlert = (props: AlertProps) => {
 }
 
 const AlertStats = () => {
-  const [alerts, setAlerts] = useState<Alerts>();
+  const [alerts, setAlerts] = useState<Alert[]>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [lastAlert, setLastAlert] = useState<Alert | null>();
@@ -158,7 +158,7 @@ const AlertStats = () => {
         // data = await data.json();
         data = data.data
         if (data.items[0]) {
-          setAlerts(data);
+          setAlerts(data.items);
           setTotalPages(data.pages);
           if (!lastAlert && currentPage === 1) {
             // console.log('setting lastalert for the fist time')
@@ -260,7 +260,7 @@ const AlertStats = () => {
             </div>
           </div>
         </div>
-        {alerts?.items.length ?? 0 > 0 ? (
+        {alerts?.length ?? 0 > 0 ? (
           <div className="m-1 p-1 w-full shadow shadow-primary rounded-xl">
             <form onSubmit={formSubmitHandler}>
               <div className="flex justify-around items-center">
@@ -297,10 +297,10 @@ const AlertStats = () => {
             </form>
 
             <div className="mb-2">
-              <Reorder.Group className="flex flex-wrap justify-evenly" values={alerts?.items} >
-                {(alerts?.items.length ?? 0 > 0)
-                  && alerts?.items.map((alert: Alert) => (
-                    <Reorder.Item key={alert._id} value={alert._id} initial={{ opacity: 0.5 }}
+              <Reorder.Group className="flex flex-wrap justify-evenly" values={alerts || []} onReorder={setAlerts}>
+                {(alerts?.length ?? 0 > 0)
+                  && alerts?.map((alert: Alert) => (
+                    <Reorder.Item key={`wrap${alert._id}`} value={alert._id} initial={{ opacity: 0.5 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0.5 }}>
                       <ShowAlert alert={alert} prefs={prefs} />
@@ -313,7 +313,7 @@ const AlertStats = () => {
           <div className="h-screen text-center text-primary">Alerts on 1, 2, 3 and 5min. timeframe are active</div>
         )}
         {/* Pagination */}
-        {alerts?.items.length ?? 0 > 0 ? (
+        {alerts?.length ?? 0 > 0 ? (
           <div className="mb-20 md:mb-2 lg:mb-20  btn-group justify-center mt-1">
             <button
               type="button"
