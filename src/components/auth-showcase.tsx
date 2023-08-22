@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useUserStore } from '@/store/global'
 import sdk from '@/utils/sdk'
 
+import { Cog8ToothIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 // interface Props { }
 
 const AuthShowcase = () => {
@@ -38,6 +40,11 @@ const AuthShowcase = () => {
         <div>Welcome back</div>
         <div className='text-secondary'>{user.name || user.email}</div>
       </div>
+      <button className='btn btn-sm btn-outline btn-primary'>
+        <Link href={`/settings`}>
+          <Cog8ToothIcon className='w-6' />
+        </Link>
+      </button>
       <button className='btn btn-sm btn-outline btn-secondary'>logout</button>
     </div>
   )
