@@ -19,10 +19,9 @@ const Login = () => {
     const login = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const session = await account.createEmailSession(formData.email, formData.password)
+            const session = await sdk.loginUser(formData)
             if (session) {
                 setAuthStatus(true)
-                await sdk.getCurrentUser()
                 router.push('/')
             }
         } catch (error: any) {
