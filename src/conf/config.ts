@@ -1,8 +1,9 @@
+'use client'
 const conf = {
-  appwriteUrl: String(process.env.NEXT_PUBLIC_APPWRITE_URL),
-  appwriteProjectId: String(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID),
-  appwriteKucoinDb: String(process.env.NEXT_PUBLIC_APPWRITE_KUCOIN_DATA),
-  appwriteKucoinApi: String(process.env.NEXT_PUBLIC_APPWRITE_KUCOIN_API)
+  appwriteUrl: 'https://baas.hezik.nl/v1',
+  appwriteProjectId: '64ce8c876695923fa07b',
+  appwriteKucoinDb: '64cf6e2f197d1fce5222',
+  appwriteKucoinApi: '64cf6e2f5eb1ac0275c0'
 }
 
 export default conf;
