@@ -44,8 +44,8 @@ export class AppwriteService {
   async loginUser({ email, password }: LoginUserAccount) {
     try {
       return await account.createEmailSession(email, password)
-    } catch (error) {
-
+    } catch (error: any) {
+      return error.message
     }
   }
 

@@ -8,29 +8,29 @@ import React, { FormEvent, useState } from "react"
 
 
 const Signup = () => {
-  const router = useRouter()
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  })
-  const [error, setError] = useState("")
-  const { setAuthStatus } = useAuthStore();
-  const createUser = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      const userData = await sdk.createUserAccount(formData)
-      if (userData) {
-        setAuthStatus(true);
-        account.updatePrefs({ binanceAlerts: true, kucoinAlerts: true })
-        router.push("/")
-      }
-    } catch (error: any) {
-      setError(error.message)
+    const router = useRouter()
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        name: "",
+    })
+    const [error, setError] = useState("")
+    const { setAuthStatus } = useAuthStore();
+    const createUser = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            const userData = await sdk.createUserAccount(formData)
+            if (userData) {
+                setAuthStatus(true);
+                account.updatePrefs({ binanceAlerts: true, kucoinAlerts: true })
+                router.push("/")
+            }
+        } catch (error: any) {
+            setError(error.message)
+        }
     }
-  }
-  return (
-    <div className="flex items-center justify-center">
+    return (
+        <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-200/50 rounded-xl p-10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[60px]">
@@ -50,7 +50,7 @@ const Signup = () => {
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                <form onSubmit={createUser} className="mt-8">
+                <form onSubmit={(e) => createUser(e)} className="mt-8">
                     <div className="space-y-5">
                         <div>
                             <label htmlFor="name" className="text-base font-medium text-gray-900">
@@ -123,7 +123,7 @@ const Signup = () => {
                 </form>
             </div>
         </div>
-  )
+    )
 }
 
 export default Signup

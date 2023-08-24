@@ -15,6 +15,7 @@ const Login = () => {
         password: ""
     })
     const [error, setError] = useState("")
+
     const login = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
@@ -24,7 +25,7 @@ const Login = () => {
                 router.push('/')
             }
         } catch (error: any) {
-            setError(error.meaage)
+            setError(error.message)
         }
     }
 
@@ -49,7 +50,7 @@ const Login = () => {
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-                <form onSubmit={login} className="mt-8">
+                <form onSubmit={(e) => login(e)} className="mt-8">
                     <div className="space-y-5">
                         <div>
                             <label htmlFor="email" className="text-base font-medium text-gray-900">
