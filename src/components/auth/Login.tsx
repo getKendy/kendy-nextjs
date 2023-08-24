@@ -1,5 +1,5 @@
 "use client"
-import sdk from "@/appwrite/sdk";
+import sdk, { account } from "@/appwrite/sdk";
 import { useAuthStore } from "@/store/global";
 
 import Link from "next/link";
@@ -19,9 +19,10 @@ const Login = () => {
     const login = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const session = await sdk.loginUser(formData)
+            const session = await account.createEmailSession(formData.email, formData.password)
             if (session) {
                 setAuthStatus(true)
+                await sdk.getCurrentUser()
                 router.push('/')
             }
         } catch (error: any) {
