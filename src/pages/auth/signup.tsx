@@ -1,18 +1,16 @@
-import Overview from '@/components/settings/overview'
+import Signup from '@/components/auth/Signup'
 import Page from '@/layout/page'
 import { useAuthStore } from '@/store/global'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-type Props = {}
-
-const Settings = (props: Props) => {
+const LoginStatus = () => {
   const { authStatus } = useAuthStore()
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
-    if (!authStatus) {
+    if (authStatus) {
       return void router.push('/')
     }
     setLoading(false)
@@ -24,9 +22,9 @@ const Settings = (props: Props) => {
 
   return (
     <Page>
-      <Overview />
+      <Signup />
     </Page>
   )
 }
 
-export default Settings
+export default LoginStatus

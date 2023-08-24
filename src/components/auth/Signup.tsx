@@ -1,7 +1,7 @@
 "use client"
 
-import sdk from "@/appwrite/sdk"
-import useAuth from "@/context/useAuth"
+import sdk, { account } from "@/appwrite/sdk"
+import { useAuthStore } from "@/store/global"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from "react"
@@ -15,14 +15,15 @@ const Signup = () => {
     name: "",
   })
   const [error, setError] = useState("")
-  const { setAuthStatus } = useAuth();
+  const { setAuthStatus } = useAuthStore();
   const createUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const userData = await sdk.createUserAccount(formData)
       if (userData) {
         setAuthStatus(true);
-        router.push("/profile")
+        account.updatePrefs({ binanceAlerts: true, kucoinAlerts: true })
+        router.push("/")
       }
     } catch (error: any) {
       setError(error.message)
@@ -42,7 +43,7 @@ const Signup = () => {
                 <p className="mt-2 text-center text-base text-gray-600">
                     Already have an account?&nbsp;
                     <Link
-                        href="/login"
+                        href="/auth/login"
                         className="font-medium text-primary transition-all duration-200 hover:underline"
                     >
                         Sign In

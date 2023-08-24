@@ -1,34 +1,35 @@
 "use client"
 import sdk from "@/appwrite/sdk";
-import useAuth from "@/context/useAuth";
+import { useAuthStore } from "@/store/global";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 const Login = () => {
-  const router = useRouter()
-  const { setAuthStatus } = useAuth()
+    const router = useRouter()
+    const { setAuthStatus } = useAuthStore()
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  })
-  const [error, setError] = useState("")
-  const login = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      const session = await sdk.loginUser(formData)
-      if (session) {
-        setAuthStatus(true)
-        router.push('/profile')
-      }
-    } catch (error: any) {
-      setError(error.meaage)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+    const [error, setError] = useState("")
+    const login = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            const session = await sdk.loginUser(formData)
+            if (session) {
+                setAuthStatus(true)
+                router.push('/')
+            }
+        } catch (error: any) {
+            setError(error.meaage)
+        }
     }
-  }
 
-  return (
-    <div className="flex items-center justify-center w-full">
+    return (
+        <div className="mt-10 flex items-center justify-center w-full">
             <div className={`mx-auto w-full max-w-lg bg-gray-200/50 rounded-xl p-10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[60px]">
@@ -41,7 +42,7 @@ const Login = () => {
                 <p className="mt-2 text-center text-base text-gray-600">
                     Don&apos;t have any account?&nbsp;
                     <Link
-                        href="/signup"
+                        href="/auth/signup"
                         className="font-medium text-primary transition-all duration-200 hover:underline"
                     >
                         Sign Up
@@ -56,7 +57,7 @@ const Login = () => {
                             </label>
                             <div className="mt-2">
                                 <input
-                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex h-10 w-full rounded-md border text-slate-300 border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="email"
                                     value={formData.email}
                                     onChange={(e) =>
@@ -76,7 +77,7 @@ const Login = () => {
                             </div>
                             <div className="mt-2">
                                 <input
-                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex h-10 w-full rounded-md border text-slate-300 border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="password"
                                     placeholder="Password"
                                     value={formData.password}
@@ -94,7 +95,7 @@ const Login = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="inline-flex w-full items-center justify-center rounded-md bg-primary px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-primary/80"
+                                className="inline-flex w-full items-center justify-center text-slate-300 rounded-md bg-primary px-3.5 py-2.5 font-semibold leading-7 hover:bg-primary/80"
                             >
                                 Sign in
                             </button>
@@ -103,7 +104,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
-  )
+    )
 }
 
 export default Login

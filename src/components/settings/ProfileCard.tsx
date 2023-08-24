@@ -4,16 +4,24 @@ import { Models } from "appwrite";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Avatar from "./Avatar";
+import { useRouter } from "next/router";
 
 
-const ProfileCard= () => {
+const ProfileCard = () => {
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);
+    const router = useRouter()
 
     useEffect(() => {
         (async () => {
-            const userData = await sdk.getCurrentUser()
-            if (userData) {
-                setUser(userData)
+            try {
+                const userData = await sdk.getCurrentUser()
+                if (userData) {
+                    setUser(userData)
+                } else {
+                    setUser(null)
+                }
+            } catch (error) {
+                setUser(null)
             }
         })()
     }, [])
@@ -21,7 +29,7 @@ const ProfileCard= () => {
     return (
         user && (
             <>
-                <div className="flex gap-y-6 flex-wrap">
+                <div className="flex gap-y-6 flex-wrap justify-center items-center">
                     <div className="flex w-full gap-x-4 items-center">
                         <div className="shrink-0 w-20">
                             <Avatar img="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
@@ -29,7 +37,7 @@ const ProfileCard= () => {
                         <div className="relative">
                             <p className="font-bold text-xl w-full mb-1">{user.name}</p>
                             <div className="text-[12px] p-0.5 inline-block rounded-md bg-gradient-to-tr from-primary to-secondary">
-                                <button className="px-2 rounded-md font-bold bg-white">FREE</button>
+                                <button className="px-2 rounded-md font-bold bg-white text-slate-400">FREE</button>
                             </div>
                         </div>
                     </div>
@@ -52,12 +60,17 @@ const ProfileCard= () => {
                         </div>
                     </div>
                     <div className="w-full flex justify-center">
-                        <Link
-                            href={"/logout"}
-                            className="bg-gray-200/70 rounded-xl px-6 py-3 inline-block hover:bg-gray-100 duration-150"
+                        <button
+                            onClick={() => {
+                                sdk.logout()
+                                setUser(null)
+                                router.reload()
+                            }}
+                            className="btn btn-outline"
                         >
+
                             Logout
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </>

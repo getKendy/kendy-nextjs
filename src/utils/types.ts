@@ -1,9 +1,9 @@
-export interface Alert {
+export type Alert = {
   '_id': string, exchange: string, market: string, date: string, timeframe: string, volume24h: string,
   trend24h: number, bbl: string, bbm: string, bbu: string, bbb: string, stochk: string, stockd: string, close: number
 }
 
-export interface Alerts {
+export type Alerts = {
   items: Array<Alert>,
   total: number,
   page: number,
@@ -11,7 +11,7 @@ export interface Alerts {
   pages: number,
 }
 
-export interface Baro {
+export type Baro = {
   _id: string,
   fiatBtcVolume: number,
   fiatBnbVolume: number,
@@ -29,7 +29,7 @@ export interface Baro {
   date: string
 }
 
-export interface Baros {
+export type Baros = {
   items: Array<Baro>
   total: number,
   page: number,
@@ -37,7 +37,7 @@ export interface Baros {
   pages: number
 }
 
-export interface JWT {
+export type JWT = {
   token_type: string,
   access_token: string,
 }

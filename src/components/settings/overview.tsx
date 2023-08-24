@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import ProfileCard from './ProfileCard'
 
 type Props = {}
 
 type SelectedMenu = { selectedMenu: string }
 const Profile = (props: SelectedMenu) => {
-  return <div className={props.selectedMenu === 'profile' ? 'visible' : 'hidden'}>Profile</div>
+  return <div className={props.selectedMenu === 'profile' ? 'visible' : 'hidden'}><ProfileCard /></div>
 }
 
 const Binance = (props: SelectedMenu) => {
@@ -20,7 +21,7 @@ const Overview = (props: Props) => {
 
 
   return (
-    <div className='flex flex-col md:flex-row justify-center lg:justify-start'>
+    <div className='flex flex-col lg:flex-row justify-center lg:justify-start lg:items-start'>
       <ul className="menu menu-horizontal items-center justify-center mt-4 lg:menu-vertical lg:w-44 rounded-box">
         <li><button onClick={() => setSelectedMenu('profile')}>Profile</button></li>
         <li><button onClick={() => setSelectedMenu('binance')}>Binance</button></li>
