@@ -1,4 +1,5 @@
 import conf from "@/conf/config";
+import { KucoinAPI } from "@/utils/types";
 import { Client, Account, Databases, ID, Avatars, Models, Permission, Role } from 'appwrite'
 
 type CreateUserAccount = {
@@ -11,12 +12,6 @@ type LoginUserAccount = {
   password: string
 }
 
-type KucoinAPI = {
-  apiKey: string,
-  apiSecret: string,
-  apiPassphrase: string,
-  userId: string
-}
 
 const appwriteClient = new Client()
 
@@ -24,7 +19,7 @@ appwriteClient.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
 
 export const account = new Account(appwriteClient)
 const avatar = new Avatars(appwriteClient)
-const database = new Databases(appwriteClient)
+export const database = new Databases(appwriteClient)
 
 export class AppwriteService {
   async createUserAccount({ email, password, name }:

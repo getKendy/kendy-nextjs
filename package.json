@@ -15,10 +15,12 @@
     "@types/react-dom": "18.2.7",
     "appwrite": "^11.0.1",
     "axios": "^1.4.0",
+    "cors": "^2.8.5",
     "encoding": "^0.1.13",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.0",
+    "kucoin-node-sdk": "^1.0.5",
     "luxon": "^3.4.0",
     "next": "13.4.19",
     "next-connect": "^1.0.0",
@@ -30,6 +32,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/luxon": "^3.3.1",
     "autoprefixer": "10.4.15",
     "daisyui": "^3.5.1",

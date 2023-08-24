@@ -282,10 +282,10 @@ const AlertStats = () => {
           </form>
 
           <div className="mb-2">
-            <Reorder.Group className="flex flex-wrap justify-evenly" values={alerts || []} onReorder={setAlerts}>
+            <Reorder.Group className="flex flex-wrap justify-evenly" values={alerts || []} onReorder={setAlerts} draggable={false}>
               {(alerts?.length ?? 0 > 0)
                 && alerts?.map((alert: Alert, index: number) => (
-                  <Reorder.Item key={`wrap${alert._id}`} value={alert._id} initial={{ opacity: 0.5 }}
+                  <Reorder.Item key={`wrap${alert._id}`} value={alert._id} initial={{ opacity: 0.5 }}  drag={false}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0.5 }}>
                     <ShowAlert alert={alert} prefs={prefs} blur={(!authStatus && index < 1) || (!authStatus && alert.timeframe === '1m') || (!authStatus && alert.timeframe === '2m')} />

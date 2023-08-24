@@ -3,7 +3,8 @@ import React from 'react'
 import { Inter } from 'next/font/google'
 import Page from '../layout/page'
 import AlertStats from '../components/alert-stats'
-import Trade from '@/components/kucoin/trade'
+import KuOverview from '@/components/trade/kucoin/overview'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,7 +13,7 @@ export default function Home() {
     <Page>
       <div className='flex flex-col lg:flex-row'>
         <AlertStats />
-        <Trade />
+        <KuOverview />
       </div>
     </Page>
   )
