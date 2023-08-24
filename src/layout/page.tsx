@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '@/components/header'
+import Header from '@/layout/header'
 import TickerStats from '@/components/ticker-stats'
 import BaroStats from '@/components/baro-stats'
 

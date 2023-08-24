@@ -1,30 +1,13 @@
-import type { Models } from 'appwrite'
 import { create } from 'zustand'
 
-
-interface UserState {
-  user: {
-    '$id': string,
-    '$createdAt': string,
-    '$updatedAt': string,
-    name: string,
-    registration: string,
-    status: boolean,
-    passwordUpdate: string,
-    email: string,
-    phone: string,
-    emailVerification: boolean,
-    phoneVerification: boolean,
-    prefs: { kucoinAlerts?: boolean, binanceAlerts?: boolean, profitPerc?: string, tradePerc?: string } | Record<string, never>
-  } | null
-  setUser: (user: Models.User<Models.Preferences>) => void
-  clearUser: () => void
+type AuthState = {
+  authStatus: boolean;
+  setAuthStatus: (status: boolean) => void;
 }
 
-export const useUserStore = create<UserState>()((set) => ({
-  user: null,
-  setUser: (user) => set(() => ({ user })),
-  clearUser: () => set(() => ({ user: null }))
+export const useAuthStore = create<AuthState>()((set) => ({
+  authStatus: false,
+  setAuthStatus: (status) => set(() => ({ authStatus: status })),
 }))
 
 interface AutoTrade {
